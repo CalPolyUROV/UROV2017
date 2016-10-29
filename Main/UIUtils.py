@@ -10,6 +10,7 @@ class UI:
         self.background = pygame.Surface(self.screen.get_size())          # Set background to white.
         self.background = self.background.convert()
         self.background.fill((255, 255, 255))
+        self.update()
 
     def update(self):
         pygame.display.update()

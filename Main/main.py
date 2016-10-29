@@ -10,7 +10,7 @@ from types import *
 
 import time
 
-import controller as cont
+from controller import *
 import serial_finder
 
 __author__ = 'johna, tina and luca'
@@ -110,6 +110,8 @@ def filterYPR(L, YPRR):
 ports = serial_finder.serial_ports()
 
 UI = UI()
+
+cont = Controller(UI)
 
 UI.textwrite(500, 250, "Please connect the serial device", 10, 10, 10, 50)
 UI.update()                         #Updates display
