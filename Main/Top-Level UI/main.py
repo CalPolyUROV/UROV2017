@@ -1,14 +1,13 @@
 import serial
 import serial.tools.list_ports
 
+from UIUtils import *
+
 import pygame
 from pygame.locals import *
 from time import sleep
-from types import *
 
-import time
-
-import controller as cont
+from controller import *
 import serial_finder
 
 __author__ = 'johna, tina and luca'
@@ -53,40 +52,18 @@ p_factor = 1
 
 no_serial = False
 
-def textwrite(Positionx, Positiony, Text, r = 10, g = 10 , b = 10, size = 25): #Function that write on screen Strings.
-
-    writeonscreen = Text
-    font = pygame.font.Font(None, size)
-    text = font.render(writeonscreen, 0, (r, g, b))
-    textpos = text.get_rect()
-    textpos.centerx = Positionx
-    textpos.centery = Positiony
-    background.blit(text, textpos)
-    screen.blit(background, (0, 0))
-
-def textdelete(Positionx, Positiony, Text, size = 25):                 #Function that deletes strings
-
-    writeonscreen = Text
-    font = pygame.font.Font(None, size)
-    text = font.render(writeonscreen, 0, (255, 255, 255))
-    textpos = text.get_rect()
-    textpos.centerx = Positionx
-    textpos.centery = Positiony
-    background.blit(text, textpos)
-    screen.blit(background, (0, 0))
-
 #@param l: the list contain a record of that data
 #@param rev: The data received
 #@param correction: A value to be removed from the data received before inputing it to the list
 def readOutput(L, rev, correction = 0):
 
-    if type(L) is not ListType:
+    if not isinstance(L, list):
         raise TypeError("Param 1 is not a list")
 
-    if type(correction) is not (IntType or FloatType or LongType):
+    if not (isinstance(correction, int) or isinstance(correction, float) or isinstance(correction, long)):
         raise TypeError("Param 3 is not a number")
 
-    if type(rev) is not StringType:
+    if not isinstance(rev, str):
         raise TypeError("Param 2 is not a string")
 
     try:
@@ -104,7 +81,7 @@ def readOutput(L, rev, correction = 0):
         return False
 
 def filterYPR(L, YPRR):
-    if type(L) is not ListType:
+    if not isinstance(L, list):
         raise TypeError("Param 1 is not a list")
 
     try:
@@ -127,37 +104,29 @@ def filterYPR(L, YPRR):
 
     return True
 
-
-pygame.init()                                           #initializes the UI
-screen = pygame.display.set_mode((1000, 500))
-pygame.display.set_caption("Cal Poly Control Center")
-
-background = pygame.Surface(screen.get_size())          # Set background to white.
-background = background.convert()
-background.fill((255, 255, 255))
-
 ports = serial_finder.serial_ports()
 
-textwrite(500, 250, "Please connect the serial device", 10, 10, 10, 50)
-pygame.display.update()                         #Updates display
+UI = UI()
+
+cont = Controller(UI)
+
+UI.textwrite(500, 250, "Please connect the serial device", 10, 10, 10, 50)
+UI.update()                         #Updates display
 
 while(len(ports) == 0):
     ports = serial_finder.serial_ports()
+    UI.shouldQuit()
 
-    for event in pygame.event.get():
-        if event.type == QUIT:
-            quit()
-
-textdelete(500, 250, "Please connect the serial device", 50)
-textwrite(75, 10, "Possible ports: ")
+UI.textdelete(500, 250, "Please connect the serial device", 50)
+UI.textwrite(75, 10, "Possible ports: ")
 
 for i in range(len(ports)):
-    textwrite(175 + 65 * i, 10, str(ports[i]))
+    UI.textwrite(175 + 65 * i, 10, str(ports[i]))
 
 port = serial_finder.find_port(ports)
 
-textwrite(70, 30, "Connected To: ")
-textwrite(160, 30, str(port))
+UI.textwrite(70, 30, "Connected To: ")
+UI.textwrite(160, 30, str(port))
 
 outbound = serial.Serial(
     port=port,
@@ -172,19 +141,19 @@ img1 = pygame.image.load('ArtificialHorizon.png')                       #Loads t
 img2 = pygame.image.load("ArtificialHorizonOverlay.png")
 img3 = pygame.image.load("ArtificialHorizonMarker.png").convert_alpha()
 
-pygame.display.update()
+UI.update()
 
 while True:
 
     if no_serial:
-        textdelete(110, 50, "Serial device Connected")
-        textwrite(115, 50, "Connect the serial device", 255, 10, 10)
-        textdelete(160, 30, str(port))
+        UI.textdelete(110, 50, "Serial device Connected")
+        UI.textwrite(115, 50, "Connect the serial device", 255, 10, 10)
+        UI.textdelete(160, 30, str(port))
         for i in range(len(ports)):
-            textdelete(175 + 65 * i, 10, str(ports[i]))
+            UI.textdelete(175 + 65 * i, 10, str(ports[i]))
         ports = serial_finder.serial_ports()
         for i in range(len(ports)):
-            textwrite(175 + 65 * i, 10, str(ports[i]))
+            UI.textwrite(175 + 65 * i, 10, str(ports[i]))
         if(len(ports) > 0):
             port = serial_finder.find_port(ports)
             outbound = serial.Serial(
@@ -195,39 +164,39 @@ while True:
                 bytesize=serial.EIGHTBITS,   # eight bits of information per pulse/packet
                 timeout=0.1
             )
-            textwrite(160, 30, str(port))
+            UI.textwrite(160, 30, str(port))
             no_serial = False
 
     else:
-        textdelete(115, 50, "Connect the serial device")
-        textwrite(110, 50, "Serial device Connected", 10, 125, 10)
+        UI.textdelete(115, 50, "Connect the serial device")
+        UI.textwrite(110, 50, "Serial device Connected", 10, 125, 10)
 
 
     if not cont.isConnected():                                      # Updates controller and shows whether it is connected.
-        textdelete(98, 70, "Controller connected")
-        textwrite(105, 70, "Connect the controller", 255, 10, 10)
+        UI.textdelete(98, 70, "Controller connected")
+        UI.textwrite(105, 70, "Connect the controller", 255, 10, 10)
 
     else:
-        textdelete(105, 70, "Connect the controller")
-        textwrite(98, 70, "Controller connected", 10, 125, 10)
+        UI.textdelete(105, 70, "Connect the controller")
+        UI.textwrite(98, 70, "Controller connected", 10, 125, 10)
 
-    textwrite(45, 90, "Pressure:")                     #Labels in black.
-    textwrite(40, 110, "Current:")
-    textwrite(64, 130, "Temperature:")
-    textwrite(34, 150, "Depth:")
-    textwrite(25, 190, "YPR:")
-    textwrite(40, 170, "YPRraw:")
+    UI.textwrite(45, 90, "Pressure:")                     #Labels in black.
+    UI.textwrite(40, 110, "Current:")
+    UI.textwrite(64, 130, "Temperature:")
+    UI.textwrite(34, 150, "Depth:")
+    UI.textwrite(25, 190, "YPR:")
+    UI.textwrite(40, 170, "YPRraw:")
 
-    textwrite(20, 250, "M1:")                        #Motor info. Work in progress.
-    textwrite(20, 270, "M2:")
-    textwrite(20, 290, "M3:")
-    textwrite(20, 310, "M4:")
-    textwrite(20, 330, "M5:")
-    textwrite(20, 350, "M6:")
-    textwrite(20, 370, "X1:")
-    textwrite(20, 390, "X2:")
+    UI.textwrite(20, 250, "M1:")                        #Motor info. Work in progress.
+    UI.textwrite(20, 270, "M2:")
+    UI.textwrite(20, 290, "M3:")
+    UI.textwrite(20, 310, "M4:")
+    UI.textwrite(20, 330, "M5:")
+    UI.textwrite(20, 350, "M6:")
+    UI.textwrite(20, 370, "X1:")
+    UI.textwrite(20, 390, "X2:")
 
-    textwrite(60, 450, "Power factor:")
+    UI.textwrite(60, 450, "Power factor:")
 
     cont.update()
     buttons1 = 0x0
@@ -242,7 +211,7 @@ while True:
             else:
                 buttons2 += cont.getValueForButton(i) >> 8
                 if buttons2 == 1:
-                    textdelete(140, 450, str(p_factor))
+                    UI.textdelete(140, 450, str(p_factor))
                     p_factor = p_factor / 2.0
                     if(p_factor < 0.5):
                         p_factor = 1
@@ -271,16 +240,16 @@ while True:
         print "Crashed while sending controller input"
 
     got = ''                                                            #shows in red the old data in case of lost connection.
-    textwrite(200, 90, (str(pressure) + " mbars"), 255, 10, 10)
-    textwrite(200, 110, (str(current) + " amps"), 255, 10, 10)
-    textwrite(200, 130, (str(temperature) + " degrees C"), 255, 10, 10)
-    textwrite(200, 150, (str(depth) + " feet"), 255, 10, 10)
-    textwrite(200, 170, str(ypr), 255, 10, 10)
-    textwrite(200, 190, str(yprraw), 255, 10, 10)
+    UI.textwrite(200, 90, (str(pressure) + " mbars"), 255, 10, 10)
+    UI.textwrite(200, 110, (str(current) + " amps"), 255, 10, 10)
+    UI.textwrite(200, 130, (str(temperature) + " degrees C"), 255, 10, 10)
+    UI.textwrite(200, 150, (str(depth) + " feet"), 255, 10, 10)
+    UI.textwrite(200, 170, str(ypr), 255, 10, 10)
+    UI.textwrite(200, 190, str(yprraw), 255, 10, 10)
 
     for i in range(len(mot)):
-        textwrite(100, 250 + 20 * i, str(mot[i]), 255, 10, 10)                        #motor info.
-        pygame.draw.rect(background, (255, 10, 10), (150, 245 + i * 20, (10 * mot[i]), 10))
+        UI.textwrite(100, 250 + 20 * i, str(mot[i]), 255, 10, 10)                        #motor info.
+        UI.drawRect((150, 245 + i * 20, (10 * mot[i]), 10),(255, 10, 10))
 
     try:
         counter = 10
@@ -307,36 +276,36 @@ while True:
                 if(label == "PSR"):                                                    # Pressure Data.
                     rev = outbound.readline().rstrip()
                     if(readOutput(pres, rev)):
-                        textdelete(200, 90, str(pressure) + " mbars")
+                        UI.textdelete(200, 90, str(pressure) + " mbars")
                         pressure = round(sum(pres)/len(pres), 2)
-                        textwrite(200, 90, str(pressure) + " mbars", 10, 125, 10)
+                        UI.textwrite(200, 90, str(pressure) + " mbars", 10, 125, 10)
                     else:
                         print "Could not read pressure data"
 
                 elif(label == "VLT"):                                                   # Electric Current data.
                     rev = outbound.readline().rstrip()
                     if(readOutput(curr, rev)):
-                        textdelete(200, 110, str(current) + " amps")
+                        UI.textdelete(200, 110, str(current) + " amps")
                         current = round(sum(curr)/len(curr), 2)
-                        textwrite(200, 110, str(current) + " amps", 10, 125, 10)
+                        UI.textwrite(200, 110, str(current) + " amps", 10, 125, 10)
                     else:
                         print "Could not read current data"
 
                 elif(label == "TMP"):                                                   # Temperature Data.
                     rev = outbound.readline().rstrip()
                     if(readOutput(tmp, rev)):
-                            textdelete(200, 130, str(temperature) + " degrees C")
+                            UI.textdelete(200, 130, str(temperature) + " degrees C")
                             temperature = round(sum(tmp)/len(tmp), 2)
-                            textwrite(200, 130, str(temperature) + " degrees C", 10, 125, 10)
+                            UI.textwrite(200, 130, str(temperature) + " degrees C", 10, 125, 10)
                     else:
                         print "Could not read temperature data"
 
                 elif(label == "DPT"):                                                   #Depth data from the arduino.
                     rev = outbound.readline().rstrip()
                     if(readOutput(dep, rev)):
-                        textdelete(200,150, str(depth) + " feet")
+                        UI.textdelete(200,150, str(depth) + " feet")
                         depth = round(sum(dep)/len(dep), 2)
-                        textwrite(200, 150, str(depth) + " feet", 10, 125, 10)
+                        UI.textwrite(200, 150, str(depth) + " feet", 10, 125, 10)
                     else:
                         print "Could not read depth data"
 
@@ -373,18 +342,18 @@ while True:
                     rec = recr.split(",")
                     if(len(rec) == len(mot)):
                         for i in range(len(mot)):
-                            textdelete(100, 250, str(mot[i]))
+                            UI.textdelete(100, 250, str(mot[i]))
                             try:
                                 tempo = float(rec[i])
-                                pygame.draw.rect(background, (255, 255, 255), (150, 245, (10 * mot[i]), 10))
+                                UI.drawRect((150, 245, (10 * mot[i]), 10), (255, 255, 255))
                                 mot[i] = tempo
-                                textwrite(100, 250, mot[i], 10, 125, 10)
+                                UI.textwrite(100, 250, mot[i], 10, 125, 10)
                                 if mot[i] < 10 and mot[i] > 0:
-                                    pygame.draw.rect(background, (10, 125, 10), (150, 245, (10 * mot[i]), 10))
+                                    UI.drawRect((150, 245, (10 * mot[i]), 10), (10, 125, 10))
                                 elif  mot[i] >= 10 and mot[i] <= 13:
-                                    pygame.draw.rect(background, (125, 125, 10), (150, 245, (10 * mot[i]), 10))
+                                    UI.drawRect((150, 245, (10 * mot[i]), 10), (125, 125, 10))
                                 elif mot[i] > 13:
-                                    pygame.draw.rect(background, (255, 125, 10), (150, 245, (10 * mot[i]), 10))
+                                    UI.drawRect((150, 245, (10 * mot[i]), 10), (255, 125, 10))
                             except:
                                 print "Could not read motor " + str(i) + " data: " + rec[i]
                     else:
@@ -427,12 +396,12 @@ while True:
 
     try:
         if got == 'TTT':                                                       #Prints out the Accelerometer data.
-            textdelete(200,170, str(ypr))
-            textdelete(200,190, str(yprraw))
+            UI.textdelete(200,170, str(ypr))
+            UI.textdelete(200,190, str(yprraw))
             yprraw = 'Y:' + str(round(yawr)) + ' P:' + str(round(pchr)) + ' R:' + str(round(rolr))
             ypr = 'Y:' + str(round(float(yaw))) + ' P:' + str(round(float(pch))) + ' R:' + str(round(float(rol)))
-            textwrite(200, 170, ypr, 10, 125, 10)
-            textwrite(200, 190, yprraw, 10, 125, 10)
+            UI.textwrite(200, 170, ypr, 10, 125, 10)
+            UI.textwrite(200, 190, yprraw, 10, 125, 10)
 
     except:
         print "Crashed while computing YPR data"
@@ -441,27 +410,25 @@ while True:
         img1pos = img1.get_rect()                  #Places down the artificial horizon background
         img1pos.centerx = 750
         img1pos.centery = 250 + (round(pchr * 5))
-        background.blit(img1, img1pos)
+        UI.blit(img1, img1pos)
 
         img2pos = img2.get_rect()                  #Places down the artificial horizon overlay
         img2pos.centerx = 750
         img2pos.centery = 250
-        background.blit(img2, img2pos)
+        UI.blit(img2, img2pos)
 
         img4 = pygame.transform.rotate(img3, round(rolr)) #Places down the artificial horizon marker
         img4pos = img4.get_rect()
         img4pos.centerx = 750
         img4pos.centery = 264
-        background.blit(img4, img4pos)
+        UI.blit(img4, img4pos)
 
     except:
         print "Crashed while loading AH images"
 
-    textwrite(140, 450, str(p_factor))
+    UI.textwrite(140, 450, str(p_factor))
 
-    pygame.display.update()                         #Updates display
+    UI.update()                         #Updates display
     sleep(0.01)                                     #Waits for 10ms
 
-    for event in pygame.event.get():                #It makes the UI quit if the X button is pressed
-        if event.type == QUIT:
-            quit()
+    UI.shouldQuit()

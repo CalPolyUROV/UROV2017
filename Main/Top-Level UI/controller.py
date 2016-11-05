@@ -3,14 +3,8 @@ __author__ = 'johna, tina and luca'
 from sfml.window import Joystick
 from sys import platform
 
-import pygame
-from pygame.locals import *
 import time
 
-
-deadZone = 15
-minValue = 0
-maxValue = 400 # higher gives more range of values however also adds more to send each time
 
 # These are there codes for the getButton command, you can just use the variables for readability
 A = 0
@@ -47,145 +41,97 @@ if platform == "linux" or platform == "linux2":
     R_JOYSTICK_CLICK = 10
     WIN_BUTTON = 8
 
-#loop to find the correct controller
-joystick = 0;
-foundController = False
+class Controller:
 
-pygame.init()
-screen = pygame.display.set_mode((1000, 500))
-pygame.display.set_caption("Cal Poly Control Center")
+    def __init__(self, UI):
+        self.Joystick = 0;
+        self.deadZone = 15
+        self.minValue = 0
+        self.maxValue = 400
+        foundController = False
+        UI.textwrite(500, 250, "Looking for controller, press A to choose the controller", 10, 10, 10, 50)
+        UI.update()
 
-background = pygame.Surface(screen.get_size())
-background = background.convert()
-background.fill((250, 250, 250))
+        while not foundController:
+            for i in range(0,5):
+                Joystick.update()
+                if Joystick.is_connected(i):
+                    Joystick.update()
+                    if Joystick.is_button_pressed(i, A):
+                        foundController = True
+                        self.joystick = i
+            UI.shouldQuit()
 
-writeonscreen = "Looking for controller, press A to chose the controller"
+        UI.textdelete(500, 250, "Looking for controller, press A to choose the controller", 50)
+        UI.textwrite(500, 250, "Found " + str(self.joystick), 10, 10, 10, 50)
+        UI.update()
+        time.sleep(2)
 
-font = pygame.font.Font(None, 50)
-text = font.render(writeonscreen, 1, (10, 10, 10))
-textpos = text.get_rect()
-textpos.centerx = background.get_rect().centerx
-textpos.centery = background.get_rect().centery
-background.blit(text, textpos)
+        UI.textdelete(500, 250, "Found " + str(self.joystick), 50)
 
-screen.blit(background, (0, 0))
+    # used inside the class, not necessary to call from outside this class, use the other calls
+    def getAxis(self, joyStickNumber, axis):
+        size = self.maxValue - self.minValue
+        return ((self.applyDeadZone(Joystick.get_axis_position(joyStickNumber, axis))/(100.0-self.deadZone)) * size) - self.minValue
 
-pygame.display.flip()
+    def getPrimaryX(self):
+        return self.getAxis(self.joystick, Joystick.X)
 
-def GUIrun():
-    background.blit(text, textpos)
+    def getPrimaryY(self):
+        return -self.getAxis(self.joystick, Joystick.Y)
 
-    screen.blit(background, (0, 0))
+    def getSecondaryX(self):
+        return self.getAxis(self.joystick, Joystick.U)
 
-    pygame.display.flip()
+    def getSecondaryY(self):
+        if platform == "linux" or platform == "linux2":
+            return -self.getAxis(self.joystick, Joystick.V)
+        return -self.getAxis(self.joystick, Joystick.R)
 
-    for event in pygame.event.get():
-        if event.type == QUIT:
-            quit()
+    def getTriggers(self):
+        if(platform == "linux" or platform == "linux2"):
+            value = self.getAxis(self.joystick, Joystick.Z)/2 - self.getAxis(self.joystick, Joystick.R)/2
+        else:
+            value = self.getAxis(self.joystick, Joystick.Z)
+        return value
 
-while not foundController:
-    GUIrun()
-    for i in range(0,5):
+    def isConnected(self):
+        return Joystick.is_connected(self.joystick)
+
+    def getButton(self, button):
+        return Joystick.is_button_pressed(self.joystick, button)
+
+    def getNumButtons(self):
+        return Joystick.get_button_count(self.joystick)
+
+    def update(self):
         Joystick.update()
-        if Joystick.is_connected(i):
-            Joystick.update()
-            if Joystick.is_button_pressed(i, A):
-                foundController = True
-                joystick = i
 
-writeonscreen = "Found controller " + str(i)
-background.fill((250, 250, 250))
-font = pygame.font.Font(None, 50)
-text = font.render(writeonscreen, 1, (10, 10, 10))
-textpos = text.get_rect()
-textpos.centerx = background.get_rect().centerx
-textpos.centery = background.get_rect().centery
+    def setDeadZone(self, value):
+        self.deadZone = value
 
-background.blit(text, textpos)
+    def getValueForButton(self, button):
+        return {
+            A:A_HEX,
+            B:B_HEX,
+            X: X_HEX,
+            Y: Y_HEX,
+            L_TRIGGER: L_TRIGGER_HEX,
+            R_TRIGGER: R_TRIGGER_HEX,
+            BACK: BACK_HEX,
+            START: START_HEX,
+            L_JOYSTICK_CLICK: L_JOYSTICK_CLICK_HEX,
+            R_JOYSTICK_CLICK: R_JOYSTICK_CLICK_HEX
+        }.get(button, 0)
 
-screen.blit(background, (0, 0))
-
-pygame.display.flip()
-
-writeonscreen = "Buttons: " + str(Joystick.get_button_count(i))
-font = pygame.font.Font(None, 50)
-text = font.render(writeonscreen, 1, (10, 10, 10))
-textpos = text.get_rect()
-textpos.centerx = background.get_rect().centerx
-textpos.centery = background.get_rect().centery + 50
-
-background.blit(text, textpos)
-
-screen.blit(background, (0, 0))
-
-pygame.display.flip()
-
-time.sleep(2)
-
-# used inside the class, not necessary to call from outside this class, use the other calls
-def getAxis(joyStickNumber, axis):
-    size = maxValue - minValue
-    return ((applyDeadZone(Joystick.get_axis_position(joyStickNumber, axis))/(100.0-deadZone)) * size) - minValue
-
-def getPrimaryX():
-    return getAxis(joystick, Joystick.X)
-
-def getPrimaryY():
-    return -getAxis(joystick, Joystick.Y)
-
-def getSecondaryX():
-    return getAxis(joystick, Joystick.U)
-
-def getSecondaryY():
-    if platform == "linux" or platform == "linux2":
-        return -getAxis(joystick, Joystick.V)
-    return -getAxis(joystick, Joystick.R)
-
-def getTriggers():
-    if(platform == "linux" or platform == "linux2"):
-        value = getAxis(joystick, Joystick.Z)/2 - getAxis(joystick, Joystick.R)/2
-    else:
-        value = getAxis(joystick, Joystick.Z)
-    return value
-
-def isConnected():
-    return Joystick.is_connected(joystick)
-
-def getButton(button):
-    return Joystick.is_button_pressed(joystick, button)
-
-def getNumButtons():
-    return Joystick.get_button_count(joystick)
-
-def update():
-    Joystick.update()
-
-def setDeadZone(value):
-    global deadZone
-    deadZone = value
-
-def getValueForButton(button):
-    return {
-        A:A_HEX,
-        B:B_HEX,
-        X: X_HEX,
-        Y: Y_HEX,
-        L_TRIGGER: L_TRIGGER_HEX,
-        R_TRIGGER: R_TRIGGER_HEX,
-        BACK: BACK_HEX,
-        START: START_HEX,
-        L_JOYSTICK_CLICK: L_JOYSTICK_CLICK_HEX,
-        R_JOYSTICK_CLICK: R_JOYSTICK_CLICK_HEX
-    }.get(button, 0)
-
-# This creates a dead zone to prevent situations where you are unable to stop the motors because of touchy input
-def applyDeadZone(value):
-    negative = False
-    if value <= 0:
-        negative = True
-    temp = abs(value)
-    temp -= deadZone
-    if temp <= 0:
-        temp = 0
-    return -temp if negative else temp
+    # This creates a dead zone to prevent situations where you are unable to stop the motors because of touchy input
+    def applyDeadZone(self, value):
+        negative = False
+        if value <= 0:
+            negative = True
+        temp = abs(value)
+        temp -= self.deadZone
+        if temp <= 0:
+            temp = 0
+        return -temp if negative else temp
 
