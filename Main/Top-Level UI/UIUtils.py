@@ -42,3 +42,8 @@ class UI:
     def drawRect(self, rect, color = (10, 10, 10), width = 0):
 
         pygame.draw.rect(self.background, color, rect, width)
+
+    def shouldQuit(self):
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                quit()

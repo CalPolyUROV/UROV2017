@@ -60,6 +60,7 @@ class Controller:
                     if Joystick.is_button_pressed(i, A):
                         foundController = True
                         self.joystick = i
+            UI.shouldQuit()
 
         UI.textdelete(500, 250, "Looking for controller, press A to choose the controller", 50)
         UI.textwrite(500, 250, "Found " + str(self.joystick), 10, 10, 10, 50)
