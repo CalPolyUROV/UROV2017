@@ -6,9 +6,6 @@ from UIUtils import *
 import pygame
 from pygame.locals import *
 from time import sleep
-from types import *
-
-import time
 
 from controller import *
 import serial_finder
@@ -60,13 +57,13 @@ no_serial = False
 #@param correction: A value to be removed from the data received before inputing it to the list
 def readOutput(L, rev, correction = 0):
 
-    if type(L) is not ListType:
+    if not isinstance(L, list):
         raise TypeError("Param 1 is not a list")
 
-    if type(correction) is not (IntType or FloatType or LongType):
+    if not (isinstance(correction, int) or isinstance(correction, float) or isinstance(correction, long)):
         raise TypeError("Param 3 is not a number")
 
-    if type(rev) is not StringType:
+    if not isinstance(rev, str):
         raise TypeError("Param 2 is not a string")
 
     try:
@@ -84,7 +81,7 @@ def readOutput(L, rev, correction = 0):
         return False
 
 def filterYPR(L, YPRR):
-    if type(L) is not ListType:
+    if not isinstance(L, list):
         raise TypeError("Param 1 is not a list")
 
     try:
@@ -118,10 +115,7 @@ UI.update()                         #Updates display
 
 while(len(ports) == 0):
     ports = serial_finder.serial_ports()
-
-    for event in pygame.event.get():
-        if event.type == QUIT:
-            quit()
+    UI.shouldQuit()
 
 UI.textdelete(500, 250, "Please connect the serial device", 50)
 UI.textwrite(75, 10, "Possible ports: ")
@@ -437,6 +431,4 @@ while True:
     UI.update()                         #Updates display
     sleep(0.01)                                     #Waits for 10ms
 
-    for event in pygame.event.get():                #It makes the UI quit if the X button is pressed
-        if event.type == QUIT:
-            quit()
+    UI.shouldQuit()
