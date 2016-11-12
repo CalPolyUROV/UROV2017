@@ -37,13 +37,6 @@ void loop() {
   Serial.print(event.orientation.y, 4);
   Serial.print("\tRoll: ");
   Serial.print(event.orientation.z, 4);
-  //  //display the data
-  //  Serial.print("Yaw: ");
-  //  Serial.print(event.orientation.x, 4);
-  //  Serial.print("\tPitch: ");
-  //  Serial.print(event.orientation.y, 4);
-  //  Serial.print("\tRoll: ");
-  //  Serial.print(event.orientation.z, 4);
 
   //get the accelerometer vector as raw data
   imu::Vector<3> linearacc = bno.getVector(Adafruit_BNO055::VECTOR_LINEARACCEL);
