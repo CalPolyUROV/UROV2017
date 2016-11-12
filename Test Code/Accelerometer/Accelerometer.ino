@@ -45,6 +45,17 @@ void loop() {
   //  Serial.print("\tRoll: ");
   //  Serial.print(event.orientation.z, 4);
 
+  //get the accelerometer vector as raw data
+  imu::Vector<3> linearacc = bno.getVector(Adafruit_BNO055::VECTOR_LINEARACCEL);
+
+  Serial.print("\tAccel X: ");
+  Serial.print(linearacc[0], 4);
+  Serial.print("\tAccel Y: ");
+  Serial.print(linearacc[1], 4);
+  Serial.print("\tAccel Z: ");
+  Serial.print(linearacc[2], 4);
+  delay(50);
+
   //next line
   Serial.println("");
 
