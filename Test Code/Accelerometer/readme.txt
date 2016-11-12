@@ -2,6 +2,7 @@ BNO055  9 Axis Abs. Orientation
 3 Axis Accel+Gyro+Mag w/ Quaternion, Euller Heading, etc. I2C out
 
 Data sheets:
+https://cdn-shop.adafruit.com/datasheets/BST_BNO055_DS000_12.pdf
 http://www.mouser.com/new/bosch-sensortec/bosch-bno55-sensor/
 http://www.mouser.com/ds/2/621/BST_BNO055_DS000_10_Release-371197.pdf
 
