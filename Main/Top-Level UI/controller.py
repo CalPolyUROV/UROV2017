@@ -49,7 +49,7 @@ class Controller:
         self.minValue = 0
         self.maxValue = 400
         foundController = False
-        UI.textwrite(500, 250, "Looking for controller, press A to choose the controller", 10, 10, 10, 50)
+        UI.textwrite(50, 250, "Looking for controller, press A to choose the controller", 10, 10, 10, 50)
         UI.update()
 
         while not foundController:
@@ -62,12 +62,12 @@ class Controller:
                         self.joystick = i
             UI.shouldQuit()
 
-        UI.textdelete(500, 250, "Looking for controller, press A to choose the controller", 50)
-        UI.textwrite(500, 250, "Found " + str(self.joystick), 10, 10, 10, 50)
+        UI.textdelete(50, 250, "Looking for controller, press A to choose the controller", 50)
+        UI.textwrite(450, 250, "Found " + str(self.joystick), 10, 10, 10, 50)
         UI.update()
         time.sleep(2)
 
-        UI.textdelete(500, 250, "Found " + str(self.joystick), 50)
+        UI.textdelete(450, 250, "Found " + str(self.joystick), 50)
 
     # used inside the class, not necessary to call from outside this class, use the other calls
     def getAxis(self, joyStickNumber, axis):

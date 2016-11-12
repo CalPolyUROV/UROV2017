@@ -1,6 +1,8 @@
 import pygame
 from pygame.locals import *
 
+__author__ = "Luca"
+
 class UI:
     def __init__(self):
         pygame.init()                                           #initializes the UI
@@ -20,8 +22,8 @@ class UI:
         font = pygame.font.Font(None, size)
         text = font.render(Text, 0, (r, g, b))
         textpos = text.get_rect()
-        textpos.centerx = Positionx
-        textpos.centery = Positiony
+        textpos.x = Positionx
+        textpos.y = Positiony
         self.background.blit(text, textpos)
         self.screen.blit(self.background, (0, 0))
 
@@ -30,8 +32,8 @@ class UI:
         font = pygame.font.Font(None, size)
         text = font.render(Text, 0, (255, 255, 255))
         textpos = text.get_rect()
-        textpos.centerx = Positionx
-        textpos.centery = Positiony
+        textpos.x = Positionx
+        textpos.y = Positiony
         self.background.blit(text, textpos)
         self.screen.blit(self.background, (0, 0))
 
