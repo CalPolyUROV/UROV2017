@@ -7,10 +7,10 @@
 Adafruit_BNO055 bno = Adafruit_BNO055(55);
 
 // initialize arrays to store velocity and position in
-int orientation[3];
-int accel[3];
-int velocity[3] = {0, 0, 0};
-int position[3] = {0, 0, 0};
+float orientation[3];
+float accel[3];
+float velocity[3] = {0, 0, 0};
+float position[3] = {0, 0, 0};
 
 //initialize time keeping variables
 unsigned long loop_start_time;
