@@ -80,8 +80,6 @@ dataObjs = [DataHandling(UI, "PSR", "Pressure", "mbars", 90),
 
 AH = AH(dataObjs, UI)
 
-
-
 UI.update()
 
 while True:
