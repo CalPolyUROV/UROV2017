@@ -18,6 +18,7 @@ float elapsed_time_factor;
 int current_time;
 int previous_time = 0;
 
+int print_index = 0;
 float filter_value = 0.2;
 
 void setup() {
@@ -39,7 +40,7 @@ void setup() {
 }
 
 void serial_print(float data_array[], String name) {
-  //display the data
+
   Serial.print("\t" + name + " X: ");
   Serial.print(data_array[0], 2);
   Serial.print("\t" + name + " Y: ");
@@ -65,13 +66,7 @@ void loop() {
   orientation[1] = event.orientation.y;
   orientation[2] = event.orientation.z;
 
-  //display the data
-  //  Serial.print("Yaw: ");
-  //  Serial.print(orientation[0], 4);
-  //  Serial.print("\tPitch: ");
-  //  Serial.print(orientation[1], 4);
-  //  Serial.print("\tRoll: ");
-  //  Serial.print(orientation[2], 4);
+
 
   //get the accelerometer vector as raw data
   imu::Vector<3> linearacc = bno.getVector(Adafruit_BNO055::VECTOR_LINEARACCEL);
@@ -79,7 +74,6 @@ void loop() {
   accel[1] = filter_accel(linearacc[1]);
   accel[2] = filter_accel(linearacc[2]);
 
-  serial_print(accel, "Accel");
 
   current_time = millis();
   elapsed_time_factor = ( current_time - previous_time) / 1000.0;
@@ -99,14 +93,28 @@ void loop() {
   velocity[1] = velocity[1] + (accel[1] * elapsed_time_factor);
   velocity[2] = velocity[2] + (accel[2] * elapsed_time_factor);
 
+  if (print_index == 20) {
 
-  serial_print(velocity, "Velocity");
-  //serial_print(position, "Position");
 
+    //display the data
+    Serial.print("\tYaw: ");
+    Serial.print(orientation[0], 4);
+    Serial.print("\tPitch: ");
+    Serial.print(orientation[1], 4);
+    Serial.print("\tRoll: ");
+    Serial.print(orientation[2], 4);
+
+    serial_print(accel, "Accel");
+    // serial_print(velocity, "Velocity");
+    // serial_print(position, "Position");
+ delay(100);
+    print_index = 0;
+  }
   previous_time = current_time;
-  delay(50);
+  //delay(50);
 
   //next line
   Serial.println("");
 
+  print_index++;
 }
