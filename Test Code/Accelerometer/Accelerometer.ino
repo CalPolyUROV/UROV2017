@@ -28,6 +28,16 @@ void setup() {
   bno.setExtCrystalUse(true);
 }
 
+void serial_print(int data_array[], String name) {
+  //display the data
+  Serial.print(name + "X: ");
+  Serial.print(data_array[0], 4);
+  Serial.print("\t" + name + " Y: ");
+  Serial.print(data_array[1], 4);
+  Serial.print("\t" + name + " z: ");
+  Serial.print(data_array[2], 4);
+}
+
 void loop() {
 
   loop_start_time = millis();
@@ -53,6 +63,9 @@ void loop() {
   Serial.print(linearacc[1], 4);
   Serial.print("\tAccel Z: ");
   Serial.print(linearacc[2], 4);
+
+  serial_print(accel, "Accel");
+
   delay(50);
   elapsed_time_factor = (millis() - loop_start_time) / 1000;
   //will glitch out every five days due to overflow, this will break everything
