@@ -36,12 +36,12 @@ void setup() {
 
 void serial_print(float data_array[], String name) {
   //display the data
-  Serial.print(name + "X: ");
-  Serial.print(data_array[0], 4);
+  Serial.print("\t" + name + " X: ");
+  Serial.print(data_array[0], 2);
   Serial.print("\t" + name + " Y: ");
-  Serial.print(data_array[1], 4);
+  Serial.print(data_array[1], 2);
   Serial.print("\t" + name + " z: ");
-  Serial.print(data_array[2], 4);
+  Serial.print(data_array[2], 2);
 }
 
 void loop() {
