@@ -86,6 +86,9 @@ void loop() {
   position[1] = position[1] + (velocity[1] * elapsed_time_factor);
   position[2] = position[2] + (velocity[2] * elapsed_time_factor);
 
+  serial_print(velocity, "Velocity");
+  serial_print(position, "Position");
+
   //next line
   Serial.println("");
 
