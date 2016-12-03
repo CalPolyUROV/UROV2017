@@ -43,6 +43,11 @@ if platform == "linux" or platform == "linux2":
 
 class Controller:
 
+    #initializes the Controller Object
+
+    #UI:        The UI it is going to use.
+
+    #@retval: None
     def __init__(self, UI):
         self.Joystick = 0;
         self.deadZone = 15

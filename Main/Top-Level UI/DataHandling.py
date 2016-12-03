@@ -6,7 +6,18 @@ DEBUG_LABEL = "STS"
 
 class DataHandling(object):
 
-    def __init__(self, UI, label, tytle, unit, posY, posX = 0,size = 3):
+    #Initializes the object DataHandling
+
+    #UI:                The UI Object which it is going to write on.
+    #label(String):     The label used on the srail transmissions.
+    #tytle(String):     The tytle of object that is going to be writen on screen.
+    #unit(String):      The unit of the data been received.
+    #posY(num):         The Y position of the text on screen.
+    #posX(num):         The X position of the text on screen. Default = 0.
+    #size(num):         The size of the filter to be used when calculating the data. Default = 3.
+
+    #@retval: None
+    def __init__(self, UI, label, tytle, unit, posY, posX = 0, size = 3):
         if not isinstance(label, str):
             raise TypeError("Param 2 is not a string")
 
@@ -38,9 +49,17 @@ class DataHandling(object):
 
         self.UI.textwrite(self.tytlePosX, self.posY, self.tytle + ": ")
 
+    #filter the data on the filter and stores it in self.filtered
+
+    #@retval: None
     def filterData(self):
         self.filtered = round(sum(self.data)/len(self.data), 2)
 
+    #updates the DataHandling object
+
+    #rev:       The string received from the serial port
+
+    #@retval: None
     def update(self, rev):
         try:
             index = len(self.data) - 1
@@ -66,6 +85,9 @@ class DataHandling(object):
             print "Could not read " + self.tytle + " data"
             return False
 
+    #Writes the old data in red if it wasn't updated
+
+    #@retval: None
     def writeOldData(self):
         if self.wasUpdated or not self.wasUpdatedBefore:
             return
@@ -75,6 +97,9 @@ class DataHandling(object):
 
 class YPRHandling(DataHandling):
 
+    #filter the data on the filter and stores it in self.filtered
+
+    #@retval: None
     def filterData(self):
         if abs(self.data[0] - self.data[len(self.data) - 1]) <= 5:      #Filters the noise in the data.
             max = len(self.data)
@@ -89,6 +114,11 @@ class YPRHandling(DataHandling):
             i += 1
         self.filtered = total / float(i)
 
+#finds a DataHandling object in a list and returns it.
+
+#@retval: DataHandling Object
+
+#LookupError returns: None
 def getDataObj(L, lable):
 
     if not isinstance(L, list):
@@ -102,4 +132,4 @@ def getDataObj(L, lable):
             if Object.lable == lable:
                 return Object
 
-    raise LookupError("No such element with label: " + lable)
+    return None

@@ -4,6 +4,9 @@ from pygame.locals import *
 __author__ = "Luca"
 
 class UI:
+    #Initialization function of the clas UI
+
+    #@retval: None
     def __init__(self):
         pygame.init()                                           #initializes the UI
         self.screen = pygame.display.set_mode((1000, 500))
@@ -14,9 +17,23 @@ class UI:
         self.background.fill((255, 255, 255))
         self.update()
 
+    #Updates the UI elements
+
+    #@retval: None
     def update(self):
         pygame.display.update()
 
+    #Adds a string to the screen. The function "update" needs to be called so it appears.
+
+    #Positionx:     The X coordinate of the left most letter of the string
+    #Positiony:     The Y coordinate of the left most letter of the string
+    #Text:          The string to be written on the screen
+    #r:             The color of the string in red. Range 0-255. Default = 10.
+    #g:             The color of the string in green. Range 0-255. Default = 10.
+    #b:             The color of the string in blue. Range 0-255. Default = 10.
+    #size           The size of the string. Default = 25.
+
+    #@retval: None
     def textwrite(self, Positionx, Positiony, Text, r = 10, g = 10 , b = 10, size = 25): #Function that write on screen Strings.
 
         font = pygame.font.Font(None, size)
@@ -27,6 +44,14 @@ class UI:
         self.background.blit(text, textpos)
         self.screen.blit(self.background, (0, 0))
 
+    #Deletes a String on the screen
+
+    #Positionx:     The X coordinate of the left most letter of the string
+    #Positiony:     The Y coordinate of the left most letter of the string
+    #Text:          The string to be written on the screen
+    #size           The size of the string. Default = 25.
+
+    #@retval: None
     def textdelete(self, Positionx, Positiony, Text, size = 25):                 #Function that deletes strings
 
         font = pygame.font.Font(None, size)
@@ -37,14 +62,30 @@ class UI:
         self.background.blit(text, textpos)
         self.screen.blit(self.background, (0, 0))
 
+    #Adds an object to the background but it does not update it.
+
+    #obj:       The object to be added
+    #objpos:    The object position in the format (X,Y).
+
+    #@retval: None
     def blit(self, obj, objPos):
 
         self.background.blit(obj, objPos)
 
+    #Draws a rectangle on the screen
+
+    #rect:          The rectangle object in the format (left, top, width, height).
+    #color:         The color of the rectangle in RGB standard. Default = (10,10,10).
+    #width:         The width of the rectangle. If 0, it gets completly filled. Default = 0.
+
+    #@retval: None
     def drawRect(self, rect, color = (10, 10, 10), width = 0):
 
         pygame.draw.rect(self.background, color, rect, width)
 
+    #Checks if the X button was clicked and if it was it quits the program.
+
+    #@retval: None
     def shouldQuit(self):
         for event in pygame.event.get():
             if event.type == QUIT:

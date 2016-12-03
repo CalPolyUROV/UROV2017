@@ -15,6 +15,12 @@ Y_CONST = 20
 
 class AH:
 
+    #initializes the artificial horizon
+
+    #dataObjs(list):      A list containing the YPRHandling objects for yaw pitch and roll.
+    #UI:                  The UI which it is going to use.
+
+    #@retval: None
     def __init__(self, dataObjs, UI):
 
         if not isinstance(dataObjs, list):
@@ -30,6 +36,9 @@ class AH:
         self.pch = getDataObj(dataObjs, "PCH")
         self.rol = getDataObj(dataObjs, "ROL")
 
+        if(self.yaw == None or self.pch == None or self.pch == None):
+            raise LookupError("Could not find objects for yaw, pitch or roll")
+
         self.yawOffset = 0
         self.pchOffset = 0
         self.rolOffset = 0
@@ -41,18 +50,27 @@ class AH:
         self.writeOffset()
         self.update()
 
+    #writes the offset data on screen just under the YPR data
+
+    #@retval: None
     def writeOffset(self):
 
         self.UI.textwrite(self.yaw.tytlePosX + X_CONST, self.yaw.posY + Y_CONST, str(self.yawOffset))
         self.UI.textwrite(self.pch.tytlePosX + X_CONST, self.pch.posY + Y_CONST, str(self.pchOffset))
         self.UI.textwrite(self.rol.tytlePosX + X_CONST, self.rol.posY + Y_CONST, str(self.rolOffset))
 
+    #deletes the offset data on screen
+
+    #@retval: None
     def deleteOffset(self):
 
         self.UI.textdelete(self.yaw.tytlePosX + X_CONST, self.yaw.posY + Y_CONST, str(self.yawOffset))
         self.UI.textdelete(self.pch.tytlePosX + X_CONST, self.pch.posY + Y_CONST, str(self.pchOffset))
         self.UI.textdelete(self.rol.tytlePosX + X_CONST, self.rol.posY + Y_CONST, str(self.rolOffset))
 
+    #Updates the artificial horizon.
+
+    #@retval: None
     def update(self):
         try:
             for event in pygame.event.get(pygame.KEYDOWN):
