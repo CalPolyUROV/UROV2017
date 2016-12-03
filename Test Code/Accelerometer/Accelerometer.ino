@@ -73,10 +73,9 @@ void loop() {
 
   //get the accelerometer vector as raw data
   imu::Vector<3> linearacc = bno.getVector(Adafruit_BNO055::VECTOR_LINEARACCEL);
-  accel[0] = linearacc[0];
-  accel[1] = linearacc[1];
-  accel[2] = linearacc[2];
-
+  accel[0] = filter_accel(linearacc[0]);
+  accel[1] = filter_accel(linearacc[1]);
+  accel[2] = filter_accel(linearacc[2]);
 
   serial_print(accel, "Accel");
 
