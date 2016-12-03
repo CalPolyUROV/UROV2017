@@ -14,7 +14,7 @@ float position[3] = {0, 0, 0};
 
 //initialize time keeping variables
 unsigned long loop_start_time;
-unsigned long elapsed_time_factor;
+float elapsed_time_factor;
 
 void setup() {
   Serial.begin(9600);
