@@ -6,6 +6,12 @@
 //create the instance of the sensor
 Adafruit_BNO055 bno = Adafruit_BNO055(55);
 
+// initialize arrays to store velocity and position in
+int orientation[3];
+int accel[3];
+int velocity[3] = {0, 0, 0};
+int position[3] = {0, 0, 0};
+
 //initialize time keeping variables
 unsigned long loop_start_time;
 unsigned long elapsed_time_factor;
@@ -46,23 +52,30 @@ void loop() {
   sensors_event_t event;
   bno.getEvent(&event);
 
+  orientation[0] = event.orientation.x;
+  orientation[1] = event.orientation.y;
+  orientation[2] = event.orientation.z;
+
   //display the data
   Serial.print("Yaw: ");
-  Serial.print(event.orientation.x, 4);
+  Serial.print(orientation[0], 4);
   Serial.print("\tPitch: ");
-  Serial.print(event.orientation.y, 4);
+  Serial.print(orientation[1], 4);
   Serial.print("\tRoll: ");
-  Serial.print(event.orientation.z, 4);
+  Serial.print(orientation[2], 4);
 
   //get the accelerometer vector as raw data
   imu::Vector<3> linearacc = bno.getVector(Adafruit_BNO055::VECTOR_LINEARACCEL);
+  accel[0] = linearacc[0];
+  accel[1] = linearacc[1];
+  accel[2] = linearacc[2];
 
   Serial.print("\tAccel X: ");
-  Serial.print(linearacc[0], 4);
+  Serial.print(accel[0], 4);
   Serial.print("\tAccel Y: ");
-  Serial.print(linearacc[1], 4);
+  Serial.print(accel[1], 4);
   Serial.print("\tAccel Z: ");
-  Serial.print(linearacc[2], 4);
+  Serial.print(accel[2], 4);
 
   serial_print(accel, "Accel");
 
