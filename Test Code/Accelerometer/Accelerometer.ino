@@ -79,23 +79,30 @@ void loop() {
 
   serial_print(accel, "Accel");
 
-  delay(50);
-  elapsed_time_factor = ((millis() - loop_start_time) / 1000.0);
+  current_time = millis();
+  elapsed_time_factor = ( current_time - previous_time) / 1000.0;
   //will glitch out every five days due to overflow, this will break everything
   //andrew's fix was to check if the later was greater
 
+
+
   Serial.print("\t Elapsed time: ");
-  Serial.print(elapsed_time_factor);
-  velocity[0] = velocity[0] + (accel[0] * elapsed_time_factor);
-  velocity[1] = velocity[1] + (accel[1] * elapsed_time_factor);
-  velocity[2] = velocity[2] + (accel[2] * elapsed_time_factor);
+  Serial.print(current_time - previous_time);
+
   position[0] = position[0] + (velocity[0] * elapsed_time_factor);
   position[1] = position[1] + (velocity[1] * elapsed_time_factor);
   position[2] = position[2] + (velocity[2] * elapsed_time_factor);
 
+  velocity[0] = velocity[0] + (accel[0] * elapsed_time_factor);
+  velocity[1] = velocity[1] + (accel[1] * elapsed_time_factor);
+  velocity[2] = velocity[2] + (accel[2] * elapsed_time_factor);
+
+
   serial_print(velocity, "Velocity");
-  serial_print(position, "Position");
   //serial_print(position, "Position");
+
+  previous_time = current_time;
+  delay(50);
 
   //next line
   Serial.println("");
