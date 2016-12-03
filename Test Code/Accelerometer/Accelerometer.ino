@@ -76,6 +76,7 @@ void loop() {
   delay(50);
   elapsed_time_factor = ((millis() - loop_start_time) / 1000.0);
   //will glitch out every five days due to overflow, this will break everything
+  //andrew's fix was to check if the later was greater
 
   Serial.print("\t Elapsed time: ");
   Serial.print(elapsed_time_factor);
