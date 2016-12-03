@@ -28,7 +28,7 @@ void setup() {
     //its broken
     Serial.print("It's broken, check the wiring");
   }
-  delay(1000);
+  delay(50);
 
   //use for better low power timing?
   bno.setExtCrystalUse(true);
