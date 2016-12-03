@@ -83,6 +83,13 @@ void loop() {
   elapsed_time_factor = (millis() - loop_start_time) / 1000;
   //will glitch out every five days due to overflow, this will break everything
 
+  velocity[0] = velocity[0] + (accel[0] * elapsed_time_factor);
+  velocity[1] = velocity[1] + (accel[1] * elapsed_time_factor);
+  velocity[2] = velocity[2] + (accel[2] * elapsed_time_factor);
+  position[0] = position[0] + (velocity[0] * elapsed_time_factor);
+  position[1] = position[1] + (velocity[1] * elapsed_time_factor);
+  position[2] = position[2] + (velocity[2] * elapsed_time_factor);
+
   //next line
   Serial.println("");
 
