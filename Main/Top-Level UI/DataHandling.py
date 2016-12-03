@@ -1,6 +1,9 @@
 __author__ = "Luca"
 
-CHAR_SIZE = 5
+CHAR_SIZE = 10
+MOT_MEDIUM = 30
+MOT_HIGH = 60
+MOT_CONST = 2
 
 DEBUG_LABEL = "STS"
 
@@ -59,7 +62,9 @@ class DataHandling(object):
 
     #rev:       The string received from the serial port
 
-    #@retval: None
+    #@retval: Error code
+    #success: True
+    #error: False
     def update(self, rev):
         try:
             index = len(self.data) - 1
@@ -69,12 +74,12 @@ class DataHandling(object):
             self.data[0] = float(rev)
 
             textDelete = str(self.filtered) + " " + self.unit
-            self.UI.textDelete(self.tytlePosX + (len(self.tytle) + len(textDelete)) * CHAR_SIZE + 10, self.posY, textDelete)
+            self.UI.textDelete(self.tytlePosX + (len(self.tytle)) * CHAR_SIZE + 10, self.posY, textDelete)
 
             self.filterData()
 
             textWrite = str(self.filtered) + " " + self.unit
-            self.UI.textwrite(self.tytlePosX + (len(self.tytle) + len(textWrite)) * CHAR_SIZE + 10, self.posY, textWrite, 10, 125, 10)
+            self.UI.textwrite(self.tytlePosX + (len(self.tytle)) * CHAR_SIZE + 10, self.posY, textWrite, 10, 125, 10)
 
             self.wasUpdated = True
             self.wasUpdatedBefore = True
@@ -82,7 +87,7 @@ class DataHandling(object):
             return True
 
         except:
-            print "Could not read " + self.tytle + " data"
+            print "Could not read " + self.tytle + " data: " + rev
             return False
 
     #Writes the old data in red if it wasn't updated
@@ -93,7 +98,70 @@ class DataHandling(object):
             return
         self.wasUpdatedBefore = False
         textWrite = str(self.filtered) + " " + self.unit
-        self.UI.textwrite(self.tytlePosX + (len(self.tytle) + len(textWrite)) * CHAR_SIZE + 10, self.posY, textWrite, 255, 10, 10)
+        self.UI.textwrite(self.tytlePosX + (len(self.tytle)) * CHAR_SIZE + 10, self.posY, textWrite, 255, 10, 10)
+
+class MotHandling(DataHandling):
+
+    #updates the DataHandling object
+
+    #rev:       The string received from the serial port
+
+    #@retval: Error code
+    #success: True
+    #error: False
+    def update(self, rev):
+        try:
+            index = len(self.data) - 1
+            while index > 0:
+                self.data[index] = self.data[index - 1]
+                index -= 1
+            self.data[0] = float(rev)
+
+            textDelete = str(self.filtered) + " " + self.unit
+            self.UI.textDelete(self.tytlePosX + (len(self.tytle)) * CHAR_SIZE + 10, self.posY, textDelete)
+
+            self.filterData()
+
+            if(self.filtered < MOT_MEDIUM):
+                R = 10
+                G = 125
+                B = 10
+            elif(self.filtered > MOT_MEDIUM and self.filtered < MOT_HIGH):
+                R = 255
+                G = 255
+                B = 10
+            else:
+                R = 255
+                G = 140
+                B = 10
+
+            textWrite = str(self.filtered) + " " + self.unit
+
+            xpos = self.tytlePosX + (len(self.tytle)) * CHAR_SIZE + 10
+            self.UI.textwrite(xpos, self.posY, textWrite, R, G, B)
+            self.UI.drawRect((xpos + len(textWrite) * CHAR_SIZE + 10, self.posY + 3, round(self.filtered * MOT_CONST), 10), (R,G,B))
+
+            self.wasUpdated = True
+            self.wasUpdatedBefore = True
+
+            return True
+
+        except:
+            print "Could not read " + self.tytle + " data: " + rev
+            return False
+
+    #Writes the old data in red if it wasn't updated
+
+    #@retval: None
+    def writeOldData(self):
+        if self.wasUpdated or not self.wasUpdatedBefore:
+            return
+        self.wasUpdatedBefore = False
+
+        textWrite = str(self.filtered) + " " + self.unit
+        xpos = self.tytlePosX + (len(self.tytle)) * CHAR_SIZE + 10
+        self.UI.textwrite(xpos, self.posY, textWrite, 255, 10, 10)
+        self.UI.drawRect((xpos + len(textWrite) * CHAR_SIZE + 10, self.posY + 3, round(self.filtered * MOT_CONST), 10), (255,10,10))
 
 class YPRHandling(DataHandling):
 
@@ -128,7 +196,7 @@ def getDataObj(L, lable):
         raise TypeError("Param 2 is not a string")
 
     for Object in L:
-        if type(Object) is DataHandling or type(Object) is YPRHandling:
+        if type(Object) is DataHandling or type(Object) is YPRHandling or type(Object) is MotHandling:
             if Object.lable == lable:
                 return Object
 
