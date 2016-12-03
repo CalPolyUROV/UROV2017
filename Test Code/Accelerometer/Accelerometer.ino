@@ -95,6 +95,7 @@ void loop() {
 
   serial_print(velocity, "Velocity");
   serial_print(position, "Position");
+  //serial_print(position, "Position");
 
   //next line
   Serial.println("");
