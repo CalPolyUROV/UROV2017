@@ -70,12 +70,6 @@ void loop() {
   accel[1] = linearacc[1];
   accel[2] = linearacc[2];
 
-  Serial.print("\tAccel X: ");
-  Serial.print(accel[0], 4);
-  Serial.print("\tAccel Y: ");
-  Serial.print(accel[1], 4);
-  Serial.print("\tAccel Z: ");
-  Serial.print(accel[2], 4);
 
   serial_print(accel, "Accel");
 
