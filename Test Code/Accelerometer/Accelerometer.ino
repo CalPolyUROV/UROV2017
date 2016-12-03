@@ -46,9 +46,14 @@ void serial_print(float data_array[], String name) {
   Serial.print(data_array[2], 2);
 }
 
-void loop() {
+float filter_accel(float value) {
+  if (value > -0.1 && value < 0.1) {
+    return 0;
+  }
+  return value;
+}
 
-  loop_start_time = millis();
+void loop() {
 
   //get the orrientation sensor event
   sensors_event_t event;
