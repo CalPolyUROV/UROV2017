@@ -34,7 +34,7 @@ void setup() {
   bno.setExtCrystalUse(true);
 }
 
-void serial_print(int data_array[], String name) {
+void serial_print(float data_array[], String name) {
   //display the data
   Serial.print(name + "X: ");
   Serial.print(data_array[0], 4);
