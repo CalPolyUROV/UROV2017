@@ -47,6 +47,8 @@ void serial_print(float data_array[], String name) {
   Serial.print(data_array[1], 2);
   Serial.print("\t" + name + " z: ");
   Serial.print(data_array[2], 2);
+
+
 }
 
 float filter_accel(float value) {
@@ -70,17 +72,14 @@ void loop() {
 
   //get the accelerometer vector as raw data
   imu::Vector<3> linearacc = bno.getVector(Adafruit_BNO055::VECTOR_LINEARACCEL);
-  accel[0] = filter_accel(linearacc[0]);
-  accel[1] = filter_accel(linearacc[1]);
-  accel[2] = filter_accel(linearacc[2]);
-
+  accel[0] = filter_accel(linearacc[0]) * cos(orientation[0] * PI / 180) + sin(orientation[0] * PI / 180);
+  accel[1] = filter_accel(linearacc[1]) * cos(orientation[0] * PI / 180) + sin(orientation[0] * PI / 180);
+  accel[2] = filter_accel(linearacc[2]) * cos(orientation[2] * PI / 180);
 
   current_time = millis();
   elapsed_time_factor = ( current_time - previous_time) / 1000.0;
   //will glitch out every five days due to overflow, this will break everything
   //andrew's fix was to check if the later was greater
-
-
 
   Serial.print("\t Elapsed time: ");
   Serial.print(current_time - previous_time);
@@ -115,6 +114,5 @@ void loop() {
 
   //next line
   Serial.println("");
-
   print_index++;
 }
