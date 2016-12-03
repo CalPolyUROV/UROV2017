@@ -6,6 +6,10 @@
 //create the instance of the sensor
 Adafruit_BNO055 bno = Adafruit_BNO055(55);
 
+//initialize time keeping variables
+unsigned long loop_start_time;
+unsigned long elapsed_time_factor;
+
 void setup() {
   Serial.begin(9600);
   Serial.println("Testing Orientation and Acceleration Sensor");
@@ -25,6 +29,8 @@ void setup() {
 }
 
 void loop() {
+
+  loop_start_time = millis();
 
   //get the orrientation sensor event
   sensors_event_t event;
@@ -48,6 +54,8 @@ void loop() {
   Serial.print("\tAccel Z: ");
   Serial.print(linearacc[2], 4);
   delay(50);
+  elapsed_time_factor = (millis() - loop_start_time) / 1000;
+  //will glitch out every five days due to overflow, this will break everything
 
   //next line
   Serial.println("");
