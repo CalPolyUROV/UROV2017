@@ -1,0 +1,27 @@
+UROV Features
+- Comms (RS485), i2c, spix2
+- G-8 Thrusters
+- 4-6 Accel Cameras (and switching)
+- temperature(external) and pressure monitors
+- temperature(internal) and power monitoring
+- 1 servo (purpose?)
+- 2 stepper motors (purpose?)
+- 3 LED strips (underglow/indication)
+- 2-3 spot lights
+- RFID?
+- remote camera
+- 2 DC motors
+
+EE/CP
+- Custom PCBs
+- half size
+- Additiional sensors
+- connections
+- test points
+
+SE
+1. Fix/improve Serial Finder
+2. Add P.I.D. Altitude holder
+3. Add record and playback system
+4. (maybe) Tranforms analog video to digital and overlay A.H.
+5. (maybe) Port UI to Raspberry Pi
