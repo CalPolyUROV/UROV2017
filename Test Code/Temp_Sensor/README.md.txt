@@ -1,0 +1,2 @@
+This is the code to run and read temperature from the DS18B20 sensor and returns it in Fahrenheit. It uses the OneWire Library 
+and takes about ~750ms to update. A 4.7K pull-up resistor is required at the Data pin.
