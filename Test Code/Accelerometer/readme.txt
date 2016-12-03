@@ -17,3 +17,10 @@ GND: The common/GND pin for power and logic
 I2C Pins
 SCL - I2C clock pin, connect to your microcontrollers I2C clock line. This pin can be used with 3V or 5V logic, and there's a 10K pullup on this pin.
 SDA - I2C data pin, connect to your microcontrollers I2C data line. This pin can be used with 3V or 5V logic, and there's a 10K pullup on this pin.
+
+Current pin setup:
+BNO055	Wire	UNO
+Vin		blue	3.3v
+GND		orange	GND
+SDA		yellow	A4
+SCL		brown 	A5
