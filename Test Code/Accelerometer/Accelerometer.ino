@@ -24,7 +24,6 @@ int current_time;
 int previous_time = 0;
 
 int print_index = 0;
-float filter_value = 0.2;
 
 void setup() {
   Serial.begin(9600);
@@ -56,9 +55,6 @@ void serial_print(float data_array[], String name) {
 
 }
 
-float filter_accel(float value) {
-  if (value > (-1 * filter_value) && value < filter_value) {
-    return 0;
   }
   return value;
 }
