@@ -6,6 +6,8 @@
 //create the instance of the sensor
 Adafruit_BNO055 bno = Adafruit_BNO055(55);
 
+sensors_event_t event;
+
 // initialize arrays to store velocity and position in
 float orientation[3];
 float accel[3];
@@ -61,7 +63,6 @@ float filter_accel(float value) {
 void loop() {
 
   //get the orrientation sensor event
-  sensors_event_t event;
   bno.getEvent(&event);
 
   orientation[0] = event.orientation.x;
