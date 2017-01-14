@@ -39,7 +39,7 @@ void setup() {
     //its broken
     Serial.print("It's broken, check the wiring");
   }
-  
+
   //use for better low power timing?
   bno.setExtCrystalUse(true);
 }
@@ -102,8 +102,8 @@ void loop() {
   velocity[1] = velocity[1] + (accel[1] * elapsed_time_factor);
   velocity[2] = velocity[2] + (accel[2] * elapsed_time_factor);
 
-  Serial.print("\t Elapsed time: ");
-  Serial.print(current_time - previous_time);
+  //  Serial.print("\t Elapsed time: ");
+  // Serial.print(current_time - previous_time);
 
   if (print_index == 20) {
     //display the data
@@ -119,11 +119,14 @@ void loop() {
     // serial_print(position, "Position");
     delay(100);
     print_index = 0;
+
+    //next line
+    Serial.println("");
   }
   previous_time = current_time;
 
   //next line
-  Serial.println("");
+//  Serial.println("");
 
   print_index++;
 }
