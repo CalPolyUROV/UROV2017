@@ -6,6 +6,7 @@
 //create the instance of the sensor
 Adafruit_BNO055 bno = Adafruit_BNO055(55);
 
+//initialize location for event data
 sensors_event_t event;
 
 // initialize arrays to store velocity and position in
