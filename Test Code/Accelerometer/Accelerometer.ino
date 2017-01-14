@@ -37,7 +37,6 @@ void setup() {
     //its broken
     Serial.print("It's broken, check the wiring");
   }
-  delay(50);
 
   //use for better low power timing?
   bno.setExtCrystalUse(true);
@@ -104,11 +103,10 @@ void loop() {
     serial_print(accel, "Accel");
     // serial_print(velocity, "Velocity");
     // serial_print(position, "Position");
- delay(100);
+    delay(100);
     print_index = 0;
   }
   previous_time = current_time;
-  //delay(50);
 
   //next line
   Serial.println("");
