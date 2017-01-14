@@ -97,9 +97,6 @@ void loop() {
   //will glitch out every five days due to overflow, this will break everything
   //andrew's fix was to check if the later was greater
 
-  Serial.print("\t Elapsed time: ");
-  Serial.print(current_time - previous_time);
-
   position[0] = position[0] + (velocity[0] * elapsed_time_factor);
   position[1] = position[1] + (velocity[1] * elapsed_time_factor);
   position[2] = position[2] + (velocity[2] * elapsed_time_factor);
@@ -108,9 +105,10 @@ void loop() {
   velocity[1] = velocity[1] + (accel[1] * elapsed_time_factor);
   velocity[2] = velocity[2] + (accel[2] * elapsed_time_factor);
 
+  Serial.print("\t Elapsed time: ");
+  Serial.print(current_time - previous_time);
+
   if (print_index == 20) {
-
-
     //display the data
     Serial.print("\tPitch: ");
     Serial.print(event.orientation.y, 4);
@@ -129,5 +127,6 @@ void loop() {
 
   //next line
   Serial.println("");
+
   print_index++;
 }
