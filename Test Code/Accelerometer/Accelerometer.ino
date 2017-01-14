@@ -9,7 +9,9 @@ Adafruit_BNO055 bno = Adafruit_BNO055(55);
 sensors_event_t event;
 
 // initialize arrays to store velocity and position in
-float orientation[3];
+float pitch;
+float roll;
+float yaw;
 float accel[3];
 float velocity[3] = {0, 0, 0};
 float position[3] = {0, 0, 0};
@@ -65,11 +67,9 @@ void loop() {
   //get the orrientation sensor event
   bno.getEvent(&event);
 
-  orientation[0] = event.orientation.x;
-  orientation[1] = event.orientation.y;
-  orientation[2] = event.orientation.z;
-
-
+  pitch = event.orientation.x;
+  yaw = event.orientation.y;
+  roll = event.orientation.z;
 
   //get the accelerometer vector as raw data
   imu::Vector<3> linearacc = bno.getVector(Adafruit_BNO055::VECTOR_LINEARACCEL);
@@ -97,12 +97,12 @@ void loop() {
 
 
     //display the data
-    Serial.print("\tYaw: ");
-    Serial.print(orientation[0], 4);
     Serial.print("\tPitch: ");
-    Serial.print(orientation[1], 4);
+    Serial.print(event.orientation.y, 4);
+    Serial.print("\tYaw: ");
+    Serial.print(event.orientation.x, 4);
     Serial.print("\tRoll: ");
-    Serial.print(orientation[2], 4);
+    Serial.print(event.orientation.z, 4);
 
     serial_print(accel, "Accel");
     // serial_print(velocity, "Velocity");
