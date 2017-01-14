@@ -87,10 +87,10 @@ void loop() {
   roll = event.orientation.z;
 
   //get the accelerometer vector as raw data
-  imu::Vector<3> linearacc = bno.getVector(Adafruit_BNO055::VECTOR_LINEARACCEL);
-  accel[0] = filter_accel(linearacc[0]) * cos(orientation[0] * PI / 180) + sin(orientation[0] * PI / 180);
-  accel[1] = filter_accel(linearacc[1]) * cos(orientation[0] * PI / 180) + sin(orientation[0] * PI / 180);
-  accel[2] = filter_accel(linearacc[2]) * cos(orientation[2] * PI / 180);
+  imu::Vector<3> linearaccel = bno.getVector(Adafruit_BNO055::VECTOR_LINEARACCEL);
+  accel[0] = (linearaccel[0] * lookup_cos(yaw) * lookup_cos(pitch)) + (linearaccel[1] * lookup_sin(yaw)) + (linearaccel[2] * lookup_sin(pitch));
+  accel[1] = (linearaccel[1] * lookup_cos(yaw) * lookup_cos(roll)) + (linearaccel[0] * lookup_sin(yaw)) + (linearaccel[2] * lookup_sin(roll));
+  accel[2] = (linearaccel[2] * lookup_cos(roll) * lookup_cos(pitch)) + (linearaccel[1] * lookup_sin(roll)) + (linearaccel[0] * lookup_sin(pitch));
 
   current_time = millis();
   elapsed_time_factor = ( current_time - previous_time) / 1000.0;
