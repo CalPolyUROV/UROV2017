@@ -10,9 +10,9 @@ Adafruit_BNO055 bno = Adafruit_BNO055(55);
 sensors_event_t event;
 
 // initialize arrays to store velocity and position in
-float pitch;
-float roll;
-float yaw;
+int pitch;
+int roll;
+int yaw;
 float accel[3];
 float velocity[3] = {0, 0, 0};
 float position[3] = {0, 0, 0};
