@@ -74,6 +74,15 @@ int phaseshift(int value)
   return out;
 }
 
+boolean greater(float value, float threshold)
+{
+  return (value > threshold);
+}
+boolean below(float value, float threshold)
+{
+  return (value < threshold);
+}
+
 void loop() {
 
   //get the orrientation sensor event
@@ -112,9 +121,37 @@ void loop() {
     Serial.print("\tYaw: ");
     Serial.print(yaw);
     Serial.print("\tRoll: ");
-    Serial.print(event.orientation.z, 4);
+    Serial.print(roll);
 
-    serial_print(accel, "Accel");
+    //    if (threshold(accel[0]) || threshold(accel[1]) || threshold(accel[2]))
+    //    {
+    //      serial_print(accel, "Accel");
+    //    }
+
+    if (greater(accel[0], 1 ))
+    {
+      Serial.print("\tForward");
+    }
+    else if(below(accel[0], -1 ))
+    {
+      Serial.print("\tBackward");
+    }
+    if (greater(accel[1], 1 ))
+    {
+      Serial.print("\tLeft");
+    }
+    else if(below(accel[1], -1 ))
+    {
+      Serial.print("\Right");
+    }
+    if (greater(accel[2], 1 ))
+    {
+      Serial.print("\tUp");
+    }
+    else if(below(accel[2], -1 ))
+    {
+      Serial.print("\tDown");
+    }
     // serial_print(velocity, "Velocity");
     // serial_print(position, "Position");
     delay(100);
