@@ -1848,8 +1848,6 @@ Manufacturer: Hirose&lt;br&gt;
 <part name="USB_GND2" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
 <part name="R5" library="SparkFun-Resistors" deviceset="0OHM" device="-0603-1/10W-5%" value="0"/>
 <part name="R6" library="SparkFun-Resistors" deviceset="0OHM" device="-0603-1/10W-5%" value="0"/>
-<part name="R7" library="SparkFun-Resistors" deviceset="10KOHM" device="-0603-1/10W-1%" value="10k"/>
-<part name="GND8" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -1878,13 +1876,13 @@ Version: 1.0</text>
 <instance part="GND3" gate="1" x="30.48" y="73.66"/>
 <instance part="R1" gate="G$1" x="106.68" y="22.86" rot="R90"/>
 <instance part="R2" gate="G$1" x="116.84" y="22.86" rot="R90"/>
-<instance part="R3" gate="G$1" x="137.16" y="22.86" rot="R90"/>
+<instance part="R3" gate="G$1" x="132.08" y="22.86" rot="R90"/>
 <instance part="R4" gate="G$1" x="124.46" y="55.88" rot="R90"/>
 <instance part="C3" gate="G$1" x="15.24" y="35.56"/>
 <instance part="GND4" gate="1" x="15.24" y="30.48"/>
 <instance part="GND5" gate="1" x="106.68" y="15.24"/>
 <instance part="GND6" gate="1" x="116.84" y="15.24"/>
-<instance part="GND7" gate="1" x="137.16" y="15.24"/>
+<instance part="GND7" gate="1" x="132.08" y="15.24"/>
 <instance part="SUPPLY3" gate="G$1" x="0" y="68.58"/>
 <instance part="J1" gate="G$1" x="-45.72" y="55.88" rot="MR0"/>
 <instance part="USB_GND" gate="1" x="-33.02" y="38.1"/>
@@ -1896,8 +1894,6 @@ Version: 1.0</text>
 <instance part="USB_GND2" gate="1" x="-5.08" y="45.72"/>
 <instance part="R5" gate="G$1" x="30.48" y="60.96"/>
 <instance part="R6" gate="G$1" x="45.72" y="66.04" rot="R90"/>
-<instance part="R7" gate="G$1" x="129.54" y="22.86" rot="R90"/>
-<instance part="GND8" gate="1" x="129.54" y="15.24"/>
 </instances>
 <busses>
 </busses>
@@ -2000,33 +1996,23 @@ Version: 1.0</text>
 <pinref part="C4" gate="G$1" pin="2"/>
 <pinref part="USB_GND2" gate="1" pin="GND"/>
 </segment>
-<segment>
-<pinref part="R7" gate="G$1" pin="1"/>
-<pinref part="GND8" gate="1" pin="GND"/>
-</segment>
 </net>
 <net name="FTDI_CBUS0" class="0">
 <segment>
 <pinref part="IC1" gate="1" pin="CBUS0"/>
-<wire x1="83.82" y1="45.72" x2="137.16" y2="45.72" width="0.1524" layer="91"/>
+<wire x1="83.82" y1="45.72" x2="132.08" y2="45.72" width="0.1524" layer="91"/>
 <pinref part="R3" gate="G$1" pin="2"/>
-<wire x1="137.16" y1="45.72" x2="137.16" y2="27.94" width="0.1524" layer="91"/>
-<junction x="137.16" y="45.72"/>
+<wire x1="132.08" y1="45.72" x2="137.16" y2="45.72" width="0.1524" layer="91"/>
+<wire x1="132.08" y1="45.72" x2="132.08" y2="27.94" width="0.1524" layer="91"/>
+<junction x="132.08" y="45.72"/>
 <label x="88.9" y="45.72" size="1.778" layer="95"/>
-<wire x1="137.16" y1="45.72" x2="142.24" y2="45.72" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="FTDI_CBUS1" class="0">
 <segment>
 <pinref part="IC1" gate="1" pin="CBUS1"/>
-<wire x1="83.82" y1="43.18" x2="129.54" y2="43.18" width="0.1524" layer="91"/>
+<wire x1="83.82" y1="43.18" x2="137.16" y2="43.18" width="0.1524" layer="91"/>
 <label x="88.9" y="43.18" size="1.778" layer="95"/>
-<pinref part="R7" gate="G$1" pin="2"/>
-<wire x1="129.54" y1="43.18" x2="137.16" y2="43.18" width="0.1524" layer="91"/>
-<wire x1="129.54" y1="27.94" x2="129.54" y2="25.4" width="0.1524" layer="91"/>
-<wire x1="129.54" y1="27.94" x2="129.54" y2="43.18" width="0.1524" layer="91"/>
-<junction x="129.54" y="27.94"/>
-<junction x="129.54" y="43.18"/>
 </segment>
 </net>
 <net name="FTDI_CBUS2" class="0">
