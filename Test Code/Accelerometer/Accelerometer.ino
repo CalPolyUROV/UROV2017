@@ -79,8 +79,8 @@ void loop() {
   //get the orrientation sensor event
   bno.getEvent(&event);
 
-  pitch = event.orientation.x;
-  yaw = event.orientation.y;
+  pitch = event.orientation.y;
+  yaw = event.orientation.x;
   roll = event.orientation.z;
 
   //get the accelerometer vector as raw data
@@ -108,9 +108,9 @@ void loop() {
   if (print_index == 20) {
     //display the data
     Serial.print("\tPitch: ");
-    Serial.print(event.orientation.y, 4);
+    Serial.print(pitch);
     Serial.print("\tYaw: ");
-    Serial.print(event.orientation.x, 4);
+    Serial.print(yaw);
     Serial.print("\tRoll: ");
     Serial.print(event.orientation.z, 4);
 
