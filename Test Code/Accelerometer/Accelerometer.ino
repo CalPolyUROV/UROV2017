@@ -94,9 +94,13 @@ void loop() {
 
   //get the accelerometer vector as raw data
   imu::Vector<3> linearaccel = bno.getVector(Adafruit_BNO055::VECTOR_LINEARACCEL);
-  accel[0] = (linearaccel[0] * lookup_cos(yaw) * lookup_cos(pitch)) + (linearaccel[1] * lookup_sin(yaw)) + (linearaccel[2] * lookup_sin(pitch));
-  accel[1] = (linearaccel[1] * lookup_cos(yaw) * lookup_cos(roll)) + (linearaccel[0] * lookup_sin(yaw)) + (linearaccel[2] * lookup_sin(roll));
-  accel[2] = (linearaccel[2] * lookup_cos(roll) * lookup_cos(pitch)) + (linearaccel[1] * lookup_sin(roll)) + (linearaccel[0] * lookup_sin(pitch));
+  accel[0] = linearaccel[0];
+  accel[1] = linearaccel[1];
+  accel[2] = linearaccel[2];
+
+  //accel[0] = (linearaccel[0] * lookup_cos(yaw) * lookup_cos(pitch)) + (linearaccel[1] * lookup_sin(yaw)) + (linearaccel[2] * lookup_sin(pitch));
+  // accel[1] = (linearaccel[1] * lookup_cos(yaw) * lookup_cos(roll)) + (linearaccel[0] * lookup_sin(yaw)) + (linearaccel[2] * lookup_sin(roll));
+  // accel[2] = (linearaccel[2] * lookup_cos(roll) * lookup_cos(pitch)) + (linearaccel[1] * lookup_sin(roll)) + (linearaccel[0] * lookup_sin(pitch));
 
   current_time = millis();
   elapsed_time_factor = ( current_time - previous_time) / 1000.0;
@@ -163,7 +167,7 @@ void loop() {
   previous_time = current_time;
 
   //next line
-//  Serial.println("");
+  //  Serial.println("");
 
   print_index++;
 }
