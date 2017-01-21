@@ -1,0 +1,15 @@
+Dependencies:
+	python 2.7:	https://www.python.org/downloads/release/python-2710/
+
+	pyserial:	https://pypi.python.org/pypi/pyserial/2.7
+	            or:
+	            https://pypi.python.org/pypi/pyserial
+
+	python sfml:	http://www.python-sfml.org/download.html
+
+	PyGames: http://www.pygame.org/download.shtml
+
+	GitHub: https://github.com/
+
+Recomended:
+    PyCharm: https://www.jetbrains.com/pycharm/download/#section=windows
