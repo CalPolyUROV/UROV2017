@@ -1866,6 +1866,7 @@ when system starts up</text>
 Date:    01/21/17
 Reviewed By:
 Version: 1.0</text>
+<text x="-27.94" y="96.52" size="1.778" layer="91">Populate R5 for GPIO RESET or R6 for no RESET</text>
 </plain>
 <instances>
 <instance part="IC1" gate="1" x="68.58" y="45.72"/>
