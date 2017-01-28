@@ -1,5 +1,5 @@
-#ifdef Accelerometer_h
-#define Acccelerometer.h
+#ifndef Accel_h
+#define Accel_h
 
 #include "Arduino.h"
 #include <Wire.h>
@@ -7,21 +7,25 @@
 #include <Adafruit_BNO055.h>
 #include <utility/imumaths.h>
 
-class Accelerometer
+class Accel
 {
-  public:
-    Accelerometer();
-    void update();
-    int getPitch();
-    int getYaw();
-    int getRoll();
   protected:
     Adafruit_BNO055 bno;
     sensors_event_t event;
     int pitch;
     int roll;
     int yaw;
-    float accel[3];
-}
+    float accelVector[3];
+
+  public:
+    Accel();
+    void update();
+    int getPitch();
+    int getYaw();
+    int getRoll();
+    float getAccelX();
+    float getAccelY();
+    float getAccelZ();
+};
 
 #endif
