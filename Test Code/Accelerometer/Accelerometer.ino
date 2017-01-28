@@ -1,22 +1,18 @@
-//#include <Wire.h>
-//#include <Adafruit_Sensor.h>
-//#include <Adafruit_BNO055.h>
-//#include <utility/imumaths.h>
-#include "accelerometer.h"
-#include "accelerometer.cpp"
+#include "Accel.h"
 
-Acceleromter myAccerlerometer();
+Accel accelerometer;
 
 //initialize time keeping variables
 unsigned long loop_start_time;
-float elapsed_time_factor;
+//float elapsed_time_factor;
 int current_time;
 int previous_time = 0;
 
 int print_index = 0;
 
 void setup() {
-  Serial.begin(19200);
+  accelerometer = Accel();
+  Serial.begin(9600);
   Serial.println("Testing Orientation and Acceleration Sensor");
   Serial.println("");
   //open serial
@@ -63,7 +59,7 @@ boolean below(float value, float threshold)
 
 void loop() {
   current_time = millis();
-  elapsed_time_factor = ( current_time - previous_time) / 1000.0;
+  //  elapsed_time_factor = ( current_time - previous_time) / 1000.0;
   //will glitch out every five days due to overflow, this will break everything
   //andrew's fix was to check if the later was greater
 
@@ -83,38 +79,38 @@ void loop() {
 
     //display the data
     Serial.print("\tPitch: ");
-    Serial.print(pitch);
+    Serial.print(accelerometer.getPitch());
     Serial.print("\tYaw: ");
-    Serial.print(yaw);
+    Serial.print(accelerometer.getYaw());
     Serial.print("\tRoll: ");
-    Serial.print(roll);
+    Serial.print(accelerometer.getRoll());
 
     //    if (threshold(accel[0]) || threshold(accel[1]) || threshold(accel[2]))
     //    {
     //      serial_print(accel, "Accel");
     //    }
 
-    if (greater(accel[0], 1 ))
+    if (greater(accelerometer.getAccelX(), 1 ))
     {
       Serial.print("\tForward");
     }
-    else if (below(accel[0], -1 ))
+    else if (below(accelerometer.getAccelX(), -1 ))
     {
       Serial.print("\tBackward");
     }
-    if (greater(accel[1], 1 ))
+    if (greater(accelerometer.getAccelY(), 1 ))
     {
       Serial.print("\tLeft");
     }
-    else if (below(accel[1], -1 ))
+    else if (below(accelerometer.getAccelY(), -1 ))
     {
       Serial.print("\Right");
     }
-    if (greater(accel[2], 1 ))
+    if (greater(accelerometer.getAccelZ(), 1 ))
     {
       Serial.print("\tUp");
     }
-    else if (below(accel[2], -1 ))
+    else if (below(accelerometer.getAccelZ(), -1 ))
     {
       Serial.print("\tDown");
     }
