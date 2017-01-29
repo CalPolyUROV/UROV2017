@@ -4,9 +4,10 @@
 
 Accel::Accel()
 {
-  bno = Adafruit_BNO055(55);
+  Serial.println("Testing Orientation and Acceleration Sensor");
 
   //initialize the sensor
+  bno = Adafruit_BNO055(55);
   if (!bno.begin())
   {
     //its broken
