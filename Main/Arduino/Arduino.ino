@@ -116,7 +116,6 @@ void setup() {
   digitalWrite(6,LOW);
   digitalWrite(7,LOW); //Relay 1
 
-//delay(5000);
 
   //to be replaced
   /*if(!bno.begin())
