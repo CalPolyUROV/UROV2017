@@ -21911,7 +21911,7 @@ distributor Buerklin 78F2475</description>
 <part name="J6" library="SparkFun-Connectors" deviceset="M02" device="PTH"/>
 <part name="J7" library="SparkFun-Connectors" deviceset="M02" device="PTH"/>
 <part name="J8" library="SparkFun-Connectors" deviceset="M02" device="PTH"/>
-<part name="J9" library="SparkFun-Connectors" deviceset="M06" device="LONGPADS"/>
+<part name="ESC_PWM_GND" library="SparkFun-Connectors" deviceset="M06" device="LONGPADS"/>
 <part name="J10" library="SparkFun-Connectors" deviceset="M02" device="PTH"/>
 <part name="J11" library="SparkFun-Connectors" deviceset="M02" device="PTH"/>
 <part name="BLUETOOTH_J6" library="SparkFun-Connectors" deviceset="M06" device="LONGPADS"/>
@@ -22237,7 +22237,7 @@ distributor Buerklin 78F2475</description>
 <instance part="J6" gate="G$1" x="337.82" y="101.6" rot="R180"/>
 <instance part="J7" gate="G$1" x="337.82" y="114.3" rot="R180"/>
 <instance part="J8" gate="G$1" x="337.82" y="127" rot="R180"/>
-<instance part="J9" gate="G$1" x="261.62" y="38.1" rot="MR0"/>
+<instance part="ESC_PWM_GND" gate="G$1" x="261.62" y="38.1" rot="MR0"/>
 <instance part="J10" gate="G$1" x="152.4" y="-76.2" rot="R180"/>
 <instance part="J11" gate="G$1" x="104.14" y="-48.26" rot="R180"/>
 <instance part="BLUETOOTH_J6" gate="G$1" x="332.74" y="-88.9" rot="MR0"/>
@@ -22673,26 +22673,26 @@ distributor Buerklin 78F2475</description>
 <label x="279.4" y="88.9" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="J9" gate="G$1" pin="6"/>
+<pinref part="ESC_PWM_GND" gate="G$1" pin="6"/>
 <wire x1="256.54" y1="45.72" x2="254" y2="45.72" width="0.1524" layer="91"/>
 <wire x1="254" y1="45.72" x2="254" y2="43.18" width="0.1524" layer="91"/>
-<pinref part="J9" gate="G$1" pin="5"/>
+<pinref part="ESC_PWM_GND" gate="G$1" pin="5"/>
 <wire x1="254" y1="43.18" x2="256.54" y2="43.18" width="0.1524" layer="91"/>
 <wire x1="254" y1="43.18" x2="254" y2="40.64" width="0.1524" layer="91"/>
 <junction x="254" y="43.18"/>
-<pinref part="J9" gate="G$1" pin="4"/>
+<pinref part="ESC_PWM_GND" gate="G$1" pin="4"/>
 <wire x1="254" y1="40.64" x2="256.54" y2="40.64" width="0.1524" layer="91"/>
 <wire x1="254" y1="40.64" x2="254" y2="38.1" width="0.1524" layer="91"/>
 <junction x="254" y="40.64"/>
-<pinref part="J9" gate="G$1" pin="3"/>
+<pinref part="ESC_PWM_GND" gate="G$1" pin="3"/>
 <wire x1="254" y1="38.1" x2="256.54" y2="38.1" width="0.1524" layer="91"/>
 <wire x1="254" y1="38.1" x2="254" y2="35.56" width="0.1524" layer="91"/>
 <junction x="254" y="38.1"/>
-<pinref part="J9" gate="G$1" pin="2"/>
+<pinref part="ESC_PWM_GND" gate="G$1" pin="2"/>
 <wire x1="254" y1="35.56" x2="256.54" y2="35.56" width="0.1524" layer="91"/>
 <wire x1="254" y1="35.56" x2="254" y2="33.02" width="0.1524" layer="91"/>
 <junction x="254" y="35.56"/>
-<pinref part="J9" gate="G$1" pin="1"/>
+<pinref part="ESC_PWM_GND" gate="G$1" pin="1"/>
 <wire x1="254" y1="33.02" x2="256.54" y2="33.02" width="0.1524" layer="91"/>
 <junction x="254" y="33.02"/>
 <wire x1="254" y1="33.02" x2="254" y2="25.4" width="0.1524" layer="91"/>

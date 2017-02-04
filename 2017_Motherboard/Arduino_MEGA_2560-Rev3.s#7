@@ -21858,6 +21858,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="J9" library="SparkFun-Connectors" deviceset="M06" device="LONGPADS"/>
 <part name="J10" library="SparkFun-Connectors" deviceset="M02" device="PTH"/>
 <part name="J11" library="SparkFun-Connectors" deviceset="M02" device="PTH"/>
+<part name="J12" library="SparkFun-Connectors" deviceset="M06" device="LONGPADS"/>
 </parts>
 <sheets>
 <sheet>
@@ -21963,6 +21964,13 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <text x="276.86" y="104.14" size="1.778" layer="91">RST (NC)</text>
 <text x="294.64" y="86.36" size="1.778" layer="91">PA0 can be used as an INT</text>
 <text x="269.24" y="124.46" size="1.778" layer="91">I2C address: 0x28</text>
+<text x="345.44" y="-63.5" size="1.778" layer="91">Bluetooth Connection</text>
+<text x="363.22" y="-86.36" size="1.778" layer="91">State</text>
+<text x="363.22" y="-88.9" size="1.778" layer="91">RXD</text>
+<text x="363.22" y="-91.44" size="1.778" layer="91">TXD</text>
+<text x="363.22" y="-93.98" size="1.778" layer="91">GND</text>
+<text x="363.22" y="-96.52" size="1.778" layer="91">VCC</text>
+<text x="363.22" y="-99.06" size="1.778" layer="91">EN</text>
 </plain>
 <instances>
 <instance part="ICSP" gate="A" x="281.94" y="152.4"/>
@@ -22150,6 +22158,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <instance part="J9" gate="G$1" x="261.62" y="38.1" rot="MR0"/>
 <instance part="J10" gate="G$1" x="152.4" y="-78.74" rot="R180"/>
 <instance part="J11" gate="G$1" x="106.68" y="-58.42" rot="R180"/>
+<instance part="J12" gate="G$1" x="355.6" y="-93.98" rot="MR0"/>
 </instances>
 <busses>
 </busses>
@@ -23902,6 +23911,42 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <wire x1="307.34" y1="106.68" x2="307.34" y2="99.06" width="0.1524" layer="91"/>
 <pinref part="J6" gate="G$1" pin="2"/>
 <wire x1="307.34" y1="99.06" x2="330.2" y2="99.06" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$15" class="0">
+<segment>
+<pinref part="J12" gate="G$1" pin="6"/>
+<wire x1="350.52" y1="-86.36" x2="335.28" y2="-86.36" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$16" class="0">
+<segment>
+<pinref part="J12" gate="G$1" pin="5"/>
+<wire x1="350.52" y1="-88.9" x2="335.28" y2="-88.9" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$17" class="0">
+<segment>
+<pinref part="J12" gate="G$1" pin="4"/>
+<wire x1="350.52" y1="-91.44" x2="335.28" y2="-91.44" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$18" class="0">
+<segment>
+<pinref part="J12" gate="G$1" pin="3"/>
+<wire x1="350.52" y1="-93.98" x2="335.28" y2="-93.98" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$19" class="0">
+<segment>
+<pinref part="J12" gate="G$1" pin="2"/>
+<wire x1="350.52" y1="-96.52" x2="335.28" y2="-96.52" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$20" class="0">
+<segment>
+<pinref part="J12" gate="G$1" pin="1"/>
+<wire x1="350.52" y1="-99.06" x2="335.28" y2="-99.06" width="0.1524" layer="91"/>
 </segment>
 </net>
 </nets>
