@@ -10,8 +10,8 @@
 class Accel
 {
   protected:
-    Adafruit_BNO055 bno;
-    sensors_event_t event;
+    Adafruit_BNO055* bno;
+    sensors_event_t* event;
     int pitch;
     int roll;
     int yaw;
@@ -19,6 +19,7 @@ class Accel
 
   public:
     Accel();
+    String init();
     void update();
     int getPitch();
     int getYaw();

@@ -4,30 +4,37 @@
 
 Accel::Accel()
 {
+  //  Serial.begin(9600);
   Serial.println("Testing Orientation and Acceleration Sensor");
-
-  //initialize the sensor
-  bno = Adafruit_BNO055(55);
-  if (!bno.begin())
+  //  Serial.flush();
+  //  //initialize the sensor
+  *bno = Adafruit_BNO055(55);
+  Serial.println("initialized sensor");
+  if (!bno->begin(AMG))
   {
     //its broken
-    Serial.print("It's broken, check the wiring");
+    Serial.println("It's broken, check the wiring");
   }
-
   //use for better low power timing?
-  bno.setExtCrystalUse(true);
+ // bno->setExtCrystalUse(true);
+  Serial.println("Finished constructor");
+  Serial.flush();
+}
+
+String Accel::init() {
+  return ("Testing Orientation and Acceleration Sensor");
 }
 
 void Accel::update() {
   //get the orrientation sensor event
-  bno.getEvent(&event);
+  bno->getEvent(event);
 
-  pitch = event.orientation.y;
-  yaw = event.orientation.x;
-  roll = event.orientation.z;
+  pitch = event->orientation.y;
+  yaw = event->orientation.x;
+  roll = event->orientation.z;
 
   //get the accelerometer vector as raw data
-  imu::Vector<3> linearaccel = bno.getVector(Adafruit_BNO055::VECTOR_LINEARACCEL);
+  imu::Vector<3> linearaccel = bno->getVector(Adafruit_BNO055::VECTOR_LINEARACCEL);
   accelVector[0] = linearaccel[0];
   accelVector[1] = linearaccel[1];
   accelVector[2] = linearaccel[2];
