@@ -10,19 +10,21 @@ Accel::Accel()
   //  //initialize the sensor
   *bno = Adafruit_BNO055(55);
   Serial.println("initialized sensor");
-  if (!bno->begin(AMG))
+  if (!bno->begin())
   {
     //its broken
     Serial.println("It's broken, check the wiring");
   }
   //use for better low power timing?
  // bno->setExtCrystalUse(true);
+
+  pitch = roll = yaw = 0;
   Serial.println("Finished constructor");
   Serial.flush();
 }
 
 String Accel::init() {
-  return ("Testing Orientation and Acceleration Sensor");
+  return ("Tested Orientation and Acceleration Sensor");
 }
 
 void Accel::update() {

@@ -6,13 +6,13 @@ unsigned long loop_start_time;
 int current_time;
 int previous_time = 0;
 
-Accel* accelerometer;
+Accel *accelerometer;
 
 void setup() {
   Serial.begin(9600);
   Serial.println("Serial Works");
   *accelerometer = Accel();
- // Serial.println(accelerometer->init());
+ Serial.println(accelerometer->init());
  Serial.println("Printing works");
  Serial.flush();
 }
