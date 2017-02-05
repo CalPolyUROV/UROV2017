@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="7.6.0">
+<eagle version="7.7.0">
 <drawing>
 <settings>
 <setting alwaysvectorfont="no"/>
@@ -22058,6 +22058,7 @@ distributor Buerklin 78F2475</description>
 <text x="419.1" y="111.76" size="1.778" layer="91">Video Switching</text>
 <text x="403.86" y="-68.58" size="1.778" layer="91">Output Transciever</text>
 <text x="444.5" y="-45.72" size="1.778" layer="91">Close these jumpers if no RS485 transciever used</text>
+<text x="124.46" y="-63.5" size="1.778" layer="91">changed RESET_B to RESET</text>
 </plain>
 <instances>
 <instance part="ICSP" gate="A" x="281.94" y="152.4"/>
@@ -22833,6 +22834,11 @@ distributor Buerklin 78F2475</description>
 <pinref part="D3" gate="G$1" pin="A"/>
 <pinref part="R27" gate="G$1" pin="1"/>
 <junction x="246.38" y="170.18"/>
+</segment>
+<segment>
+<pinref part="R22" gate="G$1" pin="1"/>
+<wire x1="144.78" y1="-68.58" x2="132.08" y2="-68.58" width="0.1524" layer="91"/>
+<label x="132.08" y="-68.58" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="VIN" class="1">
@@ -24090,11 +24096,11 @@ distributor Buerklin 78F2475</description>
 <pinref part="SUPPLY2" gate="G$1" pin="V_USB"/>
 <wire x1="160.02" y1="-40.64" x2="160.02" y2="-45.72" width="0.1524" layer="91"/>
 <junction x="160.02" y="-45.72"/>
-<wire x1="165.1" y1="-58.42" x2="165.1" y2="-60.96" width="0.1524" layer="91"/>
-<junction x="165.1" y="-58.42"/>
 <pinref part="IC2" gate="1" pin="VCC"/>
 <wire x1="175.26" y1="-60.96" x2="170.18" y2="-60.96" width="0.1524" layer="91"/>
 <junction x="170.18" y="-60.96"/>
+<pinref part="R23" gate="G$1" pin="2"/>
+<junction x="165.1" y="-58.42"/>
 </segment>
 <segment>
 <pinref part="J5" gate="G$1" pin="VBUS"/>
@@ -24118,13 +24124,6 @@ distributor Buerklin 78F2475</description>
 <wire x1="91.44" y1="-55.88" x2="91.44" y2="-68.58" width="0.1524" layer="91"/>
 <wire x1="91.44" y1="-55.88" x2="83.82" y2="-55.88" width="0.1524" layer="91"/>
 <junction x="91.44" y="-55.88"/>
-</segment>
-</net>
-<net name="RESET_B" class="0">
-<segment>
-<pinref part="R22" gate="G$1" pin="1"/>
-<wire x1="144.78" y1="-68.58" x2="132.08" y2="-68.58" width="0.1524" layer="91"/>
-<label x="132.08" y="-68.58" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="N$4" class="0">
