@@ -22025,8 +22025,8 @@ distributor Buerklin 78F2475</description>
 <text x="219.71" y="39.37" size="1.6764" layer="91">pwm</text>
 <text x="219.71" y="36.83" size="1.6764" layer="91">pwm</text>
 <text x="134.62" y="185.42" size="2.54" layer="91" ratio="20">TM</text>
-<text x="264.16" y="127" size="1.778" layer="91">Accelerometer Connectors</text>
-<text x="297.18" y="71.12" size="1.778" layer="91">Battery Monitoring</text>
+<text x="256.54" y="129.54" size="6.4516" layer="91">Accelerometer</text>
+<text x="297.18" y="71.12" size="6.4516" layer="91">Battery Monitoring</text>
 <text x="274.32" y="96.52" size="1.778" layer="91">Need to check datasheet</text>
 <text x="287.02" y="68.58" size="1.778" layer="91">Don't connect both battery and usb/other</text>
 <text x="91.44" y="-33.02" size="1.778" layer="91">Populate R5 for GPIO RESET or R6 for no RESET</text>
@@ -22055,9 +22055,12 @@ distributor Buerklin 78F2475</description>
 <text x="421.64" y="142.24" size="1.778" layer="91">PC0</text>
 <text x="421.64" y="139.7" size="1.778" layer="91">PC1</text>
 <text x="421.64" y="137.16" size="1.778" layer="91">PC2</text>
-<text x="419.1" y="111.76" size="1.778" layer="91">Video Switching</text>
+<text x="403.86" y="116.84" size="6.4516" layer="91">Video Switching</text>
 <text x="403.86" y="-68.58" size="1.778" layer="91">Output Transciever</text>
 <text x="444.5" y="-45.72" size="1.778" layer="91">Close these jumpers if no RS485 transciever used</text>
+<text x="386.08" y="-63.5" size="6.4516" layer="91">RS485</text>
+<text x="0" y="101.6" size="6.4516" layer="91">FTDI</text>
+<text x="175.26" y="-45.72" size="6.4516" layer="91">FTDI</text>
 </plain>
 <instances>
 <instance part="ICSP" gate="A" x="281.94" y="152.4"/>
