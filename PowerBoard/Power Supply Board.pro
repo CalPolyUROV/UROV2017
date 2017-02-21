@@ -2,14 +2,14 @@ EAGLE AutoRouter Statistics:
 
 Job           : /Users/dudeman444/Documents/Cal Poly Classes/UROV 2017/UROV2017/PowerBoard/Power Supply Board.brd
 
-Start at      : 23:25:30 (2/6/17)
-End at        : 23:25:33 (2/6/17)
+Start at      : 21:19:31 (2/20/17)
+End at        : 21:19:34 (2/20/17)
 Elapsed time  : 00:00:00
 
 Signals       :    26   RoutingGrid: 25 mil  Layers: 2
-Connections   :   188   predefined:  187 ( 3 Vias )
+Connections   :   190   predefined:  189 ( 3 Vias )
 
-Router memory :   349888
+Router memory :   403824
 
 Passname          :     Route Optimize1 Optimize2 Optimize3 Optimize4 Optimize5 Optimize6 Optimize7 Optimize8 Optimize9Optimize10Optimize11Optimize12
 
