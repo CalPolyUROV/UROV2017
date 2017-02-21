@@ -2011,11 +2011,11 @@ design rules under a new name.</description>
 <attribute name="OC_FARNELL" value="unknown" x="85.09" y="56.134" size="1.778" layer="27" display="off"/>
 <attribute name="MF" value="" x="85.09" y="56.134" size="1.778" layer="27" display="off"/>
 </element>
-<element name="VIDEO_OUT" library="con-coax" package="A1944" value="A1944-50" x="83.82" y="70.358" rot="R270">
-<attribute name="MPN" value="" x="83.82" y="70.358" size="1.778" layer="27" rot="R270" display="off"/>
-<attribute name="OC_NEWARK" value="unknown" x="83.82" y="70.358" size="1.778" layer="27" rot="R270" display="off"/>
-<attribute name="OC_FARNELL" value="unknown" x="83.82" y="70.358" size="1.778" layer="27" rot="R270" display="off"/>
-<attribute name="MF" value="" x="83.82" y="70.358" size="1.778" layer="27" rot="R270" display="off"/>
+<element name="VIDEO_OUT" library="con-coax" package="A1944" value="A1944-50" x="85.598" y="69.85" rot="R270">
+<attribute name="MPN" value="" x="85.598" y="69.85" size="1.778" layer="27" rot="R270" display="off"/>
+<attribute name="OC_NEWARK" value="unknown" x="85.598" y="69.85" size="1.778" layer="27" rot="R270" display="off"/>
+<attribute name="OC_FARNELL" value="unknown" x="85.598" y="69.85" size="1.778" layer="27" rot="R270" display="off"/>
+<attribute name="MF" value="" x="85.598" y="69.85" size="1.778" layer="27" rot="R270" display="off"/>
 </element>
 <element name="VIDEO_IN" library="SmartPrj" package="1X08" value="8x1F-H8.5" x="93.218" y="43.688" rot="R90"/>
 <element name="VIDEO_IN_GND" library="SmartPrj" package="1X08" value="8x1F-H8.5" x="96.774" y="43.688" rot="R270"/>
@@ -2029,11 +2029,11 @@ design rules under a new name.</description>
 <element name="RXD2_JUMPER" library="SparkFun-Connectors" package="1X02" value="" x="82.55" y="13.208" rot="R90"/>
 <element name="J9" library="SparkFun-Connectors" package="1X02" value="" x="82.804" y="22.86" rot="R180"/>
 <element name="JP2" library="adafruit" package="2X14-CLEANBIG" value="" x="73.406" y="57.658" rot="R270"/>
-<element name="R31" library="SparkFun-Resistors" package="0603-RES" value="0" x="78.486" y="61.976" rot="R180">
-<attribute name="PROD_ID" value="RES-08595" x="78.486" y="61.976" size="1.778" layer="27" rot="R180" display="off"/>
+<element name="R31" library="SparkFun-Resistors" package="0603-RES" value="0" x="79.502" y="61.976" rot="R180">
+<attribute name="PROD_ID" value="RES-08595" x="79.502" y="61.976" size="1.778" layer="27" rot="R180" display="off"/>
 </element>
-<element name="R32" library="SparkFun-Resistors" package="0603-RES" value="inf" x="77.978" y="58.928" rot="R270">
-<attribute name="PROD_ID" value="RES-08595" x="77.978" y="58.928" size="1.778" layer="27" rot="R270" display="off"/>
+<element name="R32" library="SparkFun-Resistors" package="0603-RES" value="inf" x="78.486" y="58.928" rot="R270">
+<attribute name="PROD_ID" value="RES-08595" x="78.486" y="58.928" size="1.778" layer="27" rot="R270" display="off"/>
 </element>
 <element name="IC6" library="maxim" package="SO16" value="MAX4312ESE" x="85.09" y="31.242">
 <attribute name="MPN" value="MAX4312ESE+" x="85.09" y="47.498" size="1.778" layer="27" display="off"/>
@@ -2250,11 +2250,11 @@ design rules under a new name.</description>
 <contactref element="VIDEO_OUT1" pad="4"/>
 <contactref element="VIDEO_OUT1" pad="2"/>
 <contactref element="R34" pad="2"/>
-<wire x1="77.978" y1="58.078" x2="84.455" y2="59.2074" width="0" layer="19" extent="1-1"/>
-<wire x1="78.74" y1="65.278" x2="77.978" y2="58.078" width="0" layer="19" extent="1-1"/>
+<wire x1="78.486" y1="58.078" x2="84.455" y2="59.2074" width="0" layer="19" extent="1-1"/>
+<wire x1="80.518" y1="64.77" x2="84.455" y2="59.2074" width="0" layer="19" extent="1-1"/>
 <wire x1="71.172" y1="15.962" x2="68.183" y2="17.4" width="0" layer="19" extent="1-1"/>
-<wire x1="84.455" y1="34.3154" x2="89.154" y2="38.862" width="0" layer="19" extent="1-1"/>
 <wire x1="24.415" y1="9.744" x2="22.392" y2="4.144" width="0" layer="19" extent="1-1"/>
+<wire x1="84.455" y1="34.3154" x2="89.154" y2="38.862" width="0" layer="19" extent="1-1"/>
 <wire x1="16.7348" y1="10.4686" x2="19.852" y2="4.144" width="0" layer="19" extent="1-1"/>
 <wire x1="25.351" y1="16.764" x2="24.415" y2="9.744" width="0" layer="19" extent="1-1"/>
 <wire x1="31.527" y1="9.744" x2="24.415" y2="9.744" width="0" layer="19" extent="1-1"/>
@@ -3059,8 +3059,8 @@ design rules under a new name.</description>
 <contactref element="IC4" pad="16"/>
 <contactref element="VIDEO_OUT" pad="1"/>
 <contactref element="R31" pad="1"/>
-<wire x1="79.336" y1="61.976" x2="83.82" y2="70.358" width="0" layer="19" extent="1-1"/>
-<wire x1="80.645" y1="59.2074" x2="79.336" y2="61.976" width="0" layer="19" extent="1-1"/>
+<wire x1="80.352" y1="61.976" x2="85.598" y2="69.85" width="0" layer="19" extent="1-1"/>
+<wire x1="80.645" y1="59.2074" x2="80.352" y2="61.976" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="TXD2_OUT">
 <contactref element="J13" pad="1"/>
@@ -3084,7 +3084,7 @@ design rules under a new name.</description>
 <signal name="N$17">
 <contactref element="R32" pad="1"/>
 <contactref element="R31" pad="2"/>
-<wire x1="77.978" y1="59.778" x2="77.636" y2="61.976" width="0" layer="19" extent="1-1"/>
+<wire x1="78.486" y1="59.778" x2="78.652" y2="61.976" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="VIDEO_OUT1">
 <contactref element="IC6" pad="16"/>

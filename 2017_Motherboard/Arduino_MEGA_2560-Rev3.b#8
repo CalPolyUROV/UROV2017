@@ -2002,8 +2002,8 @@ design rules under a new name.</description>
 <element name="R30" library="SparkFun-Resistors" package="0603-RES" value="1K" x="2.286" y="35.306" rot="R180">
 <attribute name="PROD_ID" value="RES-07856" x="2.286" y="35.306" size="1.778" layer="27" rot="R180" display="off"/>
 </element>
-<element name="J13" library="SparkFun-Connectors" package="1X04_LONGPADS" value="" x="84.074" y="34.29">
-<attribute name="PROD_ID" value="CONN-09696" x="84.074" y="34.29" size="1.778" layer="27" display="off"/>
+<element name="J13" library="SparkFun-Connectors" package="1X04_LONGPADS" value="" x="85.852" y="35.814">
+<attribute name="PROD_ID" value="CONN-09696" x="85.852" y="35.814" size="1.778" layer="27" display="off"/>
 </element>
 <element name="IC4" library="maxim" package="SO16" value="MAX4312ESE" x="84.328" y="57.912">
 <attribute name="MPN" value="MAX4312ESE+" x="84.328" y="57.912" size="1.778" layer="27" display="off"/>
@@ -2019,15 +2019,15 @@ design rules under a new name.</description>
 </element>
 <element name="VIDEO_IN" library="SmartPrj" package="1X08" value="8x1F-H8.5" x="93.218" y="56.642" rot="R90"/>
 <element name="VIDEO_IN_GND" library="SmartPrj" package="1X08" value="8x1F-H8.5" x="97.282" y="56.642" rot="R270"/>
-<element name="IC5" library="maxim" package="DIL08" value="MAX3468CPA" x="87.63" y="25.908">
-<attribute name="MPN" value="" x="87.63" y="25.908" size="1.778" layer="27" display="off"/>
-<attribute name="OC_NEWARK" value="unknown" x="87.63" y="25.908" size="1.778" layer="27" display="off"/>
-<attribute name="OC_FARNELL" value="unknown" x="87.63" y="25.908" size="1.778" layer="27" display="off"/>
-<attribute name="MF" value="" x="87.63" y="25.908" size="1.778" layer="27" display="off"/>
+<element name="IC5" library="maxim" package="DIL08" value="MAX3468CPA" x="89.408" y="27.432">
+<attribute name="MPN" value="" x="89.408" y="27.432" size="1.778" layer="27" display="off"/>
+<attribute name="OC_NEWARK" value="unknown" x="89.408" y="27.432" size="1.778" layer="27" display="off"/>
+<attribute name="OC_FARNELL" value="unknown" x="89.408" y="27.432" size="1.778" layer="27" display="off"/>
+<attribute name="MF" value="" x="89.408" y="27.432" size="1.778" layer="27" display="off"/>
 </element>
-<element name="TXD2_JUMPER" library="SparkFun-Connectors" package="1X02" value="" x="94.996" y="24.384" rot="R90"/>
-<element name="RXD2_JUMPER" library="SparkFun-Connectors" package="1X02" value="" x="80.772" y="24.638" rot="R90"/>
-<element name="J9" library="SparkFun-Connectors" package="1X02" value="" x="81.026" y="34.29" rot="R180"/>
+<element name="TXD2_JUMPER" library="SparkFun-Connectors" package="1X02" value="" x="96.774" y="25.908" rot="R90"/>
+<element name="RXD2_JUMPER" library="SparkFun-Connectors" package="1X02" value="" x="82.55" y="26.162" rot="R90"/>
+<element name="J9" library="SparkFun-Connectors" package="1X02" value="" x="82.804" y="35.814" rot="R180"/>
 <element name="JP2" library="adafruit" package="2X14-CLEANBIG" value="" x="71.374" y="58.928" rot="R270"/>
 <element name="R31" library="SparkFun-Resistors" package="0603-RES" value="0" x="76.454" y="62.738" rot="R180">
 <attribute name="PROD_ID" value="RES-08595" x="76.454" y="62.738" size="1.778" layer="27" rot="R180" display="off"/>
@@ -2565,25 +2565,25 @@ design rules under a new name.</description>
 <contactref element="IC3" pad="12"/>
 <contactref element="RXD2_JUMPER" pad="1"/>
 <contactref element="IC5" pad="1"/>
-<wire x1="80.772" y1="24.638" x2="83.82" y2="22.098" width="0" layer="19" extent="1-1"/>
-<wire x1="51.918" y1="34.4424" x2="80.772" y2="24.638" width="0" layer="19" extent="1-1"/>
+<wire x1="82.55" y1="26.162" x2="85.598" y2="23.622" width="0" layer="19" extent="1-1"/>
+<wire x1="51.918" y1="34.4424" x2="82.55" y2="26.162" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="RXD3">
 <contactref element="IC3" pad="63"/>
 <contactref element="J9" pad="1"/>
-<wire x1="52.418" y1="50.4424" x2="81.026" y2="34.29" width="0" layer="19" extent="1-1"/>
+<wire x1="52.418" y1="50.4424" x2="82.804" y2="35.814" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="TXD2">
 <contactref element="IC3" pad="13"/>
 <contactref element="TXD2_JUMPER" pad="1"/>
 <contactref element="IC5" pad="4"/>
-<wire x1="91.44" y1="22.098" x2="94.996" y2="24.384" width="0" layer="19" extent="1-1"/>
-<wire x1="52.418" y1="34.4424" x2="91.44" y2="22.098" width="0" layer="19" extent="1-1"/>
+<wire x1="93.218" y1="23.622" x2="96.774" y2="25.908" width="0" layer="19" extent="1-1"/>
+<wire x1="52.418" y1="34.4424" x2="93.218" y2="23.622" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="TXD3">
 <contactref element="IC3" pad="64"/>
 <contactref element="J9" pad="2"/>
-<wire x1="51.918" y1="50.4424" x2="78.486" y2="34.29" width="0" layer="19" extent="1-1"/>
+<wire x1="51.918" y1="50.4424" x2="80.264" y2="35.814" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="PC0">
 <contactref element="IC3" pad="53"/>
@@ -2689,12 +2689,12 @@ design rules under a new name.</description>
 <signal name="PA6">
 <contactref element="IC3" pad="72"/>
 <contactref element="IC5" pad="2"/>
-<wire x1="47.918" y1="50.4424" x2="86.36" y2="22.098" width="0" layer="19" extent="1-1"/>
+<wire x1="47.918" y1="50.4424" x2="88.138" y2="23.622" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="PA7">
 <contactref element="IC3" pad="71"/>
 <contactref element="IC5" pad="3"/>
-<wire x1="48.418" y1="50.4424" x2="88.9" y2="22.098" width="0" layer="19" extent="1-1"/>
+<wire x1="48.418" y1="50.4424" x2="90.678" y2="23.622" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="PL0">
 <contactref element="IC3" pad="35"/>
@@ -3072,15 +3072,15 @@ design rules under a new name.</description>
 <contactref element="J13" pad="1"/>
 <contactref element="TXD2_JUMPER" pad="2"/>
 <contactref element="IC5" pad="7"/>
-<wire x1="86.36" y1="29.718" x2="94.996" y2="26.924" width="0" layer="19" extent="1-1"/>
-<wire x1="84.074" y1="34.29" x2="86.36" y2="29.718" width="0" layer="19" extent="1-1"/>
+<wire x1="88.138" y1="31.242" x2="96.774" y2="28.448" width="0" layer="19" extent="1-1"/>
+<wire x1="85.852" y1="35.814" x2="88.138" y2="31.242" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="RXD2_OUT">
 <contactref element="J13" pad="2"/>
 <contactref element="RXD2_JUMPER" pad="2"/>
 <contactref element="IC5" pad="6"/>
-<wire x1="88.9" y1="29.718" x2="86.614" y2="34.29" width="0" layer="19" extent="1-1"/>
-<wire x1="80.772" y1="27.178" x2="88.9" y2="29.718" width="0" layer="19" extent="1-1"/>
+<wire x1="90.678" y1="31.242" x2="88.392" y2="35.814" width="0" layer="19" extent="1-1"/>
+<wire x1="82.55" y1="28.702" x2="90.678" y2="31.242" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="FB">
 <contactref element="IC4" pad="15"/>
