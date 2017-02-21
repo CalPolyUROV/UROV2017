@@ -1008,7 +1008,7 @@ design rules under a new name.</description>
 </element>
 <element name="JP2" library="pinhead" package="1X02" value="" x="60.96" y="46.99" rot="R180"/>
 <element name="U$3" library="HostlerLib" package="XT60" value="XT60" x="59.69" y="56.515" rot="R270"/>
-<element name="U$4" library="HostlerLib" package="XT60" value="XT60" x="47.625" y="6.985" rot="R180"/>
+<element name="U$4" library="HostlerLib" package="XT60" value="XT60" x="47.625" y="6.35" rot="R180"/>
 <element name="C15" library="buck33" package="0805" value="100nF" x="45.72" y="71.12">
 <attribute name="CAP" value="1.0E-7" x="45.72" y="71.12" size="0.8128" layer="27" display="off"/>
 <attribute name="ESR" value="0.28" x="45.72" y="71.12" size="0.8128" layer="27" display="off"/>
@@ -1270,10 +1270,10 @@ design rules under a new name.</description>
 <vertex x="46.355" y="17.78"/>
 <vertex x="46.355" y="10.16"/>
 <vertex x="47.625" y="8.89"/>
-<vertex x="47.625" y="5.08"/>
-<vertex x="49.53" y="3.175"/>
-<vertex x="52.705" y="3.175"/>
-<vertex x="55.245" y="5.715"/>
+<vertex x="47.625" y="4.445"/>
+<vertex x="49.53" y="2.54"/>
+<vertex x="52.705" y="2.54"/>
+<vertex x="55.245" y="5.08"/>
 <vertex x="55.245" y="8.255"/>
 <vertex x="55.88" y="8.89"/>
 <vertex x="61.595" y="8.89"/>
@@ -1447,10 +1447,10 @@ design rules under a new name.</description>
 <wire x1="53.975" y1="44.45" x2="53.9115" y2="44.3865" width="0.8128" layer="1"/>
 <wire x1="53.9115" y1="44.3865" x2="53.9115" y2="42.5323" width="0.8128" layer="1"/>
 <wire x1="53.9115" y1="42.5323" x2="53.975" y2="42.4688" width="0.8128" layer="1"/>
-<via x="52.705" y="46.99" extent="1-16" drill="0.6"/>
-<wire x1="53.0733" y1="46.99" x2="54.3433" y2="47.625" width="1.016" layer="1"/>
-<wire x1="52.705" y1="46.99" x2="59.69" y2="46.99" width="0.6096" layer="16"/>
-<wire x1="52.705" y1="46.99" x2="53.0733" y2="46.99" width="0.254" layer="1"/>
+<via x="53.34" y="46.99" extent="1-16" drill="0.6"/>
+<wire x1="53.34" y1="46.7233" x2="54.3433" y2="47.625" width="1.016" layer="1"/>
+<wire x1="53.34" y1="46.99" x2="59.69" y2="46.99" width="0.6096" layer="16"/>
+<wire x1="53.34" y1="46.99" x2="53.34" y2="46.7233" width="0.254" layer="1"/>
 </signal>
 <signal name="VSW">
 <contactref element="L3" pad="1"/>
