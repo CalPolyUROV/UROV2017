@@ -1,46 +1,52 @@
-//#include <Adafruit_BNO055.h>
 
 #include <Servo.h>
+#include <SoftwareSerial.h>
+#include <SPI.h>
+#include <Wire.h>
+
+#include "VectorMotors.h"
+#include "cameras.h"
 #include "Math.h"
 #include "Accelerometer.h"
 #include "dataStruc.h"
-//#include "QuadMotorShields.h"
 #include "gyroAccelerometer.h"
-#include <SoftwareSerial.h>
-#include <SPI.h>
-//#include "pressure.h"
-#include <Wire.h>
+
 //#include "ComsMasterArd.h"
-#include "VectorMotors.h"
-#include "cameras.h"
+//#include "pressure.h"
+//#include "QuadMotorShields.h"
 //#include "currentSensing.h"
 
 //#include "Adafruit_Sensor.h"
 //#include "Adafruit_BNO055.h"
+//#include <Adafruit_BNO055.h>
 //#include "imumaths.h"
 
 //Declarations for temp readings
-#include <OneWire.h>
+//#include <OneWire.h>
 
-#include "DallasTemperature.h"
+//#include "DallasTemperature.h"
  
 // Data wire is plugged into pin 26 on the Arduino
 #define ONE_WIRE_BUS 3
 
+//Serial baud rate, match with top side python's baud rate
+#define BAUD_RATE 9600
+
 // Setup a oneWire instance to communicate with any OneWire devices (not just Maxim/Dallas temperature ICs)
-OneWire oneWire(ONE_WIRE_BUS);
+//OneWire oneWire(ONE_WIRE_BUS);
 
 // Pass our oneWire reference to Dallas Temperature.
-DallasTemperature sensors(&oneWire);
+//DallasTemperature sensors(&oneWire);
 
-Adafruit_BNO055 bno = Adafruit_BNO055();
+//Adafruit_BNO055 bno = Adafruit_BNO055();
 
 
 
 //all pins used must be listed here! either as a variable to change quickly later or as a comment if it is in another file
 
-int serialWritePin = 2; //this is the pin to control whethgeter it is recieving or sending
-// SDA, SCL to Slave arduino
+/* this is the pin to control whethgeter it is recieving or sending
+ * SDA, SCL to Slave arduino */
+int serialWritePin = 2; 
 
 
 ///// Pins used by Quad Motor Shields //////
@@ -64,7 +70,9 @@ int serialWritePin = 2; //this is the pin to control whethgeter it is recieving 
 //
 //////////////////////////////////
 
-ComsMasterArd coms;
+/*ComsMasterArd can be used if we need to 
+ *communicate to slave Arduino via I2C*/
+//ComsMasterArd coms;
 //QuadMotorShields md;//Not being used anymore
 bool pressure = false;
 bool voltage = false;
@@ -84,14 +92,16 @@ float fast;
 uint16_t amperages[8] = {0};
 uint16_t* p_amperages;
 
-imu::Vector<3> euler;
+//imu::Vector<3> euler;
 
 
 
-//SoftwareSerial Serial3(14, 15);
+SoftwareSerial Serial3(14, 15);
 void setup() {
-	Serial3.begin(9600);   //the number in here is the baud rate, it is the communication speed, this must be matched in the python
-	Serial.begin(9600);     //it does not seem to work at lower baud rates 
+  /*Serial 3: Communication to topside python code through rs485*/
+	Serial3.begin(BAUD_RATE);   //the number in here is the baud rate, it is the communication speed, this must be matched in the python
+	/*Serial: Communication to Arduino Serial Console*/
+	Serial.begin(BAUD_RATE);     //it does not seem to work at lower baud rates 
 	pinMode(serialWritePin, OUTPUT);
 	pinMode(13, OUTPUT);
 	pinMode(4, OUTPUT);
@@ -106,24 +116,25 @@ void setup() {
   digitalWrite(6,LOW);
   digitalWrite(7,LOW); //Relay 1
 
-//delay(5000);
-  if(!bno.begin())
+
+  //to be replaced
+  /*if(!bno.begin())
   {
-    /* There was a problem detecting the BNO055 ... check your connections */
+    // There was a problem detecting the BNO055 ... check your connections
     Serial.print("Ooops, no BNO055 detected ... Check your wiring or I2C ADDR!");
     while(1);
-  }
+  }*/
 
-sensors.begin(); // IC Default 9 bit. If you have troubles consider upping it 12. 
+  //sensors.begin(); // IC Default 9 bit. If you have troubles consider upping it 12. 
 //Ups the delay giving the IC more time to process the temperature measurement
 
-Serial.println("Made it 1");
+  Serial.println("Made it 1");
   
 	digitalWrite(serialWritePin, LOW);
         motorSetup();
-        if(ypr){bno.setExtCrystalUse(true);}
+        //if(ypr){bno.setExtCrystalUse(true);}
 
-Serial.println("Made it 1");
+  Serial.println("Made it 1");
 
 }
 
@@ -188,12 +199,12 @@ void processInput(Input i){
 void writeToCommand(Input i){
   Serial3.print("STR");
   int lines = 0;
-  if (pressure) lines += 2;
+  //if (pressure) lines += 2;
   if (voltage) lines += 2;
-  if (temperature) lines += 2;
+  //if (temperature) lines += 2;
   if (depth) lines += 2;
   if (accel) lines += 4;
-  if (ypr) lines += 6;
+  //if (ypr) lines += 6;
   String numberOfLines = String(lines);
   int counter = 0;
   while ((counter + numberOfLines.length()) != 3) {
@@ -202,10 +213,10 @@ void writeToCommand(Input i){
   }
   Serial3.print(numberOfLines); //print the number of lines of input the python program can read in three digits
   if (pressure) {
-	  Serial3.println("PSR"); //tell it the next line is Pressure
-    coms.sendSlaveCmd(GET_PRES);
-	  Serial3.print(coms.getSlaveData());
-	  Serial3.println(" mbars");
+	  //Serial3.println("PSR"); //tell it the next line is Pressure
+    //coms.sendSlaveCmd(GET_PRES);
+	  //Serial3.print(coms.getSlaveData());
+	  //Serial3.println(" mbars");
   }
   if (voltage) {
 	  Serial3.println("VLT"); //tell it the next line is Power info
@@ -214,15 +225,13 @@ void writeToCommand(Input i){
   }
   if (temperature) {
 	  
-	  Serial3.println("TMP"); //tell it the next line is Temperature
+	  //Serial3.println("TMP"); //tell it the next line is Temperature
     //coms.sendSlaveCmd(GET_TEMP);
-    sensors.requestTemperatures(); // Send the command to get temperatures
-    fast = (sensors.getTempCByIndex(0));
-	  Serial3.println(fast);
-	  //Serial3.println(((float)analogRead(A0)/(2.048))-273.15);
-	  //Serial3.print(coms.getSlaveData());
-	  //Serial3.println(" degrees C");
+    //sensors.requestTemperatures(); // Send the command to get temperatures
+    //fast = (sensors.getTempCByIndex(0));
+	  //Serial3.println(fast);
   }
+  /*
   if (ypr) {
 
     euler = bno.getVector(Adafruit_BNO055::VECTOR_EULER);
@@ -248,7 +257,7 @@ void writeToCommand(Input i){
     //coms.sendSlaveCmd(GET_YAW);
     //Serial.println("YAW");
     //yaw = coms.getSlaveData();
-    /*
+    
     Serial.println(yaw);
     //Serial3.println(coms.getSlaveData());
     
@@ -259,9 +268,9 @@ void writeToCommand(Input i){
     coms.sendSlaveCmd(GET_ROL);
     Serial.println("ROL");
     Serial.println(coms.getSlaveData());
-    */
+    
     }
-  }
+  }*/
   if (accel) {
 	  Serial3.println("ACL"); //tell it the next line is Accelerometer
 	  Serial3.print("Accel: X: ");
@@ -286,8 +295,8 @@ void writeToCommand(Input i){
   }
   if (depth) {
 	  Serial3.println("DPT"); //tell it the next line is Depth
-    coms.sendSlaveCmd(GET_DEPT);
-	  Serial3.print(coms.getSlaveData());
+    //coms.sendSlaveCmd(GET_DEPT);
+	  //Serial3.print(coms.getSlaveData());
 	  Serial3.println(" feet");
   }
 }
@@ -315,10 +324,11 @@ void loop() {
         waitForStart();
         Input i = readBuffer();
         digitalWrite(serialWritePin, HIGH);
-        if(debug==true)debugInput(i);
+        if (debug==true)
+          debugInput(i);
         writeToCommand(i); //this is where the code to write back to topside goes.
 		    Serial3.flush();
-        sensors.requestTemperatures();
+        //sensors.requestTemperatures();
         delay(50);         //this delay allows for hardware serial to work with rs485
         digitalWrite(serialWritePin, LOW);
         
