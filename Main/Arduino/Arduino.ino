@@ -37,10 +37,6 @@
 // Pass our oneWire reference to Dallas Temperature.
 //DallasTemperature sensors(&oneWire);
 
-//Adafruit_BNO055 bno = Adafruit_BNO055();
-
-
-
 //all pins used must be listed here! either as a variable to change quickly later or as a comment if it is in another file
 
 /* this is the pin to control whethgeter it is recieving or sending
