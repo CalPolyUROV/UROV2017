@@ -1,3 +1,5 @@
+#include <Adafruit_BNO055.h>
+
 
 #include <Servo.h>
 #include <SoftwareSerial.h>
@@ -16,9 +18,9 @@
 //#include "QuadMotorShields.h"
 //#include "currentSensing.h"
 
-#include "Adafruit_Sensor.h"
-#include "Adafruit_BNO055.h"
-#include "imumaths.h"
+//#include "Adafruit_Sensor.h"
+//#include "Adafruit_BNO055.h"
+//#include "utility/imumaths.h"
 
 //Declarations for temp readings
 //#include <OneWire.h>
@@ -36,6 +38,10 @@
 
 // Pass our oneWire reference to Dallas Temperature.
 //DallasTemperature sensors(&oneWire);
+
+//Adafruit_BNO055 bno = Adafruit_BNO055();
+
+
 
 //all pins used must be listed here! either as a variable to change quickly later or as a comment if it is in another file
 
@@ -84,17 +90,17 @@ sensors_event_t event;
 int yaw;
 int pch;
 int rol;
-float accel[3];
+float accelData[3];
 
 float fast;
 
 uint16_t amperages[8] = {0};
 uint16_t* p_amperages;
 
-SoftwareSerial Serial3(14, 15);
+SoftwareSerial Ser3(14, 15);
 void setup() {
   /*Serial 3: Communication to topside python code through rs485*/
-  Serial3.begin(BAUD_RATE);   //the number in here is the baud rate, it is the communication speed, this must be matched in the python
+  Ser3.begin(BAUD_RATE);   //the number in here is the baud rate, it is the communication speed, this must be matched in the python
   /*Serial: Communication to Arduino Serial Console*/
   Serial.begin(BAUD_RATE);     //it does not seem to work at lower baud rates
   pinMode(serialWritePin, OUTPUT);
@@ -131,7 +137,7 @@ void setup() {
 
 //looks cleaner than the empty while loop being everywhere in the code
 void wait() {
-  while (!Serial3.available())
+  while (!Ser3.available())
     ;
 }
 
@@ -141,11 +147,11 @@ void wait() {
 void waitForStart() {
   while (true) {
     wait();
-    if ('S' == Serial3.read()) {
+    if ('S' == Ser3.read()) {
       wait();
-      if ('T' == Serial3.read()) {
+      if ('T' == Ser3.read()) {
         wait();
-        if ('R' == Serial3.read()) {
+        if ('R' == Ser3.read()) {
           break;
         }
       }
@@ -156,24 +162,24 @@ void waitForStart() {
 Input readBuffer() {
   Input input;
   wait();//makes sure that a byte of data is not missed
-  input.buttons1 = Serial3.read();
+  input.buttons1 = Ser3.read();
   wait();
-  input.buttons2 = Serial3.read();
+  input.buttons2 = Ser3.read();
   wait();
-  input.primaryX = Serial3.parseInt();
-  Serial3.read();
+  input.primaryX = Ser3.parseInt();
+  Ser3.read();
   wait();
-  input.primaryY = Serial3.parseInt();
-  Serial3.read();
+  input.primaryY = Ser3.parseInt();
+  Ser3.read();
   wait();
-  input.secondaryX = Serial3.parseInt();
-  Serial3.read();
+  input.secondaryX = Ser3.parseInt();
+  Ser3.read();
   wait();
-  input.secondaryY = Serial3.parseInt();
-  Serial3.read();
+  input.secondaryY = Ser3.parseInt();
+  Ser3.read();
   wait();
-  input.triggers = Serial3.parseInt();
-  Serial3.read();
+  input.triggers = Ser3.parseInt();
+  Ser3.read();
   return input;
 }
 void processInput(Input i) {
@@ -196,7 +202,7 @@ void processInput(Input i) {
 }
 
 void writeToCommand(Input i) {
-  Serial3.print("STR");
+  Ser3.print("STR");
   int lines = 0;
   //if (pressure) lines += 2;
   if (voltage) lines += 2;
@@ -207,28 +213,28 @@ void writeToCommand(Input i) {
   String numberOfLines = String(lines);
   int counter = 0;
   while ((counter + numberOfLines.length()) != 3) {
-    Serial3.print("0");
+    Ser3.print("0");
     counter++;
   }
-  Serial3.print(numberOfLines); //print the number of lines of input the python program can read in three digits
+  Ser3.print(numberOfLines); //print the number of lines of input the python program can read in three digits
   if (pressure) {
-    //Serial3.println("PSR"); //tell it the next line is Pressure
+    //Ser3.println("PSR"); //tell it the next line is Pressure
     //coms.sendSlaveCmd(GET_PRES);
-    //Serial3.print(coms.getSlaveData());
-    //Serial3.println(" mbars");
+    //Ser3.print(coms.getSlaveData());
+    //Ser3.println(" mbars");
   }
   if (voltage) {
-    Serial3.println("VLT"); //tell it the next line is Power info
-    Serial3.println( (((float)(analogRead(A1)) * (5.0 / 1023.0)) - 2.52)   / .066 );
-    //Serial3.println(" amps");
+    Ser3.println("VLT"); //tell it the next line is Power info
+    Ser3.println( (((float)(analogRead(A1)) * (5.0 / 1023.0)) - 2.52)   / .066 );
+    //Ser3.println(" amps");
   }
   if (temperature) {
 
-    //Serial3.println("TMP"); //tell it the next line is Temperature
+    //Ser3.println("TMP"); //tell it the next line is Temperature
     //coms.sendSlaveCmd(GET_TEMP);
     //sensors.requestTemperatures(); // Send the command to get temperatures
     //fast = (sensors.getTempCByIndex(0));
-    //Serial3.println(fast);
+    //Ser3.println(fast);
   }
 
   bno.getEvent(&event);
@@ -236,28 +242,28 @@ void writeToCommand(Input i) {
   yaw = event.orientation.x;
   rol = event.orientation.z;
   imu::Vector<3> linearaccel = bno.getVector(Adafruit_BNO055::VECTOR_LINEARACCEL);
-  accel[0] = linearaccel[0];
-  accel[1] = linearaccel[1];
-  accel[2] = linearaccel[2];
+  accelData[0] = linearaccel[0];
+  accelData[1] = linearaccel[1];
+  accelData[2] = linearaccel[2];
   /*
     if (ypr) {
 
     euler = bno.getVector(Adafruit_BNO055::VECTOR_EULER);
 
     //coms.sendSlaveCmd(GET_YAW);
-    Serial3.println("YAW");
-    Serial3.println((int)(euler.x()));
-    //Serial3.println(coms.getSlaveData());
+    Ser3.println("YAW");
+    Ser3.println((int)(euler.x()));
+    //Ser3.println(coms.getSlaveData());
 
     //coms.sendSlaveCmd(GET_PCH);
-    Serial3.println("PCH");
-    Serial3.println((int)(euler.y()));
+    Ser3.println("PCH");
+    Ser3.println((int)(euler.y()));
 
     Serial.println((int)(euler.y()));
 
     //coms.sendSlaveCmd(GET_ROL);
-    Serial3.println("ROL");
-    Serial3.println((int)(euler.z()));
+    Ser3.println("ROL");
+    Ser3.println((int)(euler.z()));
 
 
     if(debug){
@@ -267,7 +273,7 @@ void writeToCommand(Input i) {
     //yaw = coms.getSlaveData();
 
     Serial.println(yaw);
-    //Serial3.println(coms.getSlaveData());
+    //Ser3.println(coms.getSlaveData());
 
     coms.sendSlaveCmd(GET_PCH);
     Serial.println("PCH");
@@ -280,25 +286,25 @@ void writeToCommand(Input i) {
     }
     }*/
   if (accel) {
-    Serial3.println("ACL"); //tell it the next line is Accelerometer
-    Serial3.print("Accel: X: ");
-    Serial3.print(accel[0]));
-    Serial3.print(" Y: ");
-    Serial3.print(accel[1]);
-    Serial3.print(" Z: ");
-    Serial3.print(accel[2]);
-    Serial3.print("\nGyro: X: ");
-    Serial3.print(yaw);
-    Serial3.print(" Y: ");
-    Serial3.print(pch);
-    Serial3.print(" Z: ");
-    Serial3.print(rol);
+    Ser3.println("ACL"); //tell it the next line is Accelerometer
+    Ser3.print("Accel: X: ");
+    Ser3.print(accelData[0]);
+    Ser3.print(" Y: ");
+    Ser3.print(accelData[1]);
+    Ser3.print(" Z: ");
+    Ser3.print(accelData[2]);
+    Ser3.print("\nGyro: X: ");
+    Ser3.print(yaw);
+    Ser3.print(" Y: ");
+    Ser3.print(pch);
+    Ser3.print(" Z: ");
+    Ser3.print(rol);
   }
   if (depth) {
-    Serial3.println("DPT"); //tell it the next line is Depth
+    Ser3.println("DPT"); //tell it the next line is Depth
     //coms.sendSlaveCmd(GET_DEPT);
-    //Serial3.print(coms.getSlaveData());
-    Serial3.println(" feet");
+    //Ser3.print(coms.getSlaveData());
+    Ser3.println(" feet");
   }
 }
 void debugInput(Input i) {
@@ -320,7 +326,7 @@ void debugInput(Input i) {
 }
 
 void loop() {
-  if (Serial3.available()) {
+  if (Ser3.available()) {
     //digitalWrite(13, HIGH);
     waitForStart();
     Input i = readBuffer();
@@ -328,7 +334,7 @@ void loop() {
     if (debug == true)
       debugInput(i);
     writeToCommand(i); //this is where the code to write back to topside goes.
-    Serial3.flush();
+    Ser3.flush();
     //sensors.requestTemperatures();
     delay(50);         //this delay allows for hardware serial to work with rs485
     digitalWrite(serialWritePin, LOW);

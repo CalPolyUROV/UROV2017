@@ -45,7 +45,7 @@ void loop() {
       Serial.print("\tLeft");
     }
     else if (below(accel[1], -1 )) {
-      Serial.print("\Right");
+      Serial.print("\tRight");
     }
     if (greater(accel[2], 1 )) {
       Serial.print("\tUp");
@@ -54,5 +54,5 @@ void loop() {
       Serial.print("\tDown");
     }
     Serial.println("");
-  }
+  
 }
