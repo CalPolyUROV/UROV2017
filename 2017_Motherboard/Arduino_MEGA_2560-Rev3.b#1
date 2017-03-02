@@ -1704,6 +1704,33 @@ distributor Buerklin 78F2475</description>
 </package>
 </packages>
 </library>
+<library name="SparkFun-Passives">
+<description>&lt;h3&gt;SparkFun Electronics' preferred foot prints&lt;/h3&gt;
+In this library you'll find resistors, capacitors, inductors, test points, jumper pads, etc.&lt;br&gt;&lt;br&gt;
+We've spent an enormous amount of time creating and checking these footprints and parts, but it is the end user's responsibility to ensure correctness and suitablity for a given componet or application. If you enjoy using this library, please buy one of our products at www.sparkfun.com.
+&lt;br&gt;&lt;br&gt;
+&lt;b&gt;Licensing:&lt;/b&gt; Creative Commons ShareAlike 4.0 International - https://creativecommons.org/licenses/by-sa/4.0/ 
+&lt;br&gt;&lt;br&gt;
+You are welcome to use this library for commercial purposes. For attribution, we ask that when you begin to sell your device using our footprint, you email us with a link to the product being sold. We want bragging rights that we helped (in a very small part) to create your 8th world wonder. We would like the opportunity to feature your device on our homepage.</description>
+<packages>
+<package name="0603-RES">
+<wire x1="-1.473" y1="0.983" x2="1.473" y2="0.983" width="0.0508" layer="39"/>
+<wire x1="1.473" y1="0.983" x2="1.473" y2="-0.983" width="0.0508" layer="39"/>
+<wire x1="1.473" y1="-0.983" x2="-1.473" y2="-0.983" width="0.0508" layer="39"/>
+<wire x1="-1.473" y1="-0.983" x2="-1.473" y2="0.983" width="0.0508" layer="39"/>
+<wire x1="-0.356" y1="0.432" x2="0.356" y2="0.432" width="0.1016" layer="51"/>
+<wire x1="-0.356" y1="-0.419" x2="0.356" y2="-0.419" width="0.1016" layer="51"/>
+<smd name="1" x="-0.85" y="0" dx="1.1" dy="1" layer="1"/>
+<smd name="2" x="0.85" y="0" dx="1.1" dy="1" layer="1"/>
+<text x="-0.889" y="0.762" size="0.4064" layer="25" font="vector">&gt;NAME</text>
+<text x="-1.016" y="-1.143" size="0.4064" layer="27" font="vector">&gt;VALUE</text>
+<rectangle x1="-0.8382" y1="-0.4699" x2="-0.3381" y2="0.4801" layer="51"/>
+<rectangle x1="0.3302" y1="-0.4699" x2="0.8303" y2="0.4801" layer="51"/>
+<rectangle x1="-0.1999" y1="-0.3" x2="0.1999" y2="0.3" layer="35"/>
+<rectangle x1="-0.2286" y1="-0.381" x2="0.2286" y2="0.381" layer="21"/>
+</package>
+</packages>
+</library>
 </libraries>
 <attributes>
 </attributes>
@@ -1900,10 +1927,6 @@ design rules under a new name.</description>
 <element name="IC1" library="linear" package="SOT223" value="NCP1117ST50T3G" x="15.414" y="11.096" smashed="yes" rot="R180">
 <attribute name="NAME" x="16.938" y="11.0452" size="1.27" layer="49" ratio="10" rot="R180"/>
 <attribute name="VALUE" x="19.1732" y="14.652" size="1.27" layer="27" rot="R270"/>
-</element>
-<element name="C3" library="SmartPrj" package="C0603-ROUND" value="100n" x="32.132" y="34.736" smashed="yes" rot="R180">
-<attribute name="NAME" x="33.021" y="33.466" size="1.27" layer="49" ratio="10" rot="R180"/>
-<attribute name="VALUE" x="30.1" y="35.244" size="1.27" layer="27" rot="R180"/>
 </element>
 <element name="C6" library="SmartPrj" package="C0603-ROUND" value="100n" x="30.805" y="3.871" smashed="yes">
 <attribute name="NAME" x="32.202" y="3.236" size="1.27" layer="49" ratio="10"/>
@@ -2162,6 +2185,9 @@ design rules under a new name.</description>
 </element>
 <element name="JP1" library="pinhead" package="2X05" value="" x="73.406" y="66.548" rot="R270"/>
 <element name="JP2" library="pinhead" package="2X09" value="" x="73.406" y="43.942" rot="R270"/>
+<element name="R35" library="SparkFun-Passives" package="0603-RES" value="" x="-18.796" y="-9.398">
+<attribute name="R35" value="1M" x="-18.796" y="-9.398" size="1.778" layer="27" display="off"/>
+</element>
 </elements>
 <signals>
 <signal name="+5V" class="3">
@@ -2230,7 +2256,6 @@ design rules under a new name.</description>
 <contactref element="X1" pad="1"/>
 <contactref element="X1" pad="3"/>
 <contactref element="IC1" pad="1"/>
-<contactref element="C3" pad="2"/>
 <contactref element="C6" pad="2"/>
 <contactref element="C2" pad="2"/>
 <contactref element="IC3" pad="11"/>
@@ -2311,7 +2336,7 @@ design rules under a new name.</description>
 <wire x1="3.302" y1="35.306" x2="4.318" y2="34.29" width="0.4064" layer="1"/>
 <wire x1="4.318" y1="34.29" x2="5.422" y2="34.29" width="0.4064" layer="1"/>
 <wire x1="5.422" y1="34.29" x2="5.588" y2="34.456" width="0.4064" layer="1"/>
-<polygon width="0.4064" layer="16">
+<polygon width="0.4064" layer="16" isolate="0.254" rank="2">
 <vertex x="-0.762" y="79.248"/>
 <vertex x="100.838" y="79.248"/>
 <vertex x="100.838" y="-0.762"/>
@@ -2391,7 +2416,6 @@ design rules under a new name.</description>
 <wire x1="8.89" y1="8.382" x2="8.636" y2="8.128" width="0.3048" layer="16"/>
 <wire x1="31.527" y1="9.744" x2="31.527" y2="9.367" width="0.3048" layer="1"/>
 <wire x1="31.527" y1="9.367" x2="33.02" y2="7.874" width="0.3048" layer="1"/>
-<wire x1="33.02" y1="7.874" x2="33.02" y2="6.619" width="0.3048" layer="1"/>
 <wire x1="33.02" y1="6.619" x2="31.655" y2="5.254" width="0.3048" layer="1"/>
 <wire x1="31.655" y1="5.254" x2="31.655" y2="3.91" width="0.3048" layer="1"/>
 <wire x1="31.655" y1="3.91" x2="31.694" y2="3.871" width="0.3048" layer="1"/>
@@ -2404,27 +2428,37 @@ design rules under a new name.</description>
 <via x="33.782" y="20.066" extent="1-16" drill="0.6"/>
 <wire x1="33.782" y1="20.066" x2="34.036" y2="19.812" width="0.6096" layer="16"/>
 <wire x1="34.036" y1="19.812" x2="34.29" y2="20.066" width="0.6096" layer="16"/>
+<contactref element="R35" pad="1"/>
 <wire x1="78.486" y1="58.078" x2="84.455" y2="59.2074" width="0" layer="19" extent="1-1"/>
 <wire x1="80.518" y1="64.77" x2="84.455" y2="59.2074" width="0" layer="19" extent="1-1"/>
+<wire x1="33.02" y1="6.619" x2="33.02" y2="7.874" width="0" layer="19" extent="1-1"/>
 <wire x1="82.384" y1="36.83" x2="78.994" y2="38.862" width="0" layer="19" extent="1-1"/>
 <wire x1="84.455" y1="34.3154" x2="82.384" y2="36.83" width="0" layer="19" extent="1-1"/>
 <wire x1="70.664" y1="15.2" x2="66.913" y2="16.892" width="0" layer="19" extent="1-1"/>
 <wire x1="70.664" y1="23.6" x2="66.913" y2="16.892" width="0" layer="19" extent="1-1"/>
 <wire x1="60.628" y1="58.612" x2="56.896" y2="67.818" width="0" layer="19" extent="1-1"/>
 <wire x1="60.673" y1="56.942" x2="60.628" y2="58.612" width="0" layer="19" extent="1-1"/>
-<wire x1="31.243" y1="34.736" x2="20.082" y2="25.923" width="0" layer="19" extent="1-1"/>
-<wire x1="40.862" y1="33.8944" x2="31.243" y2="34.736" width="0" layer="19" extent="1-1"/>
+<wire x1="49.362" y1="47.3944" x2="60.673" y2="56.942" width="0" layer="19" extent="1-1"/>
+<wire x1="40.862" y1="42.8944" x2="49.362" y2="47.3944" width="0" layer="19" extent="1-1"/>
+<wire x1="40.862" y1="33.8944" x2="40.862" y2="42.8944" width="0" layer="19" extent="1-1"/>
 <wire x1="47.862" y1="31.3944" x2="40.862" y2="33.8944" width="0" layer="19" extent="1-1"/>
-<wire x1="40.862" y1="42.8944" x2="40.862" y2="33.8944" width="0" layer="19" extent="1-1"/>
-<wire x1="49.362" y1="47.3944" x2="40.862" y2="42.8944" width="0" layer="19" extent="1-1"/>
 <wire x1="56.862" y1="36.3944" x2="47.862" y2="31.3944" width="0" layer="19" extent="1-1"/>
+<wire x1="-19.646" y1="-9.398" x2="8.636" y2="8.128" width="0" layer="19" extent="1-16"/>
 </signal>
 <signal name="AREF">
 <contactref element="IC3" pad="98"/>
-<contactref element="C3" pad="1"/>
 <contactref element="JP6" pad="3"/>
-<wire x1="33.021" y1="34.736" x2="40.862" y2="34.3944" width="0" layer="19" extent="1-1"/>
+<contactref element="IC2" pad="25"/>
+<contactref element="R35" pad="2"/>
+<polygon width="0.3048" layer="16" isolate="0.254">
+<vertex x="20.828" y="41.91"/>
+<vertex x="20.828" y="35.56"/>
+<vertex x="28.194" y="35.814"/>
+<vertex x="28.194" y="41.91"/>
+</polygon>
+<wire x1="14.155" y1="46.493" x2="40.862" y2="34.3944" width="0" layer="19" extent="1-1"/>
 <wire x1="70.476" y1="5.8" x2="40.862" y2="34.3944" width="0" layer="19" extent="1-1"/>
+<wire x1="-17.946" y1="-9.398" x2="14.155" y2="46.493" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="RESET">
 <contactref element="ICSP" pad="5"/>
@@ -3045,9 +3079,6 @@ design rules under a new name.</description>
 <wire x1="7.874" y1="51.816" x2="8.382" y2="52.324" width="0.4064" layer="1"/>
 <wire x1="8.382" y1="52.324" x2="14.136" y2="52.324" width="0.4064" layer="1"/>
 <wire x1="14.136" y1="52.324" x2="14.155" y2="52.343" width="0.4064" layer="1"/>
-</signal>
-<signal name="AGND">
-<contactref element="IC2" pad="25"/>
 </signal>
 <signal name="FTDI_CBUS0">
 <contactref element="IC2" pad="23"/>
