@@ -99,10 +99,16 @@ uint16_t* p_amperages;
 
 SoftwareSerial Ser3(14, 15);
 void setup() {
-  /*Serial 3: Communication to topside python code through rs485*/
-  Ser3.begin(BAUD_RATE);   //the number in here is the baud rate, it is the communication speed, this must be matched in the python
+  /*Serial 3: Communication to topside python code through rs485, match baud rate in python code*/
+  Ser3.begin(BAUD_RATE);
+  while(!Ser3) {
+    ;
+  }
   /*Serial: Communication to Arduino Serial Console*/
   Serial.begin(BAUD_RATE);     //it does not seem to work at lower baud rates
+  while(!Serial) {
+    ;
+  }
   pinMode(serialWritePin, OUTPUT);
   pinMode(13, OUTPUT);
   pinMode(4, OUTPUT);
@@ -125,13 +131,14 @@ void setup() {
   //sensors.begin(); // IC Default 9 bit. If you have troubles consider upping it 12.
   //Ups the delay giving the IC more time to process the temperature measurement
 
-  Serial.println("Made it 1");
+  Serial.println("Made it Serial 1");
+  Ser3.println("Made it Serial 3");
 
   digitalWrite(serialWritePin, LOW);
   motorSetup();
   //if(ypr){bno.setExtCrystalUse(true);}
 
-  Serial.println("Made it 1");
+  Serial.println("Made it here");
 
 }
 
@@ -146,12 +153,17 @@ void wait() {
 //prevent random bytes getting past
 void waitForStart() {
   while (true) {
+    Ser3.println("Waiting");
     wait();
+    Ser3.println("Recieved");
     if ('S' == Ser3.read()) {
+      Serial.println("Read S");
       wait();
       if ('T' == Ser3.read()) {
+        Serial.println("Read T");
         wait();
         if ('R' == Ser3.read()) {
+          Serial.println("Read R");
           break;
         }
       }
@@ -162,7 +174,9 @@ void waitForStart() {
 Input readBuffer() {
   Input input;
   wait();//makes sure that a byte of data is not missed
+  Serial.println("Reading...");
   input.buttons1 = Ser3.read();
+  Serial.println("Read a byte...");
   wait();
   input.buttons2 = Ser3.read();
   wait();
@@ -245,46 +259,7 @@ void writeToCommand(Input i) {
   accelData[0] = linearaccel[0];
   accelData[1] = linearaccel[1];
   accelData[2] = linearaccel[2];
-  /*
-    if (ypr) {
 
-    euler = bno.getVector(Adafruit_BNO055::VECTOR_EULER);
-
-    //coms.sendSlaveCmd(GET_YAW);
-    Ser3.println("YAW");
-    Ser3.println((int)(euler.x()));
-    //Ser3.println(coms.getSlaveData());
-
-    //coms.sendSlaveCmd(GET_PCH);
-    Ser3.println("PCH");
-    Ser3.println((int)(euler.y()));
-
-    Serial.println((int)(euler.y()));
-
-    //coms.sendSlaveCmd(GET_ROL);
-    Ser3.println("ROL");
-    Ser3.println((int)(euler.z()));
-
-
-    if(debug){
-
-    //coms.sendSlaveCmd(GET_YAW);
-    //Serial.println("YAW");
-    //yaw = coms.getSlaveData();
-
-    Serial.println(yaw);
-    //Ser3.println(coms.getSlaveData());
-
-    coms.sendSlaveCmd(GET_PCH);
-    Serial.println("PCH");
-    Serial.println(coms.getSlaveData());
-
-    coms.sendSlaveCmd(GET_ROL);
-    Serial.println("ROL");
-    Serial.println(coms.getSlaveData());
-
-    }
-    }*/
   if (accel) {
     Ser3.println("ACL"); //tell it the next line is Accelerometer
     Ser3.print("Accel: X: ");
@@ -326,13 +301,14 @@ void debugInput(Input i) {
 }
 
 void loop() {
-  if (Ser3.available()) {
+  //if (Ser3.available()) {
     //digitalWrite(13, HIGH);
     waitForStart();
     Input i = readBuffer();
     digitalWrite(serialWritePin, HIGH);
     if (debug == true)
       debugInput(i);
+    Serial.println("Writing to surface");
     writeToCommand(i); //this is where the code to write back to topside goes.
     Ser3.flush();
     //sensors.requestTemperatures();
@@ -340,6 +316,9 @@ void loop() {
     digitalWrite(serialWritePin, LOW);
 
     processInput(i);//gives the inputs to the motors
-  }
+  /*}
+  else {
+    Ser3.println("Not writing to surface");
+  }*/
 }
 
