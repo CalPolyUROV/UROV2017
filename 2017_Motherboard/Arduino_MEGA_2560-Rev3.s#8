@@ -22260,6 +22260,12 @@ distributor Buerklin 78F2475</description>
 <pinref part="IC4" gate="N1" pin="V+"/>
 <wire x1="457.2" y1="106.68" x2="457.2" y2="109.22" width="0.1524" layer="91"/>
 <label x="457.2" y="109.22" size="1.778" layer="95" rot="R90" xref="yes"/>
+<wire x1="457.2" y1="106.68" x2="492.76" y2="106.68" width="0.1524" layer="91"/>
+<junction x="457.2" y="106.68"/>
+<wire x1="492.76" y1="106.68" x2="492.76" y2="66.04" width="0.1524" layer="91"/>
+<pinref part="IC4" gate="N1" pin="!SHDN"/>
+<wire x1="459.74" y1="68.58" x2="459.74" y2="66.04" width="0.1524" layer="91"/>
+<wire x1="492.76" y1="66.04" x2="459.74" y2="66.04" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="IC5" gate="G$1" pin="VCC"/>
@@ -22598,13 +22604,8 @@ distributor Buerklin 78F2475</description>
 </segment>
 <segment>
 <pinref part="IC4" gate="N1" pin="V-"/>
-<wire x1="457.2" y1="68.58" x2="457.2" y2="66.04" width="0.1524" layer="91"/>
 <label x="457.2" y="63.5" size="1.778" layer="95" rot="R270" xref="yes"/>
-<pinref part="IC4" gate="N1" pin="!SHDN"/>
-<wire x1="457.2" y1="66.04" x2="457.2" y2="63.5" width="0.1524" layer="91"/>
-<wire x1="459.74" y1="68.58" x2="459.74" y2="66.04" width="0.1524" layer="91"/>
-<wire x1="459.74" y1="66.04" x2="457.2" y2="66.04" width="0.1524" layer="91"/>
-<junction x="457.2" y="66.04"/>
+<wire x1="457.2" y1="68.58" x2="457.2" y2="63.5" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="IC4" gate="N1" pin="FB"/>

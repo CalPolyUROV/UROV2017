@@ -22249,6 +22249,8 @@ distributor Buerklin 78F2475</description>
 <wire x1="40.64" y1="48.26" x2="40.64" y2="50.8" width="0.1524" layer="91"/>
 <junction x="35.56" y="48.26"/>
 <pinref part="P+12" gate="1" pin="+5V"/>
+<pinref part="JP2" gate="A" pin="1"/>
+<pinref part="JP2" gate="A" pin="2"/>
 </segment>
 <segment>
 <pinref part="J11" gate="G$1" pin="1"/>

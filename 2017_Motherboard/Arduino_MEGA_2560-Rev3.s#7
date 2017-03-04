@@ -21819,6 +21819,8 @@ distributor Buerklin 78F2475</description>
 <part name="RXD2_JUMPER" library="SparkFun-Connectors" deviceset="M02" device="PTH"/>
 <part name="J9" library="SparkFun-Connectors" deviceset="M02" device="PTH"/>
 <part name="JP2" library="adafruit" deviceset="PINHD-2X14" device="-CB"/>
+<part name="R31" library="SparkFun-Resistors" deviceset="30.1KOHM1/10W1%(0603)" device="" value="0"/>
+<part name="R32" library="SparkFun-Resistors" deviceset="30.1KOHM1/10W1%(0603)" device="" value="inf"/>
 </parts>
 <sheets>
 <sheet>
@@ -22128,7 +22130,7 @@ distributor Buerklin 78F2475</description>
 <instance part="R30" gate="G$1" x="68.58" y="-55.88"/>
 <instance part="J13" gate="G$1" x="477.52" y="-88.9" rot="R180"/>
 <instance part="IC4" gate="N1" x="457.2" y="99.06"/>
-<instance part="VIDEO_OUT" gate="G$1" x="485.14" y="91.44" rot="MR0"/>
+<instance part="VIDEO_OUT" gate="G$1" x="487.68" y="91.44" rot="MR0"/>
 <instance part="VIDEO_IN" gate="A" x="416.56" y="91.44" smashed="yes" rot="MR0">
 <attribute name="VALUE" x="422.91" y="78.74" size="1.778" layer="96" rot="MR0"/>
 </instance>
@@ -22140,6 +22142,8 @@ distributor Buerklin 78F2475</description>
 <instance part="RXD2_JUMPER" gate="G$1" x="464.82" y="-68.58" rot="R180"/>
 <instance part="J9" gate="G$1" x="73.66" y="10.16"/>
 <instance part="JP2" gate="A" x="22.86" y="71.12" rot="R180"/>
+<instance part="R31" gate="G$1" x="474.98" y="86.36" rot="R270"/>
+<instance part="R32" gate="G$1" x="474.98" y="73.66" rot="R270"/>
 </instances>
 <busses>
 </busses>
@@ -22608,15 +22612,14 @@ distributor Buerklin 78F2475</description>
 <wire x1="457.2" y1="68.58" x2="457.2" y2="63.5" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="IC4" gate="N1" pin="FB"/>
-<wire x1="469.9" y1="86.36" x2="472.44" y2="86.36" width="0.1524" layer="91"/>
-<wire x1="472.44" y1="86.36" x2="472.44" y2="83.82" width="0.1524" layer="91"/>
-<label x="472.44" y="83.82" size="1.778" layer="95" rot="R270" xref="yes"/>
+<label x="480.06" y="66.04" size="1.778" layer="95" rot="R270" xref="yes"/>
 <pinref part="VIDEO_OUT" gate="G$1" pin="2"/>
-<wire x1="482.6" y1="88.9" x2="477.52" y2="88.9" width="0.1524" layer="91"/>
-<wire x1="477.52" y1="88.9" x2="477.52" y2="86.36" width="0.1524" layer="91"/>
-<wire x1="477.52" y1="86.36" x2="472.44" y2="86.36" width="0.1524" layer="91"/>
-<junction x="472.44" y="86.36"/>
+<wire x1="485.14" y1="88.9" x2="480.06" y2="88.9" width="0.1524" layer="91"/>
+<wire x1="480.06" y1="88.9" x2="480.06" y2="68.58" width="0.1524" layer="91"/>
+<pinref part="R32" gate="G$1" pin="2"/>
+<wire x1="480.06" y1="68.58" x2="480.06" y2="66.04" width="0.1524" layer="91"/>
+<wire x1="474.98" y1="68.58" x2="480.06" y2="68.58" width="0.1524" layer="91"/>
+<junction x="480.06" y="68.58"/>
 </segment>
 <segment>
 <pinref part="VIDEO_IN_GND" gate="A" pin="1"/>
@@ -24074,8 +24077,11 @@ distributor Buerklin 78F2475</description>
 <net name="VIDEO_OUT" class="0">
 <segment>
 <pinref part="IC4" gate="N1" pin="OUT"/>
-<wire x1="469.9" y1="91.44" x2="482.6" y2="91.44" width="0.1524" layer="91"/>
+<wire x1="469.9" y1="91.44" x2="474.98" y2="91.44" width="0.1524" layer="91"/>
 <pinref part="VIDEO_OUT" gate="G$1" pin="1"/>
+<pinref part="R31" gate="G$1" pin="1"/>
+<wire x1="474.98" y1="91.44" x2="485.14" y2="91.44" width="0.1524" layer="91"/>
+<junction x="474.98" y="91.44"/>
 </segment>
 </net>
 <net name="TXD2_OUT" class="0">
@@ -24110,6 +24116,13 @@ distributor Buerklin 78F2475</description>
 <pinref part="IC5" gate="G$1" pin="A"/>
 <wire x1="431.8" y1="-93.98" x2="429.26" y2="-93.98" width="0.1524" layer="91"/>
 <label x="431.8" y="-93.98" size="1.778" layer="95" xref="yes"/>
+</segment>
+</net>
+<net name="N$17" class="0">
+<segment>
+<pinref part="R32" gate="G$1" pin="1"/>
+<pinref part="R31" gate="G$1" pin="2"/>
+<wire x1="474.98" y1="78.74" x2="474.98" y2="81.28" width="0.1524" layer="91"/>
 </segment>
 </net>
 </nets>
