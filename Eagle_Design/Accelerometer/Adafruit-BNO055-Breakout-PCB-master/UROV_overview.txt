@@ -1,0 +1,10 @@
+Pinout Description:
+VIN: 3.3-5.0V power supply
+3V0: 3.3V output with 50mA
+GND: ground
+SCL: I2C
+SDA: I2C
+RST: Reset [toggle low to high] do not use (it will recalibrate)
+INT: Interrupt signal (for software maybe)
+ADR: 3V = 0x29, 0V = 0x28
+PSO and PS1: I2C or UART selection, leave unconnected
