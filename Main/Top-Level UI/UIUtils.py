@@ -9,7 +9,7 @@ class UI:
     #@retval: None
     def __init__(self):
         pygame.init()                                           #initializes the UI
-        self.screen = pygame.display.set_mode((1000, 500))
+        self.screen = pygame.display.set_mode((1000, 750), DOUBLEBUF)
         pygame.display.set_caption("Cal Poly Control Center")
 
         self.background = pygame.Surface(self.screen.get_size())          # Set background to white.
@@ -69,8 +69,10 @@ class UI:
 
     #@retval: None
     def blit(self, obj, objPos):
-
-        self.background.blit(obj, objPos)
+        try:
+            self.background.blit(obj, objPos)
+        except:
+            print "Couldn't blit object!"
 
     #Draws a rectangle on the screen
 
@@ -90,3 +92,7 @@ class UI:
         for event in pygame.event.get():
             if event.type == QUIT:
                 quit()
+        for event in pygame.event.get(pygame.KEYDOWN):
+            if event.type == pygame.KEYDOWN:
+                if event.key == K_q or event.key == K_ESCAPE:
+                    quit()

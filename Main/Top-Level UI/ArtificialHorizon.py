@@ -48,6 +48,11 @@ class AH:
         self.UI.textwrite(self.rol.tytlePosX, self.rol.posY + Y_CONST, "RCom:")
 
         self.writeOffset()
+        
+        self.cover = pygame.Surface((500,250))          # Set background to white.
+        self.cover = self.cover.convert()
+        self.cover.fill((255, 255, 255))
+        
         self.update()
 
     #writes the offset data on screen just under the YPR data
@@ -108,6 +113,8 @@ class AH:
                 markerTransPos.centerx = 750
                 markerTransPos.centery = 264
                 self.UI.blit(markerTrans, markerTransPos)
+            
+                self.UI.blit(self.cover, (500, 500))
 
         except:
             print "Crashed while loading AH images"

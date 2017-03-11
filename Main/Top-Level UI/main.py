@@ -1,6 +1,13 @@
 import serial
 import serial.tools.list_ports
 
+import pygame.camera
+from pygame.locals import *
+
+import threading
+
+import sys
+
 from UIUtils import *
 
 from time import sleep
@@ -15,10 +22,35 @@ __author__ = 'johna, tina and luca'
 #version 3.1
 
 POS_PORTS_MULTI = 65
+if sys.platform.startswith('linux') or sys.platform.startswith('cygwin'):
+    POS_PORTS_MULTI = 120
+
 POS_PORTS_X = 135
 POS_PORTS_Y = 0
 CON_TO_X = 130
-CON_TO_Y = 20
+CON_TO_Y = 15
+
+DEVICE = "/dev/video0"
+#DEVICE = "/dev/bus/usb/001/008"
+
+class cam(threading.Thread):
+    def __init__(self, camera, snapshot, UI):
+        self.UI = UI
+        self.camera = camera
+        self.snapshot = snapshot
+        threading.Thread.__init__(self)
+
+    def run(self):
+        while True:
+            try:
+                if self.camera.query_image():
+                    self.snapshot = self.camera.get_image(self.snapshot)
+                    self.UI.blit(self.snapshot, (0, 330))
+                    self.UI.update()
+                    self.UI.shouldQuit()
+                    sleep(0.03)
+            except:
+                pass
 
 start = 0
 
@@ -29,26 +61,32 @@ p_factor = 1
 no_serial = False
 
 ports = serial_finder.serial_ports()
+port = None
 
 UI = UI()
 
 cont = Controller(UI)
 
 UI.textwrite(175, 250, "Please connect the serial device", 10, 10, 10, 50)
+UI.textwrite(250, 300, "Press X for test mode", 10, 10, 10, 50)
 
 UI.update()                         #Updates display
 
-while(len(ports) == 0):
+while (len(ports) == 0 or port == None):
     ports = serial_finder.serial_ports()
+    port = serial_finder.find_port(ports)
     UI.shouldQuit()
+    cont.update()
+    if(cont.getButton(2)):
+        no_serial = True
+        break
 
 UI.textdelete(175, 250, "Please connect the serial device", 50)
+UI.textdelete(250, 300, "Press X for test mode", 50)
 UI.textwrite(0, POS_PORTS_Y, "Possible ports: ")
 
 for i in range(len(ports)):
     UI.textwrite(POS_PORTS_X + POS_PORTS_MULTI * i, POS_PORTS_Y, str(ports[i]))
-
-port = serial_finder.find_port(ports)
 
 UI.textwrite(0, CON_TO_Y, "Connected To: ")
 UI.textwrite(CON_TO_X, CON_TO_Y, str(port))
@@ -62,31 +100,42 @@ outbound = serial.Serial(
     timeout=0.1
 )
 
-UI.textwrite(0, 450, "Power factor:")
+UI.textwrite(0, 310, "Power factor:")
 
-dataObjs = [DataHandling(UI, "PSR", "Pressure", "mbars", 90),
-            DataHandling(UI, "VLT", "Current", "amps", 110),
-            DataHandling(UI, "TMP", "Temperature", "degrees C",130),
-            DataHandling(UI, "DPT", "Depth", "feet", 150),
-            MotHandling(UI, "MOT", "M1", "", 250),
-            MotHandling(UI, "MOT", "M2", "", 270),
-            MotHandling(UI, "MOT", "M3", "", 290),
-            MotHandling(UI, "MOT", "M4", "", 310),
-            MotHandling(UI, "MOT", "M5", "", 330),
-            MotHandling(UI, "MOT", "M6", "", 350),
-            YPRHandling(UI, "YAW", "Y", "", 170, 0, 10),
-            YPRHandling(UI, "PCH", "P", "", 170, 100, 10),
-            YPRHandling(UI, "ROL", "R", "", 170, 200, 10)]
+dataObjs = [DataHandling(UI, "PSR", "Pressure", "mbars", 70),
+            DataHandling(UI, "VLT", "Current", "amps", 90),
+            DataHandling(UI, "TMP", "Temperature", "degrees C",110),
+            DataHandling(UI, "DPT", "Depth", "feet", 130),
+            MotHandling(UI, "MOT", "M1", "", 190),
+            MotHandling(UI, "MOT", "M2", "", 210),
+            MotHandling(UI, "MOT", "M3", "", 230),
+            MotHandling(UI, "MOT", "M4", "", 250),
+            MotHandling(UI, "MOT", "M5", "", 270),
+            MotHandling(UI, "MOT", "M6", "", 290),
+            YPRHandling(UI, "YAW", "Y", "", 150, 0, 10),
+            YPRHandling(UI, "PCH", "P", "", 150, 100, 10),
+            YPRHandling(UI, "ROL", "R", "", 150, 200, 10)]
 
 AH = AH(dataObjs, UI)
+try:
+    pygame.camera.init()
+    camera = pygame.camera.Camera(DEVICE, (500,370))
+    camera.start()
+    snapshot = pygame.surface.Surface((500, 370), 0, UI.screen).convert()
+    t = []
+    for i in range(1):
+        t.append(cam(camera, snapshot, UI))
+        t[i].start()
+except:
+    pass
 
 UI.update()
 
 while True:
 
     if no_serial:
-        UI.textdelete(0, 40, "Serial device Connected")
-        UI.textwrite(0, 40, "Connect the serial device", 255, 10, 10)
+        UI.textdelete(0, 35, "Serial device Connected")
+        UI.textwrite(0, 35, "Connect the serial device", 255, 10, 10)
         UI.textdelete(CON_TO_X, CON_TO_Y, str(port))
         for i in range(len(ports)):
             UI.textdelete(POS_PORTS_X + POS_PORTS_MULTI * i, POS_PORTS_Y, str(ports[i]))
@@ -95,29 +144,30 @@ while True:
             UI.textwrite(POS_PORTS_X + POS_PORTS_MULTI * i, POS_PORTS_Y, str(ports[i]))
         if(len(ports) > 0):
             port = serial_finder.find_port(ports)
-            outbound = serial.Serial(
+            if(port != None):
+                outbound = serial.Serial(
                 port=port,
                 baudrate=9600,
                 parity=serial.PARITY_NONE,   # parity is error checking, odd means the message should have an odd number of 1 bits
                 stopbits=serial.STOPBITS_ONE,
                 bytesize=serial.EIGHTBITS,   # eight bits of information per pulse/packet
                 timeout=0.1
-            )
-            UI.textwrite(CON_TO_X, CON_TO_Y, str(port))
-            no_serial = False
+                )
+                UI.textwrite(CON_TO_X, CON_TO_Y, str(port))
+                no_serial = False
 
-    else:
-        UI.textdelete(0, 40, "Connect the serial device")
-        UI.textwrite(0, 40, "Serial device Connected", 10, 125, 10)
+    if not no_serial:
+        UI.textdelete(0, 35, "Connect the serial device")
+        UI.textwrite(0, 35, "Serial device Connected", 10, 125, 10)
 
 
     if not cont.isConnected():                                      # Updates controller and shows whether it is connected.
-        UI.textdelete(0, 60, "Controller connected")
-        UI.textwrite(0, 60, "Connect the controller", 255, 10, 10)
+        UI.textdelete(0, 50, "Controller connected")
+        UI.textwrite(0, 50, "Connect the controller", 255, 10, 10)
 
     else:
-        UI.textdelete(0, 60, "Connect the controller")
-        UI.textwrite(0, 60, "Controller connected", 10, 125, 10)
+        UI.textdelete(0, 50, "Connect the controller")
+        UI.textwrite(0, 50, "Controller connected", 10, 125, 10)
 
     cont.update()
     buttons1 = 0x0
@@ -132,27 +182,28 @@ while True:
             else:
                 buttons2 += cont.getValueForButton(i) >> 8
                 if buttons2 == 1:
-                    UI.textdelete(140, 450, str(p_factor))
+                    UI.textdelete(140, 310, str(p_factor))
                     p_factor = p_factor / 2.0
                     if(p_factor < 0.5):
                         p_factor = 1
 
     try:
-        outbound.write("STR") #  sends a signal to tell that this is the start of data
-        outbound.write(chr(buttons1))# writes the buttons first
-        outbound.write(chr(buttons2))
+        if(not no_serial):
+            outbound.write("STR") #  sends a signal to tell that this is the start of data
+            outbound.write(chr(buttons1))# writes the buttons first
+            outbound.write(chr(buttons2))
 
-        outbound.write(str(int(cont.getPrimaryX() * p_factor)))# casts the floats to ints, then to strings for simple parsing
-        outbound.write(" ")
-        outbound.write(str(int(cont.getPrimaryY() * p_factor)))
-        outbound.write(" ")
-        outbound.write(str(int(cont.getSecondaryX() * p_factor)))
-        outbound.write(" ")
-        outbound.write(str(int(cont.getSecondaryY() * p_factor)))
-        outbound.write(" ")
-        outbound.write(str(int(cont.getTriggers() * p_factor)))
+            outbound.write(str(int(cont.getPrimaryX() * p_factor)))# casts the floats to ints, then to strings for simple parsing
+            outbound.write(" ")
+            outbound.write(str(int(cont.getPrimaryY() * p_factor)))
+            outbound.write(" ")
+            outbound.write(str(int(cont.getSecondaryX() * p_factor)))
+            outbound.write(" ")
+            outbound.write(str(int(cont.getSecondaryY() * p_factor)))
+            outbound.write(" ")
+            outbound.write(str(int(cont.getTriggers() * p_factor)))
 
-        outbound.write(" ")
+            outbound.write(" ")
 
     except serial.serialutil.SerialException:
         no_serial = True
@@ -164,52 +215,53 @@ while True:
             Object.wasUpdated = False
 
     try:
-        counter = 10
-        proceed = False
+        if (not no_serial):
+            counter = 10
+            proceed = False
 
-        while True and counter > 0:
-            counter -= 1
-            if outbound.readable():
-                if 'S' == outbound.read(1):
-                    if 'T' == outbound.read(1):
-                        if 'R' == outbound.read(1):
-                            proceed = True
-                            if st:
-                                start = time.time()
-                                st = False
-                            break
+            while True and counter > 0:
+                counter -= 1
+                if outbound.readable():
+                    if 'S' == outbound.read(1):
+                        if 'T' == outbound.read(1):
+                            if 'R' == outbound.read(1):
+                                proceed = True
+                                if st:
+                                    start = time.time()
+                                    st = False
+                                break
 
-        if(proceed):                                            # Reads the serial line.
-                linesToRead = int(outbound.read(3)) # allows for up to 999 lines to be read...
-                if linesToRead >= 25:
-                    linesToRead = 25
-                for i in range(0, linesToRead // 2):
-                    label = outbound.readline().rstrip().lstrip()
-                    found = False
+            if(proceed):                                            # Reads the serial line.
+                    linesToRead = int(outbound.read(3)) # allows for up to 999 lines to be read...
+                    if linesToRead >= 25:
+                        linesToRead = 25
+                    for i in range(0, linesToRead // 2):
+                        label = outbound.readline().rstrip().lstrip()
+                        found = False
 
-                    rev = outbound.readline().rstrip().split(",")
-                    i = 0
+                        rev = outbound.readline().rstrip().split(",")
+                        i = 0
 
-                    if label == DEBUG_LABEL:
-                        found = True
-                        print rev
+                        if label == DEBUG_LABEL:
+                            found = True
+                            print rev
 
-                    else:
-                        for Object in dataObjs:
-                            if Object.label == label:
-                                found = True
-                                Object.update(rev[i])
-                                i += 1
+                        else:
+                            for Object in dataObjs:
+                                if Object.label == label:
+                                    found = True
+                                    Object.update(rev[i])
+                                    i += 1
 
-                    if not found:                                                       #In case it receives weird data, it prints it out on the terminal
-                        print "unknown datatype: " + label
-                        print "data: " + rev
+                        if not found:                                                       #In case it receives weird data, it prints it out on the terminal
+                            print "unknown datatype: " + label
+                            print "data: " + rev
 
-        else:
-            if not st:
-                end = time.time()
-                st = True
-                print "Lost data after" + str(end - start) + "seconds"
+            else:
+                if not st:
+                    end = time.time()
+                    st = True
+                    print "Lost data after" + str(end - start) + "seconds"
 
     except serial.serialutil.SerialException:
         no_serial = True
@@ -222,9 +274,16 @@ while True:
 
     AH.update()
 
-    UI.textwrite(140, 450, str(p_factor))
+    UI.textwrite(140, 310, str(p_factor))
 
+    try:
+        UI.blit(snapshot, (0, 330))
+    except:
+        pass
+
+    #print pygame.mouse.get_pos()
+    #print pygame.mouse.get_pressed()
     UI.update()                         #Updates display
-    sleep(0.01)                         #Waits for 10ms
+    #sleep(0.01)                         #Waits for 10ms
 
     UI.shouldQuit()
