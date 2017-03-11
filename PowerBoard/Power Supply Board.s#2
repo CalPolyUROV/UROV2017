@@ -3065,16 +3065,6 @@ With round pins</description>
 </net>
 <net name="BUCK1OUT" class="0">
 <segment>
-<pinref part="VC2" gate="G$1" pin="+OUT2"/>
-<wire x1="175.26" y1="48.26" x2="177.8" y2="48.26" width="0.1524" layer="91"/>
-<wire x1="177.8" y1="48.26" x2="185.42" y2="55.88" width="0.1524" layer="91"/>
-<pinref part="VC2" gate="G$1" pin="+OUT1"/>
-<wire x1="175.26" y1="66.04" x2="185.42" y2="55.88" width="0.1524" layer="91"/>
-<junction x="185.42" y="55.88"/>
-<wire x1="185.42" y1="55.88" x2="198.12" y2="55.88" width="0.1524" layer="91"/>
-<label x="198.12" y="55.88" size="1.778" layer="95" xref="yes"/>
-</segment>
-<segment>
 <pinref part="CSENSE1" gate="G$1" pin="IP+@2"/>
 <wire x1="236.22" y1="71.12" x2="238.76" y2="71.12" width="0.1524" layer="91"/>
 <pinref part="CSENSE1" gate="G$1" pin="IP+@1"/>
@@ -3082,6 +3072,17 @@ With round pins</description>
 <wire x1="236.22" y1="73.66" x2="236.22" y2="71.12" width="0.1524" layer="91"/>
 <junction x="236.22" y="73.66"/>
 <wire x1="193.04" y1="73.66" x2="236.22" y2="73.66" width="0.1524" layer="91"/>
+<pinref part="VC2" gate="G$1" pin="+OUT2"/>
+<wire x1="175.26" y1="48.26" x2="177.8" y2="48.26" width="0.1524" layer="91"/>
+<wire x1="177.8" y1="48.26" x2="185.42" y2="55.88" width="0.1524" layer="91"/>
+<pinref part="VC2" gate="G$1" pin="+OUT1"/>
+<wire x1="175.26" y1="66.04" x2="185.42" y2="55.88" width="0.1524" layer="91"/>
+<junction x="185.42" y="55.88"/>
+<wire x1="185.42" y1="55.88" x2="193.04" y2="55.88" width="0.1524" layer="91"/>
+<label x="198.12" y="55.88" size="1.778" layer="95" xref="yes"/>
+<wire x1="193.04" y1="55.88" x2="198.12" y2="55.88" width="0.1524" layer="91"/>
+<wire x1="193.04" y1="73.66" x2="193.04" y2="55.88" width="0.1524" layer="91"/>
+<junction x="193.04" y="55.88"/>
 </segment>
 </net>
 <net name="BUCK0OUT" class="0">
@@ -3109,6 +3110,23 @@ With round pins</description>
 </nets>
 </sheet>
 </sheets>
+<errors>
+<approved hash="102,1,203.2,-27.94,GND,GROUNDOUT,,,,"/>
+<approved hash="106,1,165.1,-17.78,N$7,,,,,"/>
+<approved hash="113,1,137.118,96.7147,SV1,,,,,"/>
+<approved hash="113,1,137.118,53.5347,SV2,,,,,"/>
+<approved hash="113,1,291.227,95.25,C5,,,,,"/>
+<approved hash="113,1,291.227,52.07,C6,,,,,"/>
+<approved hash="113,1,88.0268,95.25,C7,,,,,"/>
+<approved hash="113,1,88.0268,54.61,C8,,,,,"/>
+<approved hash="113,1,114.537,10.2912,JP2,,,,,"/>
+<approved hash="113,1,310.117,-12.5688,JP1,,,,,"/>
+<approved hash="113,1,320.277,-12.5688,JP3,,,,,"/>
+<approved hash="113,1,330.437,-12.5688,JP4,,,,,"/>
+<approved hash="113,1,294.877,120.781,JP5,,,,,"/>
+<approved hash="113,1,294.877,77.6012,JP6,,,,,"/>
+<approved hash="113,1,114.537,22.9912,JP7,,,,,"/>
+</errors>
 </schematic>
 </drawing>
 </eagle>

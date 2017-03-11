@@ -23,7 +23,7 @@
 <layer number="13" name="Route13" color="4" fill="5" visible="no" active="no"/>
 <layer number="14" name="Route14" color="1" fill="6" visible="no" active="no"/>
 <layer number="15" name="Route15" color="4" fill="6" visible="no" active="no"/>
-<layer number="16" name="Bottom" color="1" fill="1" visible="yes" active="yes"/>
+<layer number="16" name="Bottom" color="1" fill="1" visible="no" active="yes"/>
 <layer number="17" name="Pads" color="2" fill="1" visible="yes" active="yes"/>
 <layer number="18" name="Vias" color="2" fill="1" visible="yes" active="yes"/>
 <layer number="19" name="Unrouted" color="6" fill="1" visible="yes" active="yes"/>
@@ -163,29 +163,28 @@
 <text x="28.575" y="74.93" size="1.524" layer="21">Cal Poly UROV Power Board V3.0</text>
 <text x="60.96" y="74.93" size="1.524" layer="22" rot="MR0">Cal Poly UROV Power Board V3.0</text>
 <text x="26.67" y="6.985" size="2.54" layer="21" rot="R90">Andrew Hostler</text>
-<text x="3.81" y="46.99" size="1.778" layer="22" rot="MR270">Andrew Hostler</text>
+<text x="7.62" y="46.355" size="1.778" layer="22" rot="MR270">Andrew Hostler</text>
 <text x="10.795" y="27.305" size="3.81" layer="21" rot="R90">+48</text>
-<text x="9.525" y="73.025" size="5.08" layer="26" rot="MR180">-</text>
 <text x="0" y="46.355" size="5.08" layer="25">+</text>
 <text x="0.635" y="9.525" size="5.08" layer="25">+</text>
-<text x="5.715" y="67.31" size="2.54" layer="25">+</text>
+<text x="5.715" y="67.31" size="1.905" layer="25">+</text>
 <text x="0.635" y="65.405" size="5.08" layer="25">-</text>
-<text x="5.715" y="69.215" size="5.08" layer="25">-</text>
+<text x="5.715" y="69.215" size="3.81" layer="25">-</text>
 <text x="8.89" y="2.54" size="5.08" layer="25">+</text>
 <text x="60.96" y="64.77" size="5.08" layer="25">+</text>
-<text x="54.61" y="3.175" size="5.08" layer="25">+</text>
+<text x="56.515" y="4.445" size="5.08" layer="25">+</text>
 <text x="39.37" y="0" size="5.08" layer="25">-</text>
-<text x="61.595" y="19.05" size="5.08" layer="25">-</text>
-<text x="60.96" y="10.16" size="5.08" layer="25">+</text>
+<text x="62.865" y="19.05" size="3.81" layer="25">-</text>
+<text x="61.595" y="13.335" size="3.81" layer="25">+</text>
 <text x="62.23" y="55.88" size="5.08" layer="25">-</text>
 <text x="54.61" y="71.12" size="5.08" layer="25">-</text>
 <text x="39.37" y="69.85" size="1.27" layer="25">A0</text>
 <text x="40.005" y="33.655" size="1.27" layer="25">A1</text>
-<text x="56.515" y="20.955" size="1.27" layer="25">VDD</text>
-<text x="60.96" y="20.955" size="1.27" layer="25">GND</text>
+<text x="56.515" y="21.59" size="1.27" layer="25">VDD</text>
+<text x="60.96" y="21.59" size="1.27" layer="25">GND</text>
 <text x="48.895" y="14.605" size="3.81" layer="21" rot="R90">+12</text>
 <text x="48.895" y="51.435" size="3.81" layer="21" rot="R90">+12</text>
-<text x="57.785" y="31.115" size="3.048" layer="21" rot="R90">+5</text>
+<text x="57.15" y="31.75" size="3.048" layer="21" rot="R90">+5</text>
 <text x="64.77" y="40.64" size="2.032" layer="21" rot="R90">+12</text>
 <text x="65.405" y="44.45" size="2.032" layer="21" rot="R90">+</text>
 <hole x="26.035" y="2.54" drill="2.8448"/>
@@ -198,6 +197,7 @@
 <hole x="62.865" y="2.54" drill="2.8448"/>
 <hole x="2.79" y="2.54" drill="2.8448"/>
 <hole x="2.54" y="39.37" drill="2.8448"/>
+<text x="5.08" y="3.175" size="3.81" layer="25">-</text>
 </plain>
 <libraries>
 <library name="Voltage Converter Pins">
@@ -860,11 +860,12 @@ design rules under a new name.</description>
 <elements>
 <element name="VC1" library="Voltage Converter Pins" package="VOLTAGECONVERTER" value="VOLTAGECONVERTER" x="36.83" y="43.18" rot="MR180"/>
 <element name="VC2" library="Voltage Converter Pins" package="VOLTAGECONVERTER" value="VOLTAGECONVERTER" x="36.83" y="5.715" rot="MR180"/>
-<element name="SV1" library="con-lstb" package="MA04-1" value="" x="10.795" y="58.42" rot="R270">
+<element name="SV1" library="con-lstb" package="MA04-1" value="" x="10.795" y="58.42" smashed="yes" rot="R270">
 <attribute name="OC_FARNELL" value="unknown" x="10.795" y="58.42" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="OC_NEWARK" value="unknown" x="10.795" y="58.42" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="MF" value="" x="10.795" y="58.42" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="MPN" value="" x="10.795" y="58.42" size="1.778" layer="27" rot="R270" display="off"/>
+<attribute name="VALUE" x="12.446" y="57.785" size="1.27" layer="27" ratio="10" rot="R270"/>
 </element>
 <element name="SV2" library="con-lstb" package="MA04-1" value="" x="11.43" y="22.225" rot="MR270">
 <attribute name="OC_FARNELL" value="unknown" x="11.43" y="22.225" size="1.778" layer="28" rot="MR270" display="off"/>
@@ -879,7 +880,7 @@ design rules under a new name.</description>
 </element>
 <element name="C4" library="SparkFun-Capacitors" package="0603-CAP" value="4.7uF" x="46.355" y="71.12" smashed="yes">
 <attribute name="PROD_ID" value="CAP-08280" x="24.13" y="80.645" size="1.778" layer="27" display="off"/>
-<attribute name="NAME" x="45.466" y="71.882" size="0.8128" layer="25" font="vector"/>
+<attribute name="NAME" x="48.006" y="70.612" size="0.8128" layer="25" font="vector"/>
 <attribute name="VALUE" x="45.339" y="69.977" size="0.4064" layer="27" font="vector"/>
 </element>
 <element name="C5" library="capacitor-wima" package="C2.5-3" value="" x="59.055" y="71.755" smashed="yes" rot="R270">
@@ -894,14 +895,23 @@ design rules under a new name.</description>
 </element>
 <element name="C6" library="capacitor-wima" package="C2.5-3" value="" x="60.96" y="17.78" rot="R270"/>
 <element name="C7" library="capacitor-wima" package="C2.5-3" value="" x="3.175" y="6.985" rot="R270"/>
-<element name="C8" library="capacitor-wima" package="C2.5-3" value="" x="9.525" y="68.58" rot="MR90"/>
-<element name="L1" library="HostlerLib" package="SRN6045TA" value="SRN6045TA" x="9.525" y="45.085" rot="R90"/>
-<element name="L2" library="HostlerLib" package="SRN6045TA" value="SRN6045TA" x="10.16" y="11.43" rot="R90"/>
+<element name="C8" library="capacitor-wima" package="C2.5-3" value="" x="9.525" y="68.58" smashed="yes" rot="MR90">
+<attribute name="NAME" x="11.303" y="66.929" size="1.27" layer="26" ratio="10" rot="MR90"/>
+<attribute name="VALUE" x="6.477" y="66.929" size="1.27" layer="28" ratio="10" rot="MR90"/>
+</element>
+<element name="L1" library="HostlerLib" package="SRN6045TA" value="SRN6045TA" x="9.525" y="45.085" smashed="yes" rot="R90">
+<attribute name="NAME" x="12.065" y="41.275" size="1.016" layer="25" rot="R180"/>
+<attribute name="VALUE" x="12.7" y="50.165" size="1.016" layer="25" rot="R180"/>
+</element>
+<element name="L2" library="HostlerLib" package="SRN6045TA" value="SRN6045TA" x="10.16" y="11.43" smashed="yes" rot="R90">
+<attribute name="NAME" x="12.7" y="7.62" size="1.016" layer="25" rot="R180"/>
+<attribute name="VALUE" x="14.605" y="15.875" size="1.016" layer="25" rot="R180"/>
+</element>
 <element name="U$1" library="HostlerLib" package="FUSE30A" value="FUSE30A" x="52.07" y="62.23" smashed="yes" rot="R90">
-<attribute name="VALUE" x="57.15" y="58.42" size="1.016" layer="25" rot="R90"/>
+<attribute name="VALUE" x="56.515" y="58.42" size="1.016" layer="25" rot="R90"/>
 </element>
 <element name="U$2" library="HostlerLib" package="FUSE30A" value="FUSE30A" x="53.34" y="21.59" smashed="yes" rot="R270">
-<attribute name="VALUE" x="57.15" y="20.32" size="1.016" layer="25" rot="R270"/>
+<attribute name="VALUE" x="57.15" y="18.415" size="1.016" layer="25" rot="R270"/>
 </element>
 <element name="D1" library="buck33" package="SOD-123" value="385mV" x="50.8" y="49.53" smashed="yes" rot="R90">
 <attribute name="VRRM" value="20.0" x="40.005" y="41.275" size="1.778" layer="27" rot="R90" display="off"/>
@@ -936,7 +946,7 @@ design rules under a new name.</description>
 <attribute name="VDC" value="50.0" x="64.77" y="50.165" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="MANUFACTURER_PART_NUMBER" value="GRM216R71H103KA01D" x="64.77" y="50.165" size="1.778" layer="27" rot="R270" display="off"/>
 </element>
-<element name="C9" library="buck33" package="CAPSMT_6_A09" value="33uF" x="60.96" y="33.655">
+<element name="C9" library="buck33" package="CAPSMT_6_A09" value="33uF" x="60.96" y="33.655" smashed="yes">
 <attribute name="IRMS" value="0.51" x="54.61" y="39.37" size="1.778" layer="27" display="off"/>
 <attribute name="CAP" value="3.3E-5" x="54.61" y="39.37" size="1.778" layer="27" display="off"/>
 <attribute name="ESR" value="0.15" x="54.61" y="39.37" size="1.778" layer="27" display="off"/>
@@ -945,8 +955,10 @@ design rules under a new name.</description>
 <attribute name="DATASHEETURL" value="http://industrial.panasonic.com/www%2Ddata/pdf/AAA8000/AAA8000CE2.pdf" x="54.61" y="39.37" size="1.778" layer="27" display="off"/>
 <attribute name="VDC" value="10.0" x="54.61" y="39.37" size="1.778" layer="27" display="off"/>
 <attribute name="MANUFACTURER_PART_NUMBER" value="ATPH33MAHA" x="54.61" y="39.37" size="1.778" layer="27" display="off"/>
+<attribute name="NAME" x="57.4548" y="32.385" size="0.8128" layer="25" ratio="6" rot="SR0"/>
+<attribute name="VALUE" x="57.6834" y="33.02" size="1.27" layer="27" ratio="6" rot="SR0"/>
 </element>
-<element name="C10" library="buck33" package="CAPSMT_6_A09" value="33uF" x="60.96" y="36.195">
+<element name="C10" library="buck33" package="CAPSMT_6_A09" value="33uF" x="60.96" y="36.195" smashed="yes">
 <attribute name="IRMS" value="0.51" x="60.96" y="41.91" size="1.778" layer="27" display="off"/>
 <attribute name="CAP" value="3.3E-5" x="60.96" y="41.91" size="1.778" layer="27" display="off"/>
 <attribute name="ESR" value="0.15" x="60.96" y="41.91" size="1.778" layer="27" display="off"/>
@@ -955,6 +967,8 @@ design rules under a new name.</description>
 <attribute name="DATASHEETURL" value="http://industrial.panasonic.com/www%2Ddata/pdf/AAA8000/AAA8000CE2.pdf" x="60.96" y="41.91" size="1.778" layer="27" display="off"/>
 <attribute name="VDC" value="10.0" x="60.96" y="41.91" size="1.778" layer="27" display="off"/>
 <attribute name="MANUFACTURER_PART_NUMBER" value="ATPH33MAHA" x="60.96" y="41.91" size="1.778" layer="27" display="off"/>
+<attribute name="NAME" x="56.8198" y="36.83" size="0.8128" layer="25" ratio="6" rot="SR0"/>
+<attribute name="VALUE" x="57.6834" y="35.56" size="1.27" layer="27" ratio="6" rot="SR0"/>
 </element>
 <element name="L3" library="buck33" package="SRU1028" value="68uH" x="45.085" y="42.545" rot="R270">
 <attribute name="IDC" value="1.0" x="27.94" y="42.545" size="1.778" layer="27" rot="R270" display="off"/>
@@ -994,7 +1008,7 @@ design rules under a new name.</description>
 <attribute name="VENDOR" value="AVX" x="55.88" y="35.052" size="1.778" layer="27" display="off"/>
 <attribute name="VDC" value="25.0" x="55.88" y="35.052" size="1.778" layer="27" display="off"/>
 <attribute name="MANUFACTURER_PART_NUMBER" value="08053C104KAT2A" x="55.88" y="35.052" size="1.778" layer="27" display="off"/>
-<attribute name="NAME" x="57.4548" y="49.657" size="0.8128" layer="25" ratio="6" rot="SR0"/>
+<attribute name="NAME" x="54.9148" y="51.562" size="0.8128" layer="25" ratio="6" rot="SR0"/>
 <attribute name="VALUE" x="52.6034" y="49.657" size="1.27" layer="27" ratio="6" rot="SR0"/>
 </element>
 <element name="C13" library="buck33" package="CAPSMT_6_A09" value="33uF" x="61.595" y="41.275" smashed="yes" rot="R90">
@@ -1037,7 +1051,7 @@ design rules under a new name.</description>
 <attribute name="NAME" x="42.2148" y="73.66" size="0.8128" layer="25" ratio="6" rot="SR0"/>
 <attribute name="VALUE" x="42.4434" y="73.025" size="1.27" layer="27" ratio="6" rot="SR0"/>
 </element>
-<element name="C16" library="buck33" package="0805" value="100nF" x="50.8" y="35.56" rot="R180">
+<element name="C16" library="buck33" package="0805" value="100nF" x="50.8" y="35.56" smashed="yes" rot="R180">
 <attribute name="CAP" value="1.0E-7" x="50.8" y="35.56" size="0.8128" layer="27" rot="R180" display="off"/>
 <attribute name="ESR" value="0.28" x="50.8" y="35.56" size="0.8128" layer="27" rot="R180" display="off"/>
 <attribute name="IRMS" value="0.0" x="50.8" y="35.56" size="0.8128" layer="27" rot="R180" display="off"/>
@@ -1045,22 +1059,31 @@ design rules under a new name.</description>
 <attribute name="MANUFACTURER_NAME" value="AVX" x="50.8" y="35.56" size="0.8128" layer="27" rot="R180" display="off"/>
 <attribute name="MANUFACTURER_PART_NUMBER" value="08053C104KAT2A" x="50.8" y="35.56" size="0.8128" layer="27" rot="R180" display="off"/>
 <attribute name="VDC" value="25.0" x="50.8" y="35.56" size="0.8128" layer="27" rot="R180" display="off"/>
+<attribute name="NAME" x="49.1998" y="36.83" size="0.8128" layer="25" ratio="6" rot="SR0"/>
+<attribute name="VALUE" x="54.0766" y="36.195" size="1.27" layer="27" ratio="6" rot="SR180"/>
 </element>
-<element name="JP1" library="pinhead" package="1X02" value="" x="60.96" y="30.48"/>
-<element name="JP3" library="pinhead" package="1X02" value="" x="60.96" y="27.94"/>
-<element name="JP4" library="pinhead" package="1X02" value="" x="60.96" y="25.4"/>
+<element name="JP1" library="pinhead" package="1X02" value="" x="60.96" y="30.48" smashed="yes">
+<attribute name="VALUE" x="58.42" y="27.305" size="1.27" layer="27"/>
+</element>
+<element name="JP3" library="pinhead" package="1X02" value="" x="60.96" y="27.94" smashed="yes">
+<attribute name="VALUE" x="58.42" y="24.765" size="1.27" layer="27"/>
+</element>
+<element name="JP4" library="pinhead" package="1X02" value="" x="60.96" y="25.4" smashed="yes">
+<attribute name="VALUE" x="58.42" y="22.225" size="1.27" layer="27"/>
+</element>
 <element name="U$5" library="HostlerLib" package="XT60" value="XT60" x="3.81" y="20.32" rot="R270"/>
 <element name="U$6" library="HostlerLib" package="XT60" value="XT60" x="3.81" y="58.42" rot="MR270"/>
 <element name="JP5" library="adafruit" package="1X01" value="" x="43.18" y="71.755" smashed="yes">
 <attribute name="VALUE" x="41.91" y="68.58" size="1.27" layer="27"/>
 </element>
-<element name="JP6" library="adafruit" package="1X01" value="" x="44.45" y="34.925"/>
-<element name="JP7" library="pinhead" package="1X02" value="" x="61.595" y="50.165" smashed="yes" rot="R180">
-<attribute name="VALUE" x="64.135" y="53.34" size="1.27" layer="27" rot="R180"/>
+<element name="JP6" library="adafruit" package="1X01" value="" x="44.45" y="34.925" smashed="yes">
+<attribute name="VALUE" x="43.18" y="31.75" size="1.27" layer="27"/>
 </element>
-<element name="JP8" library="pinhead" package="1X02" value="" x="61.595" y="46.99" smashed="yes" rot="R180">
-<attribute name="NAME" x="64.2112" y="45.1612" size="1.27" layer="25" ratio="10" rot="R180"/>
-<attribute name="VALUE" x="64.135" y="50.165" size="1.27" layer="27" rot="R180"/>
+<element name="JP7" library="pinhead" package="1X02" value="" x="61.595" y="50.8" smashed="yes" rot="R180">
+<attribute name="VALUE" x="64.135" y="53.975" size="1.27" layer="27" rot="R180"/>
+</element>
+<element name="JP8" library="pinhead" package="1X02" value="" x="61.595" y="48.26" smashed="yes" rot="R180">
+<attribute name="VALUE" x="64.135" y="51.435" size="1.27" layer="27" rot="R180"/>
 </element>
 </elements>
 <signals>
@@ -1193,10 +1216,27 @@ design rules under a new name.</description>
 <contactref element="VC1" pad="PC"/>
 <contactref element="VC1" pad="PC21"/>
 <wire x1="10.795" y1="59.69" x2="14.74" y2="59.69" width="0.4064" layer="16"/>
-<wire x1="15.08" y1="60.03" x2="17.83" y2="60.03" width="0.4064" layer="16"/>
 <contactref element="SV1" pad="1"/>
 <wire x1="10.795" y1="62.23" x2="10.795" y2="59.69" width="0.4064" layer="16"/>
 <wire x1="14.74" y1="59.69" x2="15.08" y2="60.03" width="0.4064" layer="16"/>
+<contactref element="SV2" pad="2"/>
+<contactref element="VC2" pad="PC"/>
+<contactref element="VC2" pad="PC21"/>
+<wire x1="15.08" y1="22.565" x2="17.83" y2="22.565" width="0.4064" layer="16"/>
+<contactref element="SV2" pad="1"/>
+<wire x1="11.43" y1="23.495" x2="11.43" y2="26.035" width="0.4064" layer="16"/>
+<wire x1="11.43" y1="23.495" x2="14.15" y2="23.495" width="0.4064" layer="16"/>
+<wire x1="14.15" y1="23.495" x2="15.08" y2="22.565" width="0.4064" layer="16"/>
+<wire x1="17.83" y1="60.03" x2="25.06" y2="60.03" width="0.4064" layer="1"/>
+<wire x1="25.06" y1="60.03" x2="26.035" y2="59.055" width="0.4064" layer="1"/>
+<wire x1="26.035" y1="59.055" x2="26.035" y2="43.815" width="0.4064" layer="1"/>
+<wire x1="26.035" y1="43.815" x2="27.94" y2="41.91" width="0.4064" layer="1"/>
+<wire x1="27.94" y1="41.91" x2="27.94" y2="36.83" width="0.4064" layer="1"/>
+<wire x1="27.94" y1="36.83" x2="26.035" y2="34.925" width="0.4064" layer="1"/>
+<wire x1="26.035" y1="34.925" x2="26.035" y2="23.495" width="0.4064" layer="1"/>
+<wire x1="26.035" y1="23.495" x2="25.105" y2="22.565" width="0.4064" layer="1"/>
+<wire x1="25.105" y1="22.565" x2="17.83" y2="22.565" width="0.4064" layer="1"/>
+<wire x1="15.08" y1="60.03" x2="17.83" y2="60.03" width="0.4064" layer="16"/>
 </signal>
 <signal name="TM2">
 <contactref element="SV2" pad="4"/>
@@ -1213,16 +1253,6 @@ design rules under a new name.</description>
 <wire x1="15.08" y1="20.565" x2="17.83" y2="20.565" width="0.4064" layer="16"/>
 <wire x1="15.08" y1="20.565" x2="11.43" y2="20.565" width="0.4064" layer="16"/>
 <wire x1="11.43" y1="20.565" x2="11.43" y2="20.955" width="0.4064" layer="16"/>
-</signal>
-<signal name="PC2">
-<contactref element="SV2" pad="2"/>
-<contactref element="VC2" pad="PC"/>
-<contactref element="VC2" pad="PC21"/>
-<wire x1="15.08" y1="22.565" x2="17.83" y2="22.565" width="0.4064" layer="16"/>
-<contactref element="SV2" pad="1"/>
-<wire x1="11.43" y1="23.495" x2="11.43" y2="26.035" width="0.4064" layer="16"/>
-<wire x1="11.43" y1="23.495" x2="14.15" y2="23.495" width="0.4064" layer="16"/>
-<wire x1="14.15" y1="23.495" x2="15.08" y2="22.565" width="0.4064" layer="16"/>
 </signal>
 <signal name="5V">
 <contactref element="CSENSE0" pad="8"/>
@@ -1466,9 +1496,9 @@ design rules under a new name.</description>
 <wire x1="64.135" y1="61.4045" x2="64.135" y2="54.61" width="1.27" layer="1"/>
 <wire x1="64.135" y1="54.61" x2="62.865" y2="53.34" width="1.27" layer="1"/>
 <contactref element="JP7" pad="1"/>
-<wire x1="62.865" y1="50.165" x2="62.865" y2="53.34" width="1.27" layer="1"/>
+<wire x1="62.865" y1="50.8" x2="62.865" y2="53.34" width="1.27" layer="1"/>
 <contactref element="JP8" pad="1"/>
-<wire x1="62.865" y1="50.165" x2="62.865" y2="46.99" width="1.27" layer="1"/>
+<wire x1="62.865" y1="50.8" x2="62.865" y2="48.26" width="1.27" layer="1"/>
 </signal>
 <signal name="FUSE2IN">
 <contactref element="CSENSE1" pad="3"/>

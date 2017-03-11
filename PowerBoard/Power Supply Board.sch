@@ -2753,6 +2753,15 @@ With round pins</description>
 <pinref part="SV1" gate="1" pin="1"/>
 <wire x1="142.24" y1="91.44" x2="139.7" y2="91.44" width="0.1524" layer="91"/>
 </segment>
+<segment>
+<pinref part="SV2" gate="1" pin="2"/>
+<pinref part="VC2" gate="G$1" pin="PC"/>
+<wire x1="139.7" y1="50.8" x2="142.24" y2="50.8" width="0.1524" layer="91"/>
+<wire x1="142.24" y1="50.8" x2="142.24" y2="48.26" width="0.1524" layer="91"/>
+<junction x="142.24" y="50.8"/>
+<pinref part="SV2" gate="1" pin="1"/>
+<wire x1="142.24" y1="48.26" x2="139.7" y2="48.26" width="0.1524" layer="91"/>
+</segment>
 </net>
 <net name="TM2" class="0">
 <segment>
@@ -2766,17 +2775,6 @@ With round pins</description>
 <pinref part="SV2" gate="1" pin="3"/>
 <pinref part="VC2" gate="G$1" pin="RSV"/>
 <wire x1="139.7" y1="53.34" x2="142.24" y2="53.34" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="PC2" class="0">
-<segment>
-<pinref part="SV2" gate="1" pin="2"/>
-<pinref part="VC2" gate="G$1" pin="PC"/>
-<wire x1="139.7" y1="50.8" x2="142.24" y2="50.8" width="0.1524" layer="91"/>
-<wire x1="142.24" y1="50.8" x2="142.24" y2="48.26" width="0.1524" layer="91"/>
-<junction x="142.24" y="50.8"/>
-<pinref part="SV2" gate="1" pin="1"/>
-<wire x1="142.24" y1="48.26" x2="139.7" y2="48.26" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="5V" class="0">
