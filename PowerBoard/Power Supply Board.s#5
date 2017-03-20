@@ -2605,11 +2605,9 @@ With round pins</description>
 <segment>
 <wire x1="289.56" y1="48.26" x2="187.96" y2="48.26" width="0.1524" layer="91"/>
 <pinref part="C6" gate="G$1" pin="1"/>
-<pinref part="VC1" gate="G$1" pin="-OUT2"/>
 <wire x1="312.42" y1="91.44" x2="289.56" y2="91.44" width="0.1524" layer="91"/>
 <wire x1="289.56" y1="91.44" x2="187.96" y2="91.44" width="0.1524" layer="91"/>
 <wire x1="187.96" y1="91.44" x2="182.88" y2="91.44" width="0.1524" layer="91"/>
-<wire x1="182.88" y1="91.44" x2="175.26" y2="81.28" width="0.1524" layer="91"/>
 <pinref part="VC1" gate="G$1" pin="-OUT1"/>
 <wire x1="175.26" y1="99.06" x2="177.8" y2="99.06" width="0.1524" layer="91"/>
 <wire x1="177.8" y1="99.06" x2="182.88" y2="91.44" width="0.1524" layer="91"/>
@@ -2634,6 +2632,9 @@ With round pins</description>
 <wire x1="320.04" y1="48.26" x2="320.04" y2="50.8" width="0.1524" layer="91"/>
 <pinref part="U$4" gate="G$1" pin="2"/>
 <wire x1="320.04" y1="50.8" x2="335.28" y2="50.8" width="0.1524" layer="91"/>
+<pinref part="VC1" gate="G$1" pin="-OUT2"/>
+<wire x1="175.26" y1="81.28" x2="182.88" y2="91.44" width="0.1524" layer="91"/>
+<junction x="182.88" y="91.44"/>
 </segment>
 <segment>
 <pinref part="C10" gate="A" pin="-"/>
@@ -3069,10 +3070,7 @@ With round pins</description>
 <pinref part="VC2" gate="G$1" pin="+OUT1"/>
 <wire x1="175.26" y1="66.04" x2="185.42" y2="55.88" width="0.1524" layer="91"/>
 <junction x="185.42" y="55.88"/>
-<wire x1="185.42" y1="55.88" x2="193.04" y2="55.88" width="0.1524" layer="91"/>
-<wire x1="193.04" y1="73.66" x2="193.04" y2="55.88" width="0.1524" layer="91"/>
-<junction x="193.04" y="55.88"/>
-<wire x1="193.04" y1="55.88" x2="198.12" y2="55.88" width="0.1524" layer="91"/>
+<wire x1="185.42" y1="55.88" x2="198.12" y2="55.88" width="0.1524" layer="91"/>
 <label x="198.12" y="55.88" size="1.778" layer="95" xref="yes"/>
 </segment>
 <segment>

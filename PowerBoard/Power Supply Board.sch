@@ -2560,15 +2560,15 @@ With round pins</description>
 </instance>
 <instance part="C3" gate="A" x="129.54" y="-15.24" smashed="yes" rot="R90">
 <attribute name="NAME" x="123.9774" y="-19.9644" size="2.0828" layer="95" ratio="6" rot="SR90"/>
-<attribute name="VALUE" x="123.7234" y="-14.5034" size="2.0828" layer="96" ratio="6" rot="SR90"/>
+<attribute name="VALUE" x="123.7234" y="-11.9634" size="2.0828" layer="96" ratio="6" rot="SR90"/>
 </instance>
 <instance part="C11" gate="A" x="139.7" y="-15.24" smashed="yes" rot="R90">
 <attribute name="NAME" x="135.6614" y="-19.9644" size="2.0828" layer="95" ratio="6" rot="SR90"/>
-<attribute name="VALUE" x="135.6614" y="-15.5194" size="2.0828" layer="96" ratio="6" rot="SR90"/>
+<attribute name="VALUE" x="135.6614" y="-12.9794" size="2.0828" layer="96" ratio="6" rot="SR90"/>
 </instance>
 <instance part="C12" gate="A" x="149.86" y="-15.24" smashed="yes" rot="R90">
 <attribute name="NAME" x="145.8214" y="-20.9804" size="2.0828" layer="95" ratio="6" rot="SR90"/>
-<attribute name="VALUE" x="145.8214" y="-16.5354" size="2.0828" layer="96" ratio="6" rot="SR90"/>
+<attribute name="VALUE" x="145.8214" y="-13.9954" size="2.0828" layer="96" ratio="6" rot="SR90"/>
 </instance>
 <instance part="SUPPLY2" gate="GND" x="203.2" y="-30.48"/>
 <instance part="C13" gate="A" x="276.86" y="-17.78" smashed="yes" rot="R90">
@@ -2583,11 +2583,11 @@ With round pins</description>
 <instance part="U$3" gate="G$1" x="332.74" y="93.98"/>
 <instance part="U$4" gate="G$1" x="337.82" y="50.8"/>
 <instance part="C15" gate="A" x="309.88" y="71.12" smashed="yes" rot="R90">
-<attribute name="NAME" x="305.8414" y="65.3796" size="2.0828" layer="95" ratio="6" rot="SR90"/>
+<attribute name="NAME" x="316.0014" y="72.9996" size="2.0828" layer="95" ratio="6" rot="SR90"/>
 <attribute name="VALUE" x="305.8414" y="69.8246" size="2.0828" layer="96" ratio="6" rot="SR90"/>
 </instance>
 <instance part="C16" gate="A" x="309.88" y="114.3" smashed="yes" rot="R90">
-<attribute name="NAME" x="305.8414" y="108.5596" size="2.0828" layer="95" ratio="6" rot="SR90"/>
+<attribute name="NAME" x="316.0014" y="116.1796" size="2.0828" layer="95" ratio="6" rot="SR90"/>
 <attribute name="VALUE" x="305.8414" y="113.0046" size="2.0828" layer="96" ratio="6" rot="SR90"/>
 </instance>
 <instance part="JP1" gate="G$1" x="312.42" y="-15.24"/>
