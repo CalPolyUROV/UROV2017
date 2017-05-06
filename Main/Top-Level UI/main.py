@@ -1,10 +1,9 @@
 import serial
 import serial.tools.list_ports
 
-import pygame.camera
 from pygame.locals import *
 
-import threading
+from Autopilot import *
 
 import sys
 
@@ -30,29 +29,9 @@ POS_PORTS_Y = 0
 CON_TO_X = 130
 CON_TO_Y = 15
 
-DEVICE = "/dev/video0"
-#DEVICE = "/dev/bus/usb/001/008"
-
-class cam(threading.Thread):
-    def __init__(self, camera, snapshot, UI):
-        self.UI = UI
-        self.camera = camera
-        self.snapshot = snapshot
-        threading.Thread.__init__(self)
-
-    def run(self):
-        while True:
-            try:
-                if self.camera.query_image():
-                    self.snapshot = self.camera.get_image(self.snapshot)
-                    self.UI.blit(self.snapshot, (0, 330))
-                    self.UI.update()
-                    self.UI.shouldQuit()
-                    sleep(0.03)
-            except:
-                pass
-
 start = 0
+
+procs = []
 
 st = True
 
@@ -63,7 +42,7 @@ no_serial = False
 ports = serial_finder.serial_ports()
 port = None
 
-UI = UI()
+UI = UI(procs)
 
 cont = Controller(UI)
 
@@ -117,15 +96,11 @@ dataObjs = [DataHandling(UI, "PSR", "Pressure", "mbars", 70),
             YPRHandling(UI, "ROL", "R", "", 150, 200, 10)]
 
 AH = AH(dataObjs, UI)
+
+camera = camera(UI)
 try:
-    pygame.camera.init()
-    camera = pygame.camera.Camera(DEVICE, (500,370))
     camera.start()
-    snapshot = pygame.surface.Surface((500, 370), 0, UI.screen).convert()
-    t = []
-    for i in range(1):
-        t.append(cam(camera, snapshot, UI))
-        t[i].start()
+    procs.append(camera)
 except:
     pass
 
@@ -190,18 +165,26 @@ while True:
     try:
         if(not no_serial):
             outbound.write("STR") #  sends a signal to tell that this is the start of data
+            print "STR"
             outbound.write(chr(buttons1))# writes the buttons first
+            print chr(buttons1)
             outbound.write(chr(buttons2))
+            print chr(buttons2)
 
             outbound.write(str(int(cont.getPrimaryX() * p_factor)))# casts the floats to ints, then to strings for simple parsing
+            print str(int(cont.getPrimaryX() * p_factor))
             outbound.write(" ")
             outbound.write(str(int(cont.getPrimaryY() * p_factor)))
+            print str(int(cont.getPrimaryY() * p_factor))
             outbound.write(" ")
             outbound.write(str(int(cont.getSecondaryX() * p_factor)))
+            print str(int(cont.getSecondaryX() * p_factor))
             outbound.write(" ")
             outbound.write(str(int(cont.getSecondaryY() * p_factor)))
+            print str(int(cont.getSecondaryY() * p_factor))
             outbound.write(" ")
             outbound.write(str(int(cont.getTriggers() * p_factor)))
+            print str(int(cont.getTriggers() * p_factor))
 
             outbound.write(" ")
 
@@ -209,7 +192,7 @@ while True:
         no_serial = True
 
     except:
-        print "Crashed while sending controller input"
+        print "WARN: Crashed while sending controller input"
 
     for Object in dataObjs:
             Object.wasUpdated = False
@@ -220,26 +203,36 @@ while True:
             proceed = False
 
             while True and counter > 0:
+                print "In Loop!"
                 counter -= 1
                 if outbound.readable():
                     if 'S' == outbound.read(1):
                         if 'T' == outbound.read(1):
                             if 'R' == outbound.read(1):
                                 proceed = True
+                                print "Recieved!"
                                 if st:
                                     start = time.time()
                                     st = False
                                 break
 
             if(proceed):                                            # Reads the serial line.
+                    print "part 1"
                     linesToRead = int(outbound.read(3)) # allows for up to 999 lines to be read...
+                    print "part 2"
                     if linesToRead >= 25:
                         linesToRead = 25
+                    print "part 3"
+                    print linesToRead
                     for i in range(0, linesToRead // 2):
+                        print "part 4"
                         label = outbound.readline().rstrip().lstrip()
+                        print "part 5"
+                        print label
                         found = False
 
                         rev = outbound.readline().rstrip().split(",")
+                        print rev
                         i = 0
 
                         if label == DEBUG_LABEL:
@@ -254,20 +247,20 @@ while True:
                                     i += 1
 
                         if not found:                                                       #In case it receives weird data, it prints it out on the terminal
-                            print "unknown datatype: " + label
+                            print "INFO: unknown datatype: " + label
                             print "data: " + rev
 
             else:
                 if not st:
                     end = time.time()
                     st = True
-                    print "Lost data after" + str(end - start) + "seconds"
+                    print "INFO: Lost data after" + str(end - start) + "seconds"
 
     except serial.serialutil.SerialException:
         no_serial = True
 
     except:
-        print "Crashed while reading from arduino"
+        print "WARN: Crashed while reading from arduino"
 
     for Object in dataObjs:
             Object.writeOldData()
@@ -275,11 +268,6 @@ while True:
     AH.update()
 
     UI.textwrite(140, 310, str(p_factor))
-
-    try:
-        UI.blit(snapshot, (0, 330))
-    except:
-        pass
 
     #print pygame.mouse.get_pos()
     #print pygame.mouse.get_pressed()

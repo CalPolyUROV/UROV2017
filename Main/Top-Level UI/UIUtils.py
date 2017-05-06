@@ -7,8 +7,9 @@ class UI:
     #Initialization function of the clas UI
 
     #@retval: None
-    def __init__(self):
+    def __init__(self, procs):
         pygame.init()                                           #initializes the UI
+        self.procs = procs
         self.screen = pygame.display.set_mode((1000, 750), DOUBLEBUF)
         pygame.display.set_caption("Cal Poly Control Center")
 
@@ -42,7 +43,13 @@ class UI:
         textpos.x = Positionx
         textpos.y = Positiony
         self.background.blit(text, textpos)
-        self.screen.blit(self.background, (0, 0))
+        if len(self.procs) > 0:
+            self.procs[0].update(False)
+            self.screen.blit(self.background, (0, 0))
+            self.procs[0].update(True)
+        else:
+            self.screen.blit(self.background, (0, 0))
+
 
     #Deletes a String on the screen
 
@@ -60,7 +67,13 @@ class UI:
         textpos.x = Positionx
         textpos.y = Positiony
         self.background.blit(text, textpos)
-        self.screen.blit(self.background, (0, 0))
+        if len(self.procs) > 0:
+            self.procs[0].update(False)
+            self.screen.blit(self.background, (0, 0))
+            self.procs[0].update(True)
+        else:
+            self.screen.blit(self.background, (0, 0))
+
 
     #Adds an object to the background but it does not update it.
 
@@ -72,7 +85,7 @@ class UI:
         try:
             self.background.blit(obj, objPos)
         except:
-            print "Couldn't blit object!"
+            print "WARN: Couldn't blit object!"
 
     #Draws a rectangle on the screen
 
@@ -91,8 +104,8 @@ class UI:
     def shouldQuit(self):
         for event in pygame.event.get():
             if event.type == QUIT:
+                for proc in self.procs:
+                    print "Calling procs"
+                    proc.end_proc()
+                    proc.stop()
                 quit()
-        for event in pygame.event.get(pygame.KEYDOWN):
-            if event.type == pygame.KEYDOWN:
-                if event.key == K_q or event.key == K_ESCAPE:
-                    quit()

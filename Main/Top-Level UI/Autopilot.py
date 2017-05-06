@@ -1,3 +1,8 @@
+import pygame.camera
+from pygame.locals import *
+
+from time import sleep
+
 __author__ = "Luca"
 
 LIST_SIZE = 20
@@ -5,6 +10,11 @@ LIST_SIZE = 20
 P_CONST = 10
 I_CONST = 10
 D_CONST = 10
+
+import threading
+
+DEVICE = "/dev/video0"
+#DEVICE = "/dev/bus/usb/001/008"
 
 class AutoPilot:
 
@@ -55,3 +65,46 @@ class AutoPilot:
             PID = -400
 
         return PID
+
+class camera(threading.Thread):
+    def __init__(self, UI):
+        try:
+            pygame.camera.init()
+            self.UI = UI
+            self.camera = pygame.camera.Camera(DEVICE, (500, 370))
+            self.camera.start()
+            self.snapshot = pygame.surface.Surface((500, 370), 0, self.UI.screen).convert()
+            self.runing = True
+            self.shouldUpdate = True
+            threading.Thread.__init__(self)
+            self._stop = threading.Event()
+        except:
+            self.runing = False
+            print "FATAL: Could not initialize Camera"
+
+    def run(self):
+        while self.runing:
+            try:
+                if self.camera.query_image():
+                    self.snapshot = self.camera.get_image(self.snapshot)
+                    self.UI.blit(self.snapshot, (0, 330))
+                    print self.shouldUpdate
+                    if self.shouldUpdate:
+                        self.UI.update()
+                    self.UI.shouldQuit()
+                    sleep(0.03)
+            except:
+                pass
+
+    def update(self, shouldUpdate):
+         self.shouldUpdate = shouldUpdate
+
+    def end_proc(self):
+        print "Called!"
+        self.run = False
+
+    def stop(self):
+        self._stop.set()
+
+    def stopped(self):
+        return self._stop.isSet()
