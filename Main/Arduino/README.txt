@@ -26,3 +26,15 @@ FIRMWARE:
    Keep:
       -Vector Motor Driver code will be kept as is
       -Serial Communications method works and can be used still
+      
+      
+   Pins:
+        serial - upsidedown cat 6 ltr
+        2 - 1 - (unused brown)
+        15 - 2 - brown stripe
+        3 - 3 - green
+        14 - 4 - blue stripe - GND
+        1 - 5 - blue
+        16 - 6 - green stripe
+        4 - 7 - orange - TX3
+        17 - 8 - o stripe - RX3

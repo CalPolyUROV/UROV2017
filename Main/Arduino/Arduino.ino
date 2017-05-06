@@ -100,11 +100,13 @@ uint16_t* p_amperages;
 //SoftwareSerial Ser3(14, 15);
 void setup() {
   /*Serial 3: Communication to topside python code through rs485, match baud rate in python code*/
+  /*Pins 14 & 15*/
   Serial3.begin(BAUD_RATE);
   while(!Serial3) {
     ;
   }
   /*Serial: Communication to Arduino Serial Console*/
+  /*Pins 0 and 1*/
   Serial.begin(BAUD_RATE);     //it does not seem to work at lower baud rates
   while(!Serial) {
     ;
@@ -196,6 +198,8 @@ Input readBuffer() {
   Serial3.read();
   return input;
 }
+
+/*Currently sets camera relay*/
 void processInput(Input i) {
 
   if ((CHECK_BIT(i.buttons1, 3))) {
