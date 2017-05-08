@@ -82,7 +82,10 @@ outbound = serial.Serial(
 UI.textwrite(0, 310, "Power factor:")
 
 dataObjs = [DataHandling(UI, "PSR", "Pressure", "mbars", 70),
-            DataHandling(UI, "VLT", "Current", "amps", 90),
+            #DataHandling(UI, "VLT", "Current", "amps", 90),
+            DataHandling(UI, "ACL", "x", "", 90, 0),
+            DataHandling(UI, "ACL", "y", "", 90, 150),
+            DataHandling(UI, "ACL", "z", "", 90, 300),
             DataHandling(UI, "TMP", "Temperature", "degrees C",110),
             DataHandling(UI, "DPT", "Depth", "feet", 130),
             MotHandling(UI, "MOT", "M1", "", 190),
@@ -91,9 +94,9 @@ dataObjs = [DataHandling(UI, "PSR", "Pressure", "mbars", 70),
             MotHandling(UI, "MOT", "M4", "", 250),
             MotHandling(UI, "MOT", "M5", "", 270),
             MotHandling(UI, "MOT", "M6", "", 290),
-            YPRHandling(UI, "YAW", "Y", "", 150, 0, 10),
-            YPRHandling(UI, "PCH", "P", "", 150, 100, 10),
-            YPRHandling(UI, "ROL", "R", "", 150, 200, 10)]
+            YPRHandling(UI, "GYR", "Y", "", 150, 0, 10),
+            YPRHandling(UI, "GYR", "P", "", 150, 150, 10),
+            YPRHandling(UI, "GYR", "R", "", 150, 300, 10)]
 
 AH = AH(dataObjs, UI)
 
@@ -165,26 +168,18 @@ while True:
     try:
         if(not no_serial):
             outbound.write("STR") #  sends a signal to tell that this is the start of data
-            print "STR"
             outbound.write(chr(buttons1))# writes the buttons first
-            print chr(buttons1)
             outbound.write(chr(buttons2))
-            print chr(buttons2)
 
             outbound.write(str(int(cont.getPrimaryX() * p_factor)))# casts the floats to ints, then to strings for simple parsing
-            print str(int(cont.getPrimaryX() * p_factor))
             outbound.write(" ")
             outbound.write(str(int(cont.getPrimaryY() * p_factor)))
-            print str(int(cont.getPrimaryY() * p_factor))
             outbound.write(" ")
             outbound.write(str(int(cont.getSecondaryX() * p_factor)))
-            print str(int(cont.getSecondaryX() * p_factor))
             outbound.write(" ")
             outbound.write(str(int(cont.getSecondaryY() * p_factor)))
-            print str(int(cont.getSecondaryY() * p_factor))
             outbound.write(" ")
             outbound.write(str(int(cont.getTriggers() * p_factor)))
-            print str(int(cont.getTriggers() * p_factor))
 
             outbound.write(" ")
 
@@ -203,52 +198,43 @@ while True:
             proceed = False
 
             while True and counter > 0:
-                print "In Loop!"
                 counter -= 1
                 if outbound.readable():
                     if 'S' == outbound.read(1):
                         if 'T' == outbound.read(1):
                             if 'R' == outbound.read(1):
                                 proceed = True
-                                print "Recieved!"
                                 if st:
                                     start = time.time()
                                     st = False
                                 break
 
             if(proceed):                                            # Reads the serial line.
-                    print "part 1"
-                    linesToRead = int(outbound.read(3)) # allows for up to 999 lines to be read...
-                    print "part 2"
-                    if linesToRead >= 25:
-                        linesToRead = 25
-                    print "part 3"
-                    print linesToRead
-                    for i in range(0, linesToRead // 2):
-                        print "part 4"
-                        label = outbound.readline().rstrip().lstrip()
-                        print "part 5"
+                linesToRead = int(outbound.read(3)) # allows for up to 999 lines to be read...
+                if linesToRead >= 25:
+                    linesToRead = 25
+                for i in range(0, linesToRead // 2):
+                    label = outbound.readline().rstrip().lstrip()
+                    found = False
+
+                    rev = outbound.readline().rstrip().split(",")
+                    j = 0
+
+                    if label == DEBUG_LABEL:
+                        found = True
                         print label
-                        found = False
-
-                        rev = outbound.readline().rstrip().split(",")
                         print rev
-                        i = 0
 
-                        if label == DEBUG_LABEL:
-                            found = True
-                            print rev
+                    else:
+                        for Object in dataObjs:
+                            if Object.label == label:
+                                found = True
+                                Object.update(rev[j])
+                                j += 1
 
-                        else:
-                            for Object in dataObjs:
-                                if Object.label == label:
-                                    found = True
-                                    Object.update(rev[i])
-                                    i += 1
-
-                        if not found:                                                       #In case it receives weird data, it prints it out on the terminal
-                            print "INFO: unknown datatype: " + label
-                            print "data: " + rev
+                    if not found:                                                       #In case it receives weird data, it prints it out on the terminal
+                        print "INFO: unknown datatype: " + label
+                        print "      data: " + str(rev)
 
             else:
                 if not st:
@@ -272,6 +258,6 @@ while True:
     #print pygame.mouse.get_pos()
     #print pygame.mouse.get_pressed()
     UI.update()                         #Updates display
-    #sleep(0.01)                         #Waits for 10ms
+    sleep(0.03)                         #Waits for 10ms
 
     UI.shouldQuit()

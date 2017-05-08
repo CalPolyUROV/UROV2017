@@ -32,9 +32,9 @@ class AH:
         self.overlay = pygame.image.load(OVERLAY)
         self.marker = pygame.image.load(MARKER).convert_alpha()
 
-        self.yaw = getDataObj(dataObjs, "YAW")
-        self.pch = getDataObj(dataObjs, "PCH")
-        self.rol = getDataObj(dataObjs, "ROL")
+        self.yaw = getDataObj(dataObjs, "Y")
+        self.pch = getDataObj(dataObjs, "P")
+        self.rol = getDataObj(dataObjs, "R")
 
         if(self.yaw == None or self.pch == None or self.pch == None):
             raise LookupError("Could not find objects for yaw, pitch or roll")
@@ -100,7 +100,7 @@ class AH:
             if self.pch.wasUpdated or self.rol.wasUpdated:
                 backgroundPos = self.background.get_rect()                  #Places down the artificial horizon background
                 backgroundPos.centerx = 750
-                backgroundPos.centery = 250 + (round(self.pch.filtered * 5 - self.pchOffset))
+                backgroundPos.centery = 250 + (round(self.pch.filtered * 5 - self.pchOffset * 5))
                 self.UI.blit(self.background, backgroundPos)
 
                 overlayPos = self.overlay.get_rect()                  #Places down the artificial horizon overlay

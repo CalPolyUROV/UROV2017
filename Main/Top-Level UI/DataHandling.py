@@ -39,8 +39,8 @@ class DataHandling(object):
         if not (isinstance(size, int) or isinstance(size, float) or isinstance(size, long)):
             raise TypeError("Param 7 is not a number")
 
-        self.UI = UI
-        self.lable = label
+        self.ui = UI
+        self.label = label
         self.tytle = tytle
         self.unit = unit
         self.posY = posY
@@ -50,7 +50,7 @@ class DataHandling(object):
         self.wasUpdated = True
         self.wasUpdatedBefore = True
 
-        self.UI.textwrite(self.tytlePosX, self.posY, self.tytle + ": ")
+        self.ui.textwrite(self.tytlePosX, self.posY, self.tytle + ": ")
 
     #filter the data on the filter and stores it in self.filtered
 
@@ -74,12 +74,12 @@ class DataHandling(object):
             self.data[0] = float(rev)
 
             textDelete = str(self.filtered) + " " + self.unit
-            self.UI.textDelete(self.tytlePosX + (len(self.tytle)) * CHAR_SIZE + 10, self.posY, textDelete)
 
+            self.ui.textdelete(self.tytlePosX + (len(self.tytle)) * CHAR_SIZE + 10, self.posY, textDelete)
             self.filterData()
 
             textWrite = str(self.filtered) + " " + self.unit
-            self.UI.textwrite(self.tytlePosX + (len(self.tytle)) * CHAR_SIZE + 10, self.posY, textWrite, 10, 125, 10)
+            self.ui.textwrite(self.tytlePosX + (len(self.tytle)) * CHAR_SIZE + 10, self.posY, textWrite, 10, 125, 10)
 
             self.wasUpdated = True
             self.wasUpdatedBefore = True
@@ -98,7 +98,7 @@ class DataHandling(object):
             return
         self.wasUpdatedBefore = False
         textWrite = str(self.filtered) + " " + self.unit
-        self.UI.textwrite(self.tytlePosX + (len(self.tytle)) * CHAR_SIZE + 10, self.posY, textWrite, 255, 10, 10)
+        self.ui.textwrite(self.tytlePosX + (len(self.tytle)) * CHAR_SIZE + 10, self.posY, textWrite, 255, 10, 10)
 
 class MotHandling(DataHandling):
 
@@ -118,7 +118,7 @@ class MotHandling(DataHandling):
             self.data[0] = float(rev)
 
             textDelete = str(self.filtered) + " " + self.unit
-            self.UI.textDelete(self.tytlePosX + (len(self.tytle)) * CHAR_SIZE + 10, self.posY, textDelete)
+            self.ui.textdelete(self.tytlePosX + (len(self.tytle)) * CHAR_SIZE + 10, self.posY, textDelete)
 
             self.filterData()
 
@@ -138,8 +138,8 @@ class MotHandling(DataHandling):
             textWrite = str(self.filtered) + " " + self.unit
 
             xpos = self.tytlePosX + (len(self.tytle)) * CHAR_SIZE + 10
-            self.UI.textwrite(xpos, self.posY, textWrite, R, G, B)
-            self.UI.drawRect((xpos + len(textWrite) * CHAR_SIZE + 10, self.posY + 3, round(self.filtered * MOT_CONST), 10), (R,G,B))
+            self.ui.textwrite(xpos, self.posY, textWrite, R, G, B)
+            self.ui.drawRect((xpos + len(textWrite) * CHAR_SIZE + 10, self.posY + 3, round(self.filtered * MOT_CONST), 10), (R,G,B))
 
             self.wasUpdated = True
             self.wasUpdatedBefore = True
@@ -160,8 +160,8 @@ class MotHandling(DataHandling):
 
         textWrite = str(self.filtered) + " " + self.unit
         xpos = self.tytlePosX + (len(self.tytle)) * CHAR_SIZE + 10
-        self.UI.textwrite(xpos, self.posY, textWrite, 255, 10, 10)
-        self.UI.drawRect((xpos + len(textWrite) * CHAR_SIZE + 10, self.posY + 3, round(self.filtered * MOT_CONST), 10), (255,10,10))
+        self.ui.textwrite(xpos, self.posY, textWrite, 255, 10, 10)
+        self.ui.drawRect((xpos + len(textWrite) * CHAR_SIZE + 10, self.posY + 3, round(self.filtered * MOT_CONST), 10), (255,10,10))
 
 class YPRHandling(DataHandling):
 
@@ -187,17 +187,17 @@ class YPRHandling(DataHandling):
 #@retval: DataHandling Object
 
 #LookupError returns: None
-def getDataObj(L, lable):
+def getDataObj(L, tytle):
 
     if not isinstance(L, list):
         raise TypeError("Param 1 is not a list")
 
-    if not isinstance(lable, str):
+    if not isinstance(tytle, str):
         raise TypeError("Param 2 is not a string")
 
     for Object in L:
         if type(Object) is DataHandling or type(Object) is YPRHandling or type(Object) is MotHandling:
-            if Object.lable == lable:
+            if Object.tytle == tytle:
                 return Object
 
     return None
