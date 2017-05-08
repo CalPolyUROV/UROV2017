@@ -1,6 +1,6 @@
 #include "arduino.h"
 //
-#include <wire.h>
+//#include <wire.h>
 #define MOTORACCELERATIONMAX 80
 
 #define CHECK_BIT(var,pos) ((var) & (1<<(pos)))
@@ -20,7 +20,9 @@
 #include <Servo.h>
 
 //motor pins
-int _m1 = 13;
+//pin 11 change rotation
+//pin 12 change x axis
+int _m1 = 13;//
 int _m2 = 12;
 int _m3 = 11;
 int _m4 = 10;
@@ -156,7 +158,7 @@ void setMotors(int X,int Y,int Z,int R,unsigned char buttons)
   motor4speedY = Y;
   
   motor1speedX = X; // get directions right left
-  motor2speedX = -1*X;
+  motor2speedX = X;
   motor3speedX = X;
   motor4speedX = X;
 
@@ -173,7 +175,7 @@ void setMotors(int X,int Y,int Z,int R,unsigned char buttons)
 
   motor1speed = motor1speed + R/2;
   motor2speed = motor2speed - R/2;
-  motor3speed = motor3speed - R/2;
+  motor3speed = motor3speed + R/2;
   motor4speed = motor4speed - R/2;
 
   motor1speed = constrain(motor1speed,-400,400);

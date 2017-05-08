@@ -50,10 +50,9 @@
 int serialWritePin = 2;
 
 
-///// Pins used by Quad Motor Shields //////
+///// Pins used by Vector Motors //////
 //
-// 7, 6, 11, 12, 22, 24, 31, 33, 29, 25, 27, 23, A1,
-//42, 44, 40, 24, 26, 22
+// 8, 9, 10, 11, 12, 13
 //
 //////////////////////////////////
 
@@ -78,12 +77,12 @@ int serialWritePin = 2;
 bool pressure = false;
 bool voltage = false;
 bool temperature = true;
-bool accel = false;
+bool accel = true;
 bool depth = false;
 bool ypr = true;
 bool amperage = false;
 
-bool debug = false;
+bool debug = true;
 
 Adafruit_BNO055 bno = Adafruit_BNO055(55);
 sensors_event_t event;
@@ -154,17 +153,24 @@ void wait() {
 //except for input such as SSTR, that will be skipped. There should be multiple characters to
 //prevent random bytes getting past
 void waitForStart() {
+  char x;
   while (true) {
     Serial.println("Waiting");
     wait();
     Serial.println("Recieved");
-    if ('S' == Serial3.read()) {
+    x = Serial3.read();
+    Serial.println(x);
+    if ('S' == x) {
       Serial.println("Read S");
       wait();
-      if ('T' == Serial3.read()) {
+      x = Serial3.read();
+      Serial.println(x);
+      if ('T' == x) {
         Serial.println("Read T");
         wait();
-        if ('R' == Serial3.read()) {
+        x = Serial3.read();
+        Serial.println(x);
+        if ('R' == x) {
           Serial.println("Read R");
           break;
         }
@@ -196,6 +202,7 @@ Input readBuffer() {
   wait();
   input.triggers = Serial3.parseInt();
   Serial3.read();
+  Serial.println("Packet received");
   return input;
 }
 
@@ -222,7 +229,7 @@ void processInput(Input i) {
 void writeToCommand(Input i) {
   Serial3.print("STR");
   int lines = 0;
-  //if (pressure) lines += 2;
+  if (pressure) lines += 2;
   if (voltage) lines += 2;
   //if (temperature) lines += 2;
   if (depth) lines += 2;
@@ -236,10 +243,10 @@ void writeToCommand(Input i) {
   }
   Serial3.print(numberOfLines); //print the number of lines of input the python program can read in three digits
   if (pressure) {
-    //Serial3.println("PSR"); //tell it the next line is Pressure
+    Serial3.println("PSR"); //tell it the next line is Pressure
     //coms.sendSlaveCmd(GET_PRES);
     //Serial3.print(coms.getSlaveData());
-    //Serial3.println(" mbars");
+    Serial3.println(" 5");
   }
   if (voltage) {
     Serial3.println("VLT"); //tell it the next line is Power info
@@ -266,18 +273,20 @@ void writeToCommand(Input i) {
 
   if (accel) {
     Serial3.println("ACL"); //tell it the next line is Accelerometer
-    Serial3.print("Accel: X: ");
+    //Accel data: x, y, z
     Serial3.print(accelData[0]);
-    Serial3.print(" Y: ");
+    Serial3.print(",");
     Serial3.print(accelData[1]);
-    Serial3.print(" Z: ");
-    Serial3.print(accelData[2]);
-    Serial3.print("\nGyro: X: ");
+    Serial3.print(",");
+    Serial3.println(accelData[2]);
+    
+    Serial3.println("GYR");
+    //Gyro data: yaw, pitch, roll
     Serial3.print(yaw);
-    Serial3.print(" Y: ");
+    Serial3.print(",");
     Serial3.print(pch);
-    Serial3.print(" Z: ");
-    Serial3.print(rol);
+    Serial3.print(",");
+    Serial3.println(rol);
   }
   if (depth) {
     Serial3.println("DPT"); //tell it the next line is Depth
@@ -305,7 +314,7 @@ void debugInput(Input i) {
 }
 
 void loop() {
-  //if (Serial3.available()) {
+  if (Serial3.available()) {
     //digitalWrite(13, HIGH);
     waitForStart();
     Input i = readBuffer();
@@ -316,13 +325,13 @@ void loop() {
     writeToCommand(i); //this is where the code to write back to topside goes.
     Serial3.flush();
     //sensors.requestTemperatures();
-    delay(50);         //this delay allows for hardware serial to work with rs485
+    delay(20);         //this delay allows for hardware serial to work with rs485
     digitalWrite(serialWritePin, LOW);
 
     processInput(i);//gives the inputs to the motors
-  /*}
+  }
   else {
     Serial3.println("Not writing to surface");
-  }*/
+  }
 }
 
