@@ -3,6 +3,9 @@ import sys
 import serial
 from sys import platform
 
+#finds all serial ports and returns a list containing them
+
+#@retval: a list containg all the serial ports
 def serial_ports():
     """ Lists serial port names
 
@@ -31,7 +34,9 @@ def serial_ports():
             pass
     return result
 
+#finds a port in a list to use and returns it
 
+#@retval: a serial port
 def find_port(ports):
 
     if platform == "linux" or platform == "linux2":
