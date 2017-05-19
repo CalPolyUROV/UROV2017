@@ -1,4 +1,4 @@
-#include "arduino.h"
+ #include "arduino.h"
 //
 //#include <wire.h>
 #define MOTORACCELERATIONMAX 80
@@ -87,7 +87,7 @@ void motorSetup()
   motor4.writeMicroseconds(1500);
   motor5.writeMicroseconds(1500);
   motor6.writeMicroseconds(1500);
-  delay(100); // ensure that the signal was recieved
+  delay(1000); // ensure that the signal was recieved
 }
 
 ///////////////////////////////////////////////////////////////////////////how to write motorspeeds

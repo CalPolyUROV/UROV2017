@@ -13,42 +13,33 @@
 #include "dataStruc.h"
 #include "gyroAccelerometer.h"
 
-//#include "ComsMasterArd.h"
-//#include "pressure.h"
-//#include "QuadMotorShields.h"
-//#include "currentSensing.h"
-
-//#include "Adafruit_Sensor.h"
-//#include "Adafruit_BNO055.h"
-//#include "utility/imumaths.h"
-
-//Declarations for temp readings
-//#include <OneWire.h>
-
-//#include "DallasTemperature.h"
-
 // Data wire is plugged into pin 26 on the Arduino
 #define ONE_WIRE_BUS 3
 
 //Serial baud rate, match with top side python's baud rate
-#define BAUD_RATE 9600
+#define BAUD_RATE_UI 115200
+#define BAUD_RATE_SER 9600
 
-// Setup a oneWire instance to communicate with any OneWire devices (not just Maxim/Dallas temperature ICs)
-//OneWire oneWire(ONE_WIRE_BUS);
-
-// Pass our oneWire reference to Dallas Temperature.
-//DallasTemperature sensors(&oneWire);
-
-//Adafruit_BNO055 bno = Adafruit_BNO055();
-
-
+#define A_HEX 0x1
+#define B_HEX 0x2
+#define X_HEX 0x4
+#define Y_HEX 0x8
+#define L_TRIGGER_HEX 0x10
+#define R_TRIGGER_HEX 0x20
+#define BACK_HEX 0x40
+#define BROKEN_HEX 0x80   //this hex signal over serial seems to lag the arduino by a second, so we are not using it, ever
+#define START_HEX 0x100
+#define L_JOYSTICK_CLICK_HEX 0x200
+#define R_JOYSTICK_CLICK_HEX 0x400
 
 //all pins used must be listed here! either as a variable to change quickly later or as a comment if it is in another file
 
-/* this is the pin to control whethgeter it is recieving or sending
+/* this is the pin to control whetheter it is recieving or sending in rs485
    SDA, SCL to Slave arduino */
 int serialWritePin = 2;
 
+int solenoidPin = A5;
+boolean toggleSol = false;
 
 ///// Pins used by Vector Motors //////
 //
@@ -82,7 +73,7 @@ bool depth = false;
 bool ypr = true;
 bool amperage = false;
 
-bool debug = true;
+bool debug = false;
 
 Adafruit_BNO055 bno = Adafruit_BNO055(55);
 sensors_event_t event;
@@ -96,28 +87,42 @@ float fast;
 uint16_t amperages[8] = {0};
 uint16_t* p_amperages;
 
+void startup();
+
 //SoftwareSerial Ser3(14, 15);
 void setup() {
   /*Serial 3: Communication to topside python code through rs485, match baud rate in python code*/
   /*Pins 14 & 15*/
-  Serial3.begin(BAUD_RATE);
+  Serial3.begin(BAUD_RATE_UI);    //it does not seem to work at lower baud rates
   while(!Serial3) {
     ;
   }
   /*Serial: Communication to Arduino Serial Console*/
   /*Pins 0 and 1*/
-  Serial.begin(BAUD_RATE);     //it does not seem to work at lower baud rates
+  Serial.begin(BAUD_RATE_SER);   
   while(!Serial) {
     ;
   }
+  /*Serial 2: Communication to slave Arduino */
+  /* Pins 16 & 17*/
+  Serial2.begin(BAUD_RATE_SER);
+  while(!Serial2) {
+    ;
+  }  
   pinMode(serialWritePin, OUTPUT);
+  pinMode(solenoidPin, OUTPUT);
   pinMode(13, OUTPUT);
-  pinMode(4, OUTPUT);
+  
+  pinMode(4, OUTPUT); //4,5,6,7,22,24 have all been used for relay in the past. currently using 4,5,6,7
   pinMode(5, OUTPUT);
   pinMode(6, OUTPUT);
   pinMode(7, OUTPUT);
   pinMode(22, OUTPUT);
   pinMode(24, OUTPUT);
+  pinMode(A0, OUTPUT);
+  pinMode(A1, OUTPUT);
+  pinMode(A2, OUTPUT);
+  pinMode(A3, OUTPUT);
 
   digitalWrite(4, LOW); //Relay 4
   digitalWrite(5, LOW);
@@ -139,8 +144,36 @@ void setup() {
   motorSetup();
   //if(ypr){bno.setExtCrystalUse(true);}
 
+  //startup();
   Serial.println("Finished setup");
 
+}
+
+void startup() {
+  motor_1(-75);
+  delay(1000);
+  motor_1(75);
+  delay(1000);
+  motor_2(75);
+  delay(1000);
+  motor_2(-75);
+  delay(1000);
+  motor_3(75);
+  delay(1000);
+  motor_3(-75);
+  delay(1000);
+  motor_4(75);
+  delay(1000);
+  motor_4(-75);
+  delay(1000);
+  motor_5(75);
+  delay(1000);
+  motor_5(-75);
+  delay(1000);
+  motor_6(75);
+  delay(1000);
+  motor_6(-75);
+  delay(1000);
 }
 
 //looks cleaner than the empty while loop being everywhere in the code
@@ -208,7 +241,7 @@ Input readBuffer() {
 
 /*Currently sets camera relay*/
 void processInput(Input i) {
-
+  unsigned char step1, step2;
   if ((CHECK_BIT(i.buttons1, 3))) {
     digitalWrite(22, HIGH);
   }
@@ -221,7 +254,49 @@ void processInput(Input i) {
   else {
     digitalWrite(24, LOW);
   }
-
+  step1 = step2 = 'x';
+  digitalWrite(A0, LOW); 
+  digitalWrite(A1, LOW); 
+  digitalWrite(A2, LOW); 
+  digitalWrite(A3, LOW); 
+  switch(i.buttons1) {
+    case A_HEX:
+      digitalWrite(A0, HIGH);   
+    break;
+    case B_HEX:
+      digitalWrite(A1, HIGH); 
+    break;
+    case X_HEX:
+      digitalWrite(A2, HIGH); 
+    break;
+    case Y_HEX:
+      digitalWrite(A3, HIGH); 
+    break;
+    case BACK_HEX:
+      toggleSol = !toggleSol;
+      digitalWrite(solenoidPin, toggleSol);
+    break;
+  }
+  switch(i.buttons2) {
+    case A_HEX:
+      digitalWrite(A0, HIGH); 
+    break;
+    case B_HEX:
+      digitalWrite(A1, HIGH); 
+    break;
+    case X_HEX:
+      digitalWrite(A2, HIGH); 
+    break;
+    case Y_HEX:
+      digitalWrite(A3, HIGH); 
+    break;
+    case BACK_HEX:
+      toggleSol = !toggleSol;
+      digitalWrite(solenoidPin, toggleSol);
+    break;
+  }
+  Serial2.print(step1);
+  Serial2.print(step2);
   setCameras(i.buttons1);
   setMotors(i.primaryX, i.primaryY, i.triggers, i.secondaryX, i.buttons1);
 }
@@ -262,14 +337,16 @@ void writeToCommand(Input i) {
     //Serial3.println(fast);
   }
 
-  bno.getEvent(&event);
+  /*bno.getEvent(&event);
   pch = event.orientation.y;
   yaw = event.orientation.x;
   rol = event.orientation.z;
   imu::Vector<3> linearaccel = bno.getVector(Adafruit_BNO055::VECTOR_LINEARACCEL);
   accelData[0] = linearaccel[0];
   accelData[1] = linearaccel[1];
-  accelData[2] = linearaccel[2];
+  accelData[2] = linearaccel[2];*/
+  pch = yaw = rol = 4;
+  accelData[0] = accelData[1] = accelData[2] = 5;
 
   if (accel) {
     Serial3.println("ACL"); //tell it the next line is Accelerometer
@@ -325,13 +402,13 @@ void loop() {
     writeToCommand(i); //this is where the code to write back to topside goes.
     Serial3.flush();
     //sensors.requestTemperatures();
-    delay(20);         //this delay allows for hardware serial to work with rs485
+    delay(50);         //this delay allows for hardware serial to work with rs485
     digitalWrite(serialWritePin, LOW);
 
     processInput(i);//gives the inputs to the motors
   }
   else {
-    Serial3.println("Not writing to surface");
+    //Serial3.println("N"); //*ot writing to surface");
   }
 }
 
