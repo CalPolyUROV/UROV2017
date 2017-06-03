@@ -89,7 +89,6 @@ uint16_t* p_amperages;
 
 void startup();
 
-//SoftwareSerial Ser3(14, 15);
 void setup() {
   /*Serial 3: Communication to topside python code through rs485, match baud rate in python code*/
   /*Pins 14 & 15*/
