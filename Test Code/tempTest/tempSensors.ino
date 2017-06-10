@@ -14,7 +14,7 @@ void tempSetup() { //sets resolution to 9 bits
         ds.write(0x4E);  // writes on scratchpad mem.
         ds.write(0x00);  // first user byte is 0
         ds.write(0x00);  // second user byte is 0
-        ds.write(0x1F);  // set 9 bits "00011111" = 0x1F
+        ds.write(0x1F);  // set 9 bits, see data sheet for hex number
 
         ds.reset();      // reset 1-wire
         ds.select(addr); // select DS18b20
@@ -26,35 +26,33 @@ void tempSetup() { //sets resolution to 9 bits
 
 float readTemp() {
     byte i;
-    byte present = 0;
-    byte type_s;
     byte data[12];
     byte addr[8];
     float celsius, fahrenheit;
 
-    if(!ds.search(addr)) {
+    if(!ds.search(addr)) { //resets onewire if address not found 
         ds.reset_search();
-        delay(250);
+        delay(50);
     }
-   
-   ds.reset();  
-   ds.select(addr);
-   ds.write(0x44, 1); //starts conversion, 1 for if using 1 wire
+	   
+	ds.reset();        //resets onewire
+	ds.select(addr);
+	ds.write(0x44, 1); //starts conversion, 1 if using 1 wire
 
-   delay(95);
+	delay(95);		  // 93.75 ms for 9 bit resolution
 
-   present = ds.reset();
-   ds.select(addr);   //select address
-   ds.write(0xBE);    //read data
+	ds.reset();
+    ds.select(addr);   //select address
+	ds.write(0xBE);    //read data
 
-   for(i = 0; i < 9; i++) {
-       data[i] = ds.read();
-   }
+    for(i = 0; i < 9; i++) {
+	   data[i] = ds.read();
+	}
 
-   int16_t raw = (data[1] << 8) | data[0]; // set to 16 bit signed int
+	int16_t raw = (data[1] << 8) | data[0]; // set to 16 bit signed int
 
-   celsius = (float)raw / 16.0;      
-   fahrenheit = celsius * 1.8 + 32.0;
+	celsius = (float)raw / 16.0;      
+	fahrenheit = celsius * 1.8 + 32.0;
 
-   return fahrenheit;
+	return fahrenheit;
 }
