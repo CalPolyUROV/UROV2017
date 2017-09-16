@@ -72,7 +72,7 @@ UI.textwrite(CON_TO_X, CON_TO_Y, str(port))
 
 outbound = serial.Serial(
     port=port,
-    baudrate=9600,
+    baudrate=115200,
     parity=serial.PARITY_NONE,   # parity is error checking, odd means the message should have an odd number of 1 bits
     stopbits=serial.STOPBITS_ONE,
     bytesize=serial.EIGHTBITS,   # eight bits of information per pulse/packet
@@ -83,11 +83,11 @@ UI.textwrite(0, 310, "Power factor:")
 
 dataObjs = [DataHandling(UI, "PSR", "Pressure", "mbars", 70),
             #DataHandling(UI, "VLT", "Current", "amps", 90),
-            DataHandling(UI, "ACL", "x", "", 90, 0),
-            DataHandling(UI, "ACL", "y", "", 90, 150),
-            DataHandling(UI, "ACL", "z", "", 90, 300),
-            DataHandling(UI, "TMP", "Temperature", "degrees C",110),
-            DataHandling(UI, "DPT", "Depth", "feet", 130),
+            DataHandling(UI, "ACL", "x", "", 130, 0),
+            DataHandling(UI, "ACL", "y", "", 130, 150),
+            DataHandling(UI, "ACL", "z", "", 130, 300),
+            DataHandling(UI, "TMP", "Temperature", "degrees C",90),
+            DataHandling(UI, "DPT", "Depth", "feet", 110),
             MotHandling(UI, "MOT", "M1", "", 190),
             MotHandling(UI, "MOT", "M2", "", 210),
             MotHandling(UI, "MOT", "M3", "", 230),
@@ -100,7 +100,10 @@ dataObjs = [DataHandling(UI, "PSR", "Pressure", "mbars", 70),
 
 AH = AH(dataObjs, UI)
 
+AutoPilot = AutoPilot(dataObjs, UI)
+
 camera = camera(UI)
+
 try:
     camera.start()
     procs.append(camera)
@@ -125,7 +128,7 @@ while True:
             if(port != None):
                 outbound = serial.Serial(
                 port=port,
-                baudrate=9600,
+                baudrate=115200,
                 parity=serial.PARITY_NONE,   # parity is error checking, odd means the message should have an odd number of 1 bits
                 stopbits=serial.STOPBITS_ONE,
                 bytesize=serial.EIGHTBITS,   # eight bits of information per pulse/packet
@@ -147,6 +150,9 @@ while True:
         UI.textdelete(0, 50, "Connect the controller")
         UI.textwrite(0, 50, "Controller connected", 10, 125, 10)
 
+    for Object in dataObjs:
+            Object.wasUpdated = False
+
     cont.update()
     buttons1 = 0x0
     buttons2 = 0x0
@@ -156,18 +162,21 @@ while True:
         if(cont.getButton(i)):
             if(cont.getValueForButton(i) <= 0xFF):
                 buttons1 += cont.getValueForButton(i)
+                if buttons1 == 32:
+                    AutoPilot.toggle()
 
             else:
                 buttons2 += cont.getValueForButton(i) >> 8
                 if buttons2 == 1:
                     UI.textdelete(140, 310, str(p_factor))
                     p_factor = p_factor / 2.0
-                    if(p_factor < 0.5):
+                    if(p_factor < 0.25):
                         p_factor = 1
 
     try:
         if(not no_serial):
             outbound.write("STR") #  sends a signal to tell that this is the start of data
+            #print "STR"
             outbound.write(chr(buttons1))# writes the buttons first
             outbound.write(chr(buttons2))
 
@@ -179,8 +188,7 @@ while True:
             outbound.write(" ")
             outbound.write(str(int(cont.getSecondaryY() * p_factor)))
             outbound.write(" ")
-            outbound.write(str(int(cont.getTriggers() * p_factor)))
-
+            outbound.write(str(int(AutoPilot.CalcAltitude(cont.getTriggers(), p_factor))))
             outbound.write(" ")
 
     except serial.serialutil.SerialException:
@@ -189,30 +197,25 @@ while True:
     except:
         print "WARN: Crashed while sending controller input"
 
-    for Object in dataObjs:
-            Object.wasUpdated = False
-
     try:
         if (not no_serial):
             counter = 10
             proceed = False
 
-            while True and counter > 0:
+            while counter > 0:
                 counter -= 1
                 if outbound.readable():
-                    if 'S' == outbound.read(1):
-                        if 'T' == outbound.read(1):
-                            if 'R' == outbound.read(1):
-                                proceed = True
-                                if st:
-                                    start = time.time()
-                                    st = False
-                                break
+                    if "STR" == outbound.read(3):
+                        proceed = True
+                        if st:
+                            start = time.time()
+                            st = False
+                        break
 
             if(proceed):                                            # Reads the serial line.
                 linesToRead = int(outbound.read(3)) # allows for up to 999 lines to be read...
-                if linesToRead >= 25:
-                    linesToRead = 25
+                if linesToRead > 24:
+                    linesToRead = 24
                 for i in range(0, linesToRead // 2):
                     label = outbound.readline().rstrip().lstrip()
                     found = False
@@ -237,10 +240,11 @@ while True:
                         print "      data: " + str(rev)
 
             else:
+                print "WARN: No Response From Arduino"
                 if not st:
                     end = time.time()
                     st = True
-                    print "INFO: Lost data after" + str(end - start) + "seconds"
+                    print "INFO: Lost data after" + ("%.2f" % (end - start)) + "seconds"
 
     except serial.serialutil.SerialException:
         no_serial = True
@@ -258,6 +262,6 @@ while True:
     #print pygame.mouse.get_pos()
     #print pygame.mouse.get_pressed()
     UI.update()                         #Updates display
-    sleep(0.03)                         #Waits for 10ms
+    #sleep(0.03)                         #Waits for 30ms
 
     UI.shouldQuit()
