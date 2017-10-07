@@ -90,7 +90,7 @@ imu::Vector<3> euler;
 
 //SoftwareSerial Serial3(14, 15);
 void setup() {
-	Serial3.begin(9600);   //the number in here is the baud rate, it is the communication speed, this must be matched in the python
+	Serial3.begin(115200);   //the number in here is the baud rate, it is the communication speed, this must be matched in the python
 	Serial.begin(9600);     //it does not seem to work at lower baud rates 
 	pinMode(serialWritePin, OUTPUT);
 	pinMode(13, OUTPUT);
