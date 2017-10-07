@@ -92,7 +92,7 @@ class DataHandling(object):
             return True
 
         except:
-            print "Could not read " + self.tytle + " data: " + rev
+            print "WARN: Could not read " + self.tytle + " data: " + rev
             return False
 
     #Writes the old data in red if it wasn't updated

@@ -127,12 +127,12 @@ while True:
             port = serial_finder.find_port(ports)
             if(port != None):
                 outbound = serial.Serial(
-                port=port,
-                baudrate=115200,
-                parity=serial.PARITY_NONE,   # parity is error checking, odd means the message should have an odd number of 1 bits
-                stopbits=serial.STOPBITS_ONE,
-                bytesize=serial.EIGHTBITS,   # eight bits of information per pulse/packet
-                timeout=0.1
+                    port=port,
+                    baudrate=115200,
+                    parity=serial.PARITY_NONE,   # parity is error checking, odd means the message should have an odd number of 1 bits
+                    stopbits=serial.STOPBITS_ONE,
+                    bytesize=serial.EIGHTBITS,   # eight bits of information per pulse/packet
+                    timeout=0.1
                 )
                 UI.textwrite(CON_TO_X, CON_TO_Y, str(port))
                 no_serial = False
