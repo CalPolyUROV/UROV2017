@@ -7,64 +7,96 @@ __author__ = "Luca"
 
 LIST_SIZE = 20
 
+MOT_LIM = 400
+
 P_CONST = 10
 I_CONST = 10
 D_CONST = 10
 
 import threading
+from DataHandling import *
 
 DEVICE = "/dev/video0"
 #DEVICE = "/dev/bus/usb/001/008"
 
 class AutoPilot:
 
-    def __init__(self):
+    def __init__(self, dataObjs, UI):
+        self.UI = UI
         self.errors = [0.0] * LIST_SIZE
         self.times = [0.0] * LIST_SIZE
+        self.times[0] = 1.1
         self.P = 0
         self.I = 0
         self.D = 0
         self.goal = 0
+        self.on = False
+        self.pressure = getDataObj(dataObjs, "Pressure")
+        self.init = True
 
-    def CalcAltitude(self, user, pres, time):
-        if(user != 0):
+        if(self.pressure == None):
+            print "FATAL: Could not initialize the Autopilot!"
+            self.init = False
+
+        UI.textwrite(250, 310, "AutoPilot:")
+        self.UI.textwrite(350, 310, str(self.on))
+
+    def CalcAltitude(self, user, pfactor):
+
+        if not self.init:
+            return user * pfactor
+
+        if(user != 0 or not self.on):
             error = 0
         else:
-            error = self.goal - pres
+            error = self.goal - self.pressure.filtered
 
         for i in range(LIST_SIZE - 1):
-            self.errors[LIST_SIZE - i] = self.errors[LIST_SIZE - i - 1]
-            self.times[LIST_SIZE - i] = self.times[LIST_SIZE - i - 1]
+            self.errors[LIST_SIZE - i - 1] = self.errors[LIST_SIZE - i - 2]
+            self.times[LIST_SIZE - i - 1] = self.times[LIST_SIZE - i - 2]
 
         self.errors[0] = error
-        self.times[0] = time
+        self.times[0] = self.pressure.time
 
-        if(user != 0):
-            self.goal = pres
-            PID = self.I + self.D + user
-            if(PID > 400):
-                PID = 400
-            elif(self.PID < 400):
-                PID = -400
+        if(not self.on):
+            return user * pfactor
 
-            return PID
+        elif(user != 0):
+            self.goal = self.pressure.filtered
+            PID = self.I + self.D + user * pfactor
+
+            return clamp(PID)
 
         self.I = 0
-        for i in range(LIST_SIZE):
-            self.I += self.errors[i] * self.times[i]
+        for i in range(LIST_SIZE - 1):
+            self.I += self.errors[i] * (self.times[i] - self.times[i + 1])
         self.I *= I_CONST
 
-        self.D = ((self.errors[0] - self.errors[1]) / self.times[0])*  D_CONST
+        self.D = ((self.errors[0] - self.errors[1]) / (self.times[0] - self.times[1]))*  D_CONST
 
         self.P = error * P_CONST
+
         PID = self.P + self.I +self.D
 
-        if(PID > 400):
-            PID = 400
-        elif(self.PID < 400):
-            PID = -400
+        return clamp(PID)
 
-        return PID
+    def toggle(self):
+        self.UI.textdelete(350, 310, str(self.on))
+        if(self.on):
+            self.on = False
+        elif(self.init):
+            self.on = True
+
+        self.UI.textwrite(350, 310, str(self.on))
+
+def clamp(num):
+    ret = num
+    if (ret > MOT_LIM):
+        ret = MOT_LIM
+    elif (ret < MOT_LIM):
+        ret = -MOT_LIM
+
+    return ret
 
 class camera(threading.Thread):
     def __init__(self, UI):

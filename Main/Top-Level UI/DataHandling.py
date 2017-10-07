@@ -7,6 +7,8 @@ MOT_CONST = 2
 
 DEBUG_LABEL = "STS"
 
+import time
+
 class DataHandling(object):
 
     #Initializes the object DataHandling
@@ -47,6 +49,7 @@ class DataHandling(object):
         self.data = [0.0] * size
         self.filtered = 0
         self.tytlePosX = posX
+        self.time = 1
         self.wasUpdated = True
         self.wasUpdatedBefore = True
 
@@ -73,21 +76,23 @@ class DataHandling(object):
                 index -= 1
             self.data[0] = float(rev)
 
-            textDelete = str(self.filtered) + " " + self.unit
+            textDelete = ("%.2f" % self.filtered) + " " + self.unit
 
             self.ui.textdelete(self.tytlePosX + (len(self.tytle)) * CHAR_SIZE + 10, self.posY, textDelete)
             self.filterData()
 
-            textWrite = str(self.filtered) + " " + self.unit
+            textWrite = ("%.2f" % self.filtered) + " " + self.unit
             self.ui.textwrite(self.tytlePosX + (len(self.tytle)) * CHAR_SIZE + 10, self.posY, textWrite, 10, 125, 10)
 
             self.wasUpdated = True
             self.wasUpdatedBefore = True
 
+            self.time = time.time()
+
             return True
 
         except:
-            print "Could not read " + self.tytle + " data: " + rev
+            print "WARN: Could not read " + self.tytle + " data: " + rev
             return False
 
     #Writes the old data in red if it wasn't updated
@@ -97,7 +102,7 @@ class DataHandling(object):
         if self.wasUpdated or not self.wasUpdatedBefore:
             return
         self.wasUpdatedBefore = False
-        textWrite = str(self.filtered) + " " + self.unit
+        textWrite = ("%.2f" % self.filtered) + " " + self.unit
         self.ui.textwrite(self.tytlePosX + (len(self.tytle)) * CHAR_SIZE + 10, self.posY, textWrite, 255, 10, 10)
 
 class MotHandling(DataHandling):
@@ -117,7 +122,7 @@ class MotHandling(DataHandling):
                 index -= 1
             self.data[0] = float(rev)
 
-            textDelete = str(self.filtered) + " " + self.unit
+            textDelete = ("%.2f" % self.filtered) + " " + self.unit
             self.ui.textdelete(self.tytlePosX + (len(self.tytle)) * CHAR_SIZE + 10, self.posY, textDelete)
 
             self.filterData()
@@ -135,7 +140,7 @@ class MotHandling(DataHandling):
                 G = 140
                 B = 10
 
-            textWrite = str(self.filtered) + " " + self.unit
+            textWrite = ("%.2f" % self.filtered) + " " + self.unit
 
             xpos = self.tytlePosX + (len(self.tytle)) * CHAR_SIZE + 10
             self.ui.textwrite(xpos, self.posY, textWrite, R, G, B)

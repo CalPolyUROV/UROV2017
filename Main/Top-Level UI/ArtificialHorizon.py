@@ -94,7 +94,7 @@ class AH:
                         self.writeOffset()
 
         except:
-            print "Crashed while reading keyboard inputs"
+            print "WARN: Crashed while reading keyboard inputs"
 
         try:
             if self.pch.wasUpdated or self.rol.wasUpdated:
@@ -117,4 +117,4 @@ class AH:
                 self.UI.blit(self.cover, (500, 500))
 
         except:
-            print "Crashed while loading AH images"
+            print "WARN: Crashed while loading AH images"
